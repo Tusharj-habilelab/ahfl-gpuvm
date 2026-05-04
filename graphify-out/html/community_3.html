@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>_run_ocr_on_region() — Community 3</title>
+<script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, sans-serif; display: flex; height: 100vh; overflow: hidden; }
+#sidebar { width: 320px; min-width: 320px; background: #1a1a2e; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; border-right: 1px solid #2a2a4a; }
+#sidebar h2 { font-size: 18px; color: #76B7B2; margin-bottom: 4px; }
+#sidebar h3 { font-size: 14px; color: #9ca3af; margin-bottom: 8px; }
+.nav-link { display: flex; align-items: center; gap: 8px; font-size: 13px; padding: 6px 8px; border-radius: 4px; color: #e0e0e0; text-decoration: none; }
+.nav-link:hover { background: #2a2a4a; }
+.legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+#graph-container { flex: 1; position: relative; }
+#search { width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #3a3a5a; background: #0f0f1a; color: #e0e0e0; font-size: 14px; }
+#search:focus { outline: none; border-color: #76B7B2; }
+#info-panel { background: #0f0f1a; border-radius: 8px; padding: 12px; font-size: 13px; line-height: 1.6; min-height: 100px; }
+#info-panel .prop { color: #9ca3af; }
+#info-panel .val { color: #e0e0e0; }
+</style>
+</head>
+<body>
+<div id="sidebar">
+    <div>
+        <h2>_run_ocr_on_region()</h2>
+        <p style="font-size:12px;color:#666;">29 nodes · Community 3</p>
+    </div>
+    <input id="search" type="text" placeholder="Search nodes…" />
+    <div>
+        <h3>Node Info</h3>
+        <div id="info-panel"><i style="color:#666">Click a node to see details</i></div>
+    </div>
+    <div>
+        <h3>Navigation</h3>
+        <a href="index.html" class="nav-link" style="font-weight:bold;">← Overview</a>
+    </div>
+</div>
+<div id="graph-container"></div>
+<script>
+(function() {
+    var nodesData = [{id:"core_pipeline_py",label:"pipeline",title:"pipeline\nType: File\nFile: ./core/pipeline.py\nDegree: 28",color:"#76B7B2",size:29.2},{id:"core_pipeline_py_import_gc",label:"gc",title:"gc\nType: Module\nFile: ./core/pipeline.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"core_pipeline_py_import_logging",label:"logging",title:"logging\nType: Module\nFile: ./core/pipeline.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"core_pipeline_py_import_threading",label:"threading",title:"threading\nType: Module\nFile: ./core/pipeline.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"core_pipeline_py_import_time",label:"time",title:"time\nType: Module\nFile: ./core/pipeline.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"core_pipeline_py_import_typing_any",label:"typing.Any",title:"typing.Any\nType: Module\nFile: ./core/pipeline.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"core_pipeline_py_import_typing_dict",label:"typing.Dict",title:"typing.Dict\nType: Module\nFile: ./core/pipeline.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"core_pipeline_py_import_typing_tuple",label:"typing.Tuple",title:"typing.Tuple\nType: Module\nFile: ./core/pipeline.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"core_pipeline_py_import_cv2",label:"cv2",title:"cv2\nType: Module\nFile: ./core/pipeline.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"core_pipeline_py_import_numpy",label:"numpy",title:"numpy\nType: Module\nFile: ./core/pipeline.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"core_pipeline_py_import_core_config_skip_keywords",label:"core.config.SKIP_KEYWORDS",title:"core.config.SKIP_KEYWORDS\nType: Module\nFile: ./core/pipeline.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"core_pipeline_py_import_core_aadhaar_gate_run_full_gate_scoring",label:"core.aadhaar_gate.run_full_gate_scoring",title:"core.aadhaar_gate.run_full_gate_scoring\nType: Module\nFile: ./core/pipeline.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"core_pipeline_py_import_core_ocr_masking_find_aadhaar_patterns",label:"core.ocr.masking.find_aadhaar_patterns",title:"core.ocr.masking.find_aadhaar_patterns\nType: Module\nFile: ./core/pipeline.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"core_pipeline_py_import_core_ocr_masking_mask_ocr_detections",label:"core.ocr.masking.mask_ocr_detections",title:"core.ocr.masking.mask_ocr_detections\nType: Module\nFile: ./core/pipeline.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"core_pipeline_py_import_core_ocr_masking_mask_yolo_detections",label:"core.ocr.masking.mask_yolo_detections",title:"core.ocr.masking.mask_yolo_detections\nType: Module\nFile: ./core/pipeline.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"core_pipeline_py_import_core_ocr_paddle_create_paddle_ocr",label:"core.ocr.paddle.create_paddle_ocr",title:"core.ocr.paddle.create_paddle_ocr\nType: Module\nFile: ./core/pipeline.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"core_pipeline_py_import_core_ocr_paddle_get_doc_orientation_model",label:"core.ocr.paddle.get_doc_orientation_model",title:"core.ocr.paddle.get_doc_orientation_model\nType: Module\nFile: ./core/pipeline.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"core_pipeline_py_import_core_ocr_paddle_resize_image_for_ocr",label:"core.ocr.paddle.resize_image_for_ocr",title:"core.ocr.paddle.resize_image_for_ocr\nType: Module\nFile: ./core/pipeline.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"core_pipeline_py_import_core_ocr_paddle_scale_adapted_ocr_results",label:"core.ocr.paddle.scale_adapted_ocr_results",title:"core.ocr.paddle.scale_adapted_ocr_results\nType: Module\nFile: ./core/pipeline.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"core_pipeline_py_import_core_ocr_ocr_adapter_adapt_paddle_result",label:"core.ocr.ocr_adapter.adapt_paddle_result",title:"core.ocr.ocr_adapter.adapt_paddle_result\nType: Module\nFile: ./core/pipeline.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"core_pipeline_py_import_core_ocr_ocr_adapter_get_texts_and_boxes",label:"core.ocr.ocr_adapter.get_texts_and_boxes",title:"core.ocr.ocr_adapter.get_texts_and_boxes\nType: Module\nFile: ./core/pipeline.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"core_pipeline_py_import_core_classifiers_is_pan_card",label:"core.classifiers.is_pan_card",title:"core.classifiers.is_pan_card\nType: Module\nFile: ./core/pipeline.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"core_pipeline_py_import_core_classifiers_is_aadhaar_card_confirmed",label:"core.classifiers.is_aadhaar_card_confirmed",title:"core.classifiers.is_aadhaar_card_confirmed\nType: Module\nFile: ./core/pipeline.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"core_pipeline_py_import_core_classifiers_mask_pvc_aadhaar",label:"core.classifiers.mask_pvc_aadhaar",title:"core.classifiers.mask_pvc_aadhaar\nType: Module\nFile: ./core/pipeline.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"core_pipeline_py_import_core_utils_angle_detector_find_best_orientation",label:"core.utils.angle_detector.find_best_orientation",title:"core.utils.angle_detector.find_best_orientation\nType: Module\nFile: ./core/pipeline.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"core_pipeline_py_get_ocr",label:"_get_ocr()",title:"_get_ocr()\nType: Function\nFile: ./core/pipeline.py\nDegree: 2",color:"#76B7B2",size:13.7},{id:"core_pipeline_py_correct_doc_orientation",label:"_correct_doc_orientation()",title:"_correct_doc_orientation()\nType: Function\nFile: ./core/pipeline.py\nDegree: 2",color:"#76B7B2",size:13.7},{id:"core_pipeline_py_run_ocr_on_region",label:"_run_ocr_on_region()",title:"_run_ocr_on_region()\nType: Function\nFile: ./core/pipeline.py\nDegree: 2",color:"#76B7B2",size:13.7},{id:"core_pipeline_py_process_image",label:"process_image()",title:"process_image()\nType: Function\nFile: ./core/pipeline.py\nDegree: 4",color:"#76B7B2",size:16.0}];
+    var edgesData = [{from:"core_pipeline_py",to:"core_pipeline_py_import_gc",label:"imports",dashes:false,title:"imports: core_pipeline_py → core_pipeline_py_import_gc\nConfidence: Extracted"},{from:"core_pipeline_py",to:"core_pipeline_py_import_logging",label:"imports",dashes:false,title:"imports: core_pipeline_py → core_pipeline_py_import_logging\nConfidence: Extracted"},{from:"core_pipeline_py",to:"core_pipeline_py_import_threading",label:"imports",dashes:false,title:"imports: core_pipeline_py → core_pipeline_py_import_threading\nConfidence: Extracted"},{from:"core_pipeline_py",to:"core_pipeline_py_import_time",label:"imports",dashes:false,title:"imports: core_pipeline_py → core_pipeline_py_import_time\nConfidence: Extracted"},{from:"core_pipeline_py",to:"core_pipeline_py_import_typing_any",label:"imports",dashes:false,title:"imports: core_pipeline_py → core_pipeline_py_import_typing_any\nConfidence: Extracted"},{from:"core_pipeline_py",to:"core_pipeline_py_import_typing_dict",label:"imports",dashes:false,title:"imports: core_pipeline_py → core_pipeline_py_import_typing_dict\nConfidence: Extracted"},{from:"core_pipeline_py",to:"core_pipeline_py_import_typing_tuple",label:"imports",dashes:false,title:"imports: core_pipeline_py → core_pipeline_py_import_typing_tuple\nConfidence: Extracted"},{from:"core_pipeline_py",to:"core_pipeline_py_import_cv2",label:"imports",dashes:false,title:"imports: core_pipeline_py → core_pipeline_py_import_cv2\nConfidence: Extracted"},{from:"core_pipeline_py",to:"core_pipeline_py_import_numpy",label:"imports",dashes:false,title:"imports: core_pipeline_py → core_pipeline_py_import_numpy\nConfidence: Extracted"},{from:"core_pipeline_py",to:"core_pipeline_py_import_core_config_skip_keywords",label:"imports",dashes:false,title:"imports: core_pipeline_py → core_pipeline_py_import_core_config_skip_keywords\nConfidence: Extracted"},{from:"core_pipeline_py",to:"core_pipeline_py_import_core_aadhaar_gate_run_full_gate_scoring",label:"imports",dashes:false,title:"imports: core_pipeline_py → core_pipeline_py_import_core_aadhaar_gate_run_full_gate_scoring\nConfidence: Extracted"},{from:"core_pipeline_py",to:"core_pipeline_py_import_core_ocr_masking_find_aadhaar_patterns",label:"imports",dashes:false,title:"imports: core_pipeline_py → core_pipeline_py_import_core_ocr_masking_find_aadhaar_patterns\nConfidence: Extracted"},{from:"core_pipeline_py",to:"core_pipeline_py_import_core_ocr_masking_mask_ocr_detections",label:"imports",dashes:false,title:"imports: core_pipeline_py → core_pipeline_py_import_core_ocr_masking_mask_ocr_detections\nConfidence: Extracted"},{from:"core_pipeline_py",to:"core_pipeline_py_import_core_ocr_masking_mask_yolo_detections",label:"imports",dashes:false,title:"imports: core_pipeline_py → core_pipeline_py_import_core_ocr_masking_mask_yolo_detections\nConfidence: Extracted"},{from:"core_pipeline_py",to:"core_pipeline_py_import_core_ocr_paddle_create_paddle_ocr",label:"imports",dashes:false,title:"imports: core_pipeline_py → core_pipeline_py_import_core_ocr_paddle_create_paddle_ocr\nConfidence: Extracted"},{from:"core_pipeline_py",to:"core_pipeline_py_import_core_ocr_paddle_get_doc_orientation_model",label:"imports",dashes:false,title:"imports: core_pipeline_py → core_pipeline_py_import_core_ocr_paddle_get_doc_orientation_model\nConfidence: Extracted"},{from:"core_pipeline_py",to:"core_pipeline_py_import_core_ocr_paddle_resize_image_for_ocr",label:"imports",dashes:false,title:"imports: core_pipeline_py → core_pipeline_py_import_core_ocr_paddle_resize_image_for_ocr\nConfidence: Extracted"},{from:"core_pipeline_py",to:"core_pipeline_py_import_core_ocr_paddle_scale_adapted_ocr_results",label:"imports",dashes:false,title:"imports: core_pipeline_py → core_pipeline_py_import_core_ocr_paddle_scale_adapted_ocr_results\nConfidence: Extracted"},{from:"core_pipeline_py",to:"core_pipeline_py_import_core_ocr_ocr_adapter_adapt_paddle_result",label:"imports",dashes:false,title:"imports: core_pipeline_py → core_pipeline_py_import_core_ocr_ocr_adapter_adapt_paddle_result\nConfidence: Extracted"},{from:"core_pipeline_py",to:"core_pipeline_py_import_core_ocr_ocr_adapter_get_texts_and_boxes",label:"imports",dashes:false,title:"imports: core_pipeline_py → core_pipeline_py_import_core_ocr_ocr_adapter_get_texts_and_boxes\nConfidence: Extracted"},{from:"core_pipeline_py",to:"core_pipeline_py_import_core_classifiers_is_pan_card",label:"imports",dashes:false,title:"imports: core_pipeline_py → core_pipeline_py_import_core_classifiers_is_pan_card\nConfidence: Extracted"},{from:"core_pipeline_py",to:"core_pipeline_py_import_core_classifiers_is_aadhaar_card_confirmed",label:"imports",dashes:false,title:"imports: core_pipeline_py → core_pipeline_py_import_core_classifiers_is_aadhaar_card_confirmed\nConfidence: Extracted"},{from:"core_pipeline_py",to:"core_pipeline_py_import_core_classifiers_mask_pvc_aadhaar",label:"imports",dashes:false,title:"imports: core_pipeline_py → core_pipeline_py_import_core_classifiers_mask_pvc_aadhaar\nConfidence: Extracted"},{from:"core_pipeline_py",to:"core_pipeline_py_import_core_utils_angle_detector_find_best_orientation",label:"imports",dashes:false,title:"imports: core_pipeline_py → core_pipeline_py_import_core_utils_angle_detector_find_best_orientation\nConfidence: Extracted"},{from:"core_pipeline_py",to:"core_pipeline_py_get_ocr",label:"defines",dashes:false,title:"defines: core_pipeline_py → core_pipeline_py_get_ocr\nConfidence: Extracted"},{from:"core_pipeline_py",to:"core_pipeline_py_correct_doc_orientation",label:"defines",dashes:false,title:"defines: core_pipeline_py → core_pipeline_py_correct_doc_orientation\nConfidence: Extracted"},{from:"core_pipeline_py",to:"core_pipeline_py_run_ocr_on_region",label:"defines",dashes:false,title:"defines: core_pipeline_py → core_pipeline_py_run_ocr_on_region\nConfidence: Extracted"},{from:"core_pipeline_py",to:"core_pipeline_py_process_image",label:"defines",dashes:false,title:"defines: core_pipeline_py → core_pipeline_py_process_image\nConfidence: Extracted"},{from:"core_pipeline_py_process_image",to:"core_pipeline_py_run_ocr_on_region",label:"calls",dashes:true,title:"calls: core_pipeline_py_process_image → core_pipeline_py_run_ocr_on_region\nConfidence: Inferred"},{from:"core_pipeline_py_process_image",to:"core_pipeline_py_get_ocr",label:"calls",dashes:true,title:"calls: core_pipeline_py_process_image → core_pipeline_py_get_ocr\nConfidence: Inferred"},{from:"core_pipeline_py_process_image",to:"core_pipeline_py_correct_doc_orientation",label:"calls",dashes:true,title:"calls: core_pipeline_py_process_image → core_pipeline_py_correct_doc_orientation\nConfidence: Inferred"}];
+    var container = document.getElementById('graph-container');
+    var nodes = new vis.DataSet(nodesData);
+    var edges = new vis.DataSet(edgesData);
+    var options = {
+        physics: {solver:'forceAtlas2Based',forceAtlas2Based:{gravitationalConstant:-50,centralGravity:0.01,springLength:120,springConstant:0.08,damping:0.4,avoidOverlap:0.5},stabilization:{iterations:200}},
+        nodes: { shape: 'dot', font: { color: '#e0e0e0', size: 12 }, borderWidth: 2 },
+        edges: { color: { color: '#4a4a6a', highlight: '#76B7B2', hover: '#76B7B2' }, font: { color: '#888', size: 10 }, arrows: { to: { enabled: false } }, smooth: { type: 'continuous' } },
+        interaction: { hover: true, tooltipDelay: 200, zoomView: true, dragView: true }
+    };
+    var network = new vis.Network(container, { nodes: nodes, edges: edges }, options);
+    network.on('stabilizationIterationsDone', function() { network.setOptions({ physics: { enabled: false } }); });
+    network.on('click', function(params) {
+        var panel = document.getElementById('info-panel');
+        if (params.nodes.length > 0) {
+            var node = nodes.get(params.nodes[0]);
+            if (node) {
+                panel.innerHTML = '<div><span class="prop">Label:</span> <span class="val">' + node.label + '</span></div><div><span class="prop">ID:</span> <span class="val">' + node.id + '</span></div>';
+                network.focus(params.nodes[0], { scale: 1.2, animation: true });
+            }
+        }
+    });
+    var searchEl = document.getElementById('search');
+    var sTimer = null;
+    searchEl.addEventListener('input', function() {
+        clearTimeout(sTimer);
+        sTimer = setTimeout(function() {
+            var term = searchEl.value.toLowerCase();
+            var updates = [];
+            nodes.forEach(function(n) {
+                var h = term && !n.label.toLowerCase().includes(term);
+                if (n.hidden !== h) { updates.push({ id: n.id, hidden: h }); }
+            });
+            if (updates.length > 0) { nodes.update(updates); }
+        }, 200);
+    });
+})();
+</script>
+</body>
+</html>

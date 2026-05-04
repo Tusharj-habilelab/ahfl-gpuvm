@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>write_mask_log() — Community 10</title>
+<script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, sans-serif; display: flex; height: 100vh; overflow: hidden; }
+#sidebar { width: 320px; min-width: 320px; background: #1a1a2e; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; border-right: 1px solid #2a2a4a; }
+#sidebar h2 { font-size: 18px; color: #4E79A7; margin-bottom: 4px; }
+#sidebar h3 { font-size: 14px; color: #9ca3af; margin-bottom: 8px; }
+.nav-link { display: flex; align-items: center; gap: 8px; font-size: 13px; padding: 6px 8px; border-radius: 4px; color: #e0e0e0; text-decoration: none; }
+.nav-link:hover { background: #2a2a4a; }
+.legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+#graph-container { flex: 1; position: relative; }
+#search { width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #3a3a5a; background: #0f0f1a; color: #e0e0e0; font-size: 14px; }
+#search:focus { outline: none; border-color: #4E79A7; }
+#info-panel { background: #0f0f1a; border-radius: 8px; padding: 12px; font-size: 13px; line-height: 1.6; min-height: 100px; }
+#info-panel .prop { color: #9ca3af; }
+#info-panel .val { color: #e0e0e0; }
+</style>
+</head>
+<body>
+<div id="sidebar">
+    <div>
+        <h2>write_mask_log()</h2>
+        <p style="font-size:12px;color:#666;">16 nodes · Community 10</p>
+    </div>
+    <input id="search" type="text" placeholder="Search nodes…" />
+    <div>
+        <h3>Node Info</h3>
+        <div id="info-panel"><i style="color:#666">Click a node to see details</i></div>
+    </div>
+    <div>
+        <h3>Navigation</h3>
+        <a href="index.html" class="nav-link" style="font-weight:bold;">← Overview</a>
+    </div>
+</div>
+<div id="graph-container"></div>
+<script>
+(function() {
+    var nodesData = [{id:"core_db_log_writer_py",label:"log_writer",title:"log_writer\nType: File\nFile: ./core/db/log_writer.py\nDegree: 15",color:"#4E79A7",size:23.5},{id:"core_db_log_writer_py_import_logging",label:"logging",title:"logging\nType: Module\nFile: ./core/db/log_writer.py\nDegree: 1",color:"#4E79A7",size:12.0},{id:"core_db_log_writer_py_import_uuid",label:"uuid",title:"uuid\nType: Module\nFile: ./core/db/log_writer.py\nDegree: 1",color:"#4E79A7",size:12.0},{id:"core_db_log_writer_py_import_math",label:"math",title:"math\nType: Module\nFile: ./core/db/log_writer.py\nDegree: 1",color:"#4E79A7",size:12.0},{id:"core_db_log_writer_py_import_decimal_decimal",label:"decimal.Decimal",title:"decimal.Decimal\nType: Module\nFile: ./core/db/log_writer.py\nDegree: 1",color:"#4E79A7",size:12.0},{id:"core_db_log_writer_py_import_datetime_timezone",label:"datetime.timezone",title:"datetime.timezone\nType: Module\nFile: ./core/db/log_writer.py\nDegree: 1",color:"#4E79A7",size:12.0},{id:"core_db_log_writer_py_import_typing_list",label:"typing.List",title:"typing.List\nType: Module\nFile: ./core/db/log_writer.py\nDegree: 1",color:"#4E79A7",size:12.0},{id:"core_db_log_writer_py_import_typing_dict",label:"typing.Dict",title:"typing.Dict\nType: Module\nFile: ./core/db/log_writer.py\nDegree: 1",color:"#4E79A7",size:12.0},{id:"core_db_log_writer_py_import_typing_set",label:"typing.Set",title:"typing.Set\nType: Module\nFile: ./core/db/log_writer.py\nDegree: 1",color:"#4E79A7",size:12.0},{id:"core_db_log_writer_py_import_boto3_dynamodb_conditions_attr",label:"boto3.dynamodb.conditions.Attr",title:"boto3.dynamodb.conditions.Attr\nType: Module\nFile: ./core/db/log_writer.py\nDegree: 1",color:"#4E79A7",size:12.0},{id:"core_db_log_writer_py_import_database_get_dynamo_table",label:".database.get_dynamo_table",title:".database.get_dynamo_table\nType: Module\nFile: ./core/db/log_writer.py\nDegree: 1",color:"#4E79A7",size:12.0},{id:"core_db_log_writer_py_to_decimal",label:"_to_decimal()",title:"_to_decimal()\nType: Function\nFile: ./core/db/log_writer.py\nDegree: 2",color:"#4E79A7",size:13.7},{id:"core_db_log_writer_py_write_mask_log",label:"write_mask_log()",title:"write_mask_log()\nType: Function\nFile: ./core/db/log_writer.py\nDegree: 3",color:"#4E79A7",size:14.9},{id:"core_db_log_writer_py_bulk_write_logs",label:"bulk_write_logs()",title:"bulk_write_logs()\nType: Function\nFile: ./core/db/log_writer.py\nDegree: 2",color:"#4E79A7",size:13.7},{id:"core_db_log_writer_py_get_processed_paths",label:"get_processed_paths()",title:"get_processed_paths()\nType: Function\nFile: ./core/db/log_writer.py\nDegree: 1",color:"#4E79A7",size:12.0},{id:"core_db_log_writer_py_ensure_log_table",label:"ensure_log_table()",title:"ensure_log_table()\nType: Function\nFile: ./core/db/log_writer.py\nDegree: 1",color:"#4E79A7",size:12.0}];
+    var edgesData = [{from:"core_db_log_writer_py",to:"core_db_log_writer_py_import_logging",label:"imports",dashes:false,title:"imports: core_db_log_writer_py → core_db_log_writer_py_import_logging\nConfidence: Extracted"},{from:"core_db_log_writer_py",to:"core_db_log_writer_py_import_uuid",label:"imports",dashes:false,title:"imports: core_db_log_writer_py → core_db_log_writer_py_import_uuid\nConfidence: Extracted"},{from:"core_db_log_writer_py",to:"core_db_log_writer_py_import_math",label:"imports",dashes:false,title:"imports: core_db_log_writer_py → core_db_log_writer_py_import_math\nConfidence: Extracted"},{from:"core_db_log_writer_py",to:"core_db_log_writer_py_import_decimal_decimal",label:"imports",dashes:false,title:"imports: core_db_log_writer_py → core_db_log_writer_py_import_decimal_decimal\nConfidence: Extracted"},{from:"core_db_log_writer_py",to:"core_db_log_writer_py_import_datetime_timezone",label:"imports",dashes:false,title:"imports: core_db_log_writer_py → core_db_log_writer_py_import_datetime_timezone\nConfidence: Extracted"},{from:"core_db_log_writer_py",to:"core_db_log_writer_py_import_typing_list",label:"imports",dashes:false,title:"imports: core_db_log_writer_py → core_db_log_writer_py_import_typing_list\nConfidence: Extracted"},{from:"core_db_log_writer_py",to:"core_db_log_writer_py_import_typing_dict",label:"imports",dashes:false,title:"imports: core_db_log_writer_py → core_db_log_writer_py_import_typing_dict\nConfidence: Extracted"},{from:"core_db_log_writer_py",to:"core_db_log_writer_py_import_typing_set",label:"imports",dashes:false,title:"imports: core_db_log_writer_py → core_db_log_writer_py_import_typing_set\nConfidence: Extracted"},{from:"core_db_log_writer_py",to:"core_db_log_writer_py_import_boto3_dynamodb_conditions_attr",label:"imports",dashes:false,title:"imports: core_db_log_writer_py → core_db_log_writer_py_import_boto3_dynamodb_conditions_attr\nConfidence: Extracted"},{from:"core_db_log_writer_py",to:"core_db_log_writer_py_import_database_get_dynamo_table",label:"imports",dashes:false,title:"imports: core_db_log_writer_py → core_db_log_writer_py_import_database_get_dynamo_table\nConfidence: Extracted"},{from:"core_db_log_writer_py",to:"core_db_log_writer_py_to_decimal",label:"defines",dashes:false,title:"defines: core_db_log_writer_py → core_db_log_writer_py_to_decimal\nConfidence: Extracted"},{from:"core_db_log_writer_py",to:"core_db_log_writer_py_write_mask_log",label:"defines",dashes:false,title:"defines: core_db_log_writer_py → core_db_log_writer_py_write_mask_log\nConfidence: Extracted"},{from:"core_db_log_writer_py",to:"core_db_log_writer_py_bulk_write_logs",label:"defines",dashes:false,title:"defines: core_db_log_writer_py → core_db_log_writer_py_bulk_write_logs\nConfidence: Extracted"},{from:"core_db_log_writer_py",to:"core_db_log_writer_py_get_processed_paths",label:"defines",dashes:false,title:"defines: core_db_log_writer_py → core_db_log_writer_py_get_processed_paths\nConfidence: Extracted"},{from:"core_db_log_writer_py",to:"core_db_log_writer_py_ensure_log_table",label:"defines",dashes:false,title:"defines: core_db_log_writer_py → core_db_log_writer_py_ensure_log_table\nConfidence: Extracted"},{from:"core_db_log_writer_py_write_mask_log",to:"core_db_log_writer_py_to_decimal",label:"calls",dashes:true,title:"calls: core_db_log_writer_py_write_mask_log → core_db_log_writer_py_to_decimal\nConfidence: Inferred"},{from:"core_db_log_writer_py_bulk_write_logs",to:"core_db_log_writer_py_write_mask_log",label:"calls",dashes:true,title:"calls: core_db_log_writer_py_bulk_write_logs → core_db_log_writer_py_write_mask_log\nConfidence: Inferred"}];
+    var container = document.getElementById('graph-container');
+    var nodes = new vis.DataSet(nodesData);
+    var edges = new vis.DataSet(edgesData);
+    var options = {
+        physics: {solver:'forceAtlas2Based',forceAtlas2Based:{gravitationalConstant:-50,centralGravity:0.01,springLength:120,springConstant:0.08,damping:0.4,avoidOverlap:0.5},stabilization:{iterations:200}},
+        nodes: { shape: 'dot', font: { color: '#e0e0e0', size: 12 }, borderWidth: 2 },
+        edges: { color: { color: '#4a4a6a', highlight: '#4E79A7', hover: '#4E79A7' }, font: { color: '#888', size: 10 }, arrows: { to: { enabled: false } }, smooth: { type: 'continuous' } },
+        interaction: { hover: true, tooltipDelay: 200, zoomView: true, dragView: true }
+    };
+    var network = new vis.Network(container, { nodes: nodes, edges: edges }, options);
+    network.on('stabilizationIterationsDone', function() { network.setOptions({ physics: { enabled: false } }); });
+    network.on('click', function(params) {
+        var panel = document.getElementById('info-panel');
+        if (params.nodes.length > 0) {
+            var node = nodes.get(params.nodes[0]);
+            if (node) {
+                panel.innerHTML = '<div><span class="prop">Label:</span> <span class="val">' + node.label + '</span></div><div><span class="prop">ID:</span> <span class="val">' + node.id + '</span></div>';
+                network.focus(params.nodes[0], { scale: 1.2, animation: true });
+            }
+        }
+    });
+    var searchEl = document.getElementById('search');
+    var sTimer = null;
+    searchEl.addEventListener('input', function() {
+        clearTimeout(sTimer);
+        sTimer = setTimeout(function() {
+            var term = searchEl.value.toLowerCase();
+            var updates = [];
+            nodes.forEach(function(n) {
+                var h = term && !n.label.toLowerCase().includes(term);
+                if (n.hidden !== h) { updates.push({ id: n.id, hidden: h }); }
+            });
+            if (updates.length > 0) { nodes.update(updates); }
+        }, 200);
+    });
+})();
+</script>
+</body>
+</html>

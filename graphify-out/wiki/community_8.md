@@ -1,0 +1,49 @@
+# Community 8: rotate_image_affine()
+
+**Members:** 18
+
+## Nodes
+
+- **angle_detector** (`core_utils_angle_detector_py`, File, degree: 17)
+- **find_best_orientation()** (`core_utils_angle_detector_py_find_best_orientation`, Function, degree: 3)
+- **_get_doc_orientation_hint()** (`core_utils_angle_detector_py_get_doc_orientation_hint`, Function, degree: 2)
+- **core.config.ORIENTATION_ANGLES** (`core_utils_angle_detector_py_import_core_config_orientation_angles`, Module, degree: 1)
+- **core.config.ORIENTATION_EARLY_EXIT_CONF** (`core_utils_angle_detector_py_import_core_config_orientation_early_exit_conf`, Module, degree: 1)
+- **core.config.ORIENTATION_ENABLED** (`core_utils_angle_detector_py_import_core_config_orientation_enabled`, Module, degree: 1)
+- **core.ocr.paddle.get_doc_orientation_model** (`core_utils_angle_detector_py_import_core_ocr_paddle_get_doc_orientation_model`, Module, degree: 1)
+- **cv2** (`core_utils_angle_detector_py_import_cv2`, Module, degree: 1)
+- **logging** (`core_utils_angle_detector_py_import_logging`, Module, degree: 1)
+- **numpy** (`core_utils_angle_detector_py_import_numpy`, Module, degree: 1)
+- **typing.Any** (`core_utils_angle_detector_py_import_typing_any`, Module, degree: 1)
+- **typing.Callable** (`core_utils_angle_detector_py_import_typing_callable`, Module, degree: 1)
+- **typing.Dict** (`core_utils_angle_detector_py_import_typing_dict`, Module, degree: 1)
+- **typing.List** (`core_utils_angle_detector_py_import_typing_list`, Module, degree: 1)
+- **typing.Tuple** (`core_utils_angle_detector_py_import_typing_tuple`, Module, degree: 1)
+- **_rotate_by_angle()** (`core_utils_angle_detector_py_rotate_by_angle`, Function, degree: 4)
+- **rotate_image()** (`core_utils_angle_detector_py_rotate_image`, Function, degree: 2)
+- **rotate_image_affine()** (`core_utils_angle_detector_py_rotate_image_affine`, Function, degree: 2)
+
+## Relationships
+
+- core_utils_angle_detector_py → core_utils_angle_detector_py_import_cv2 (imports)
+- core_utils_angle_detector_py → core_utils_angle_detector_py_import_numpy (imports)
+- core_utils_angle_detector_py → core_utils_angle_detector_py_import_logging (imports)
+- core_utils_angle_detector_py → core_utils_angle_detector_py_import_typing_any (imports)
+- core_utils_angle_detector_py → core_utils_angle_detector_py_import_typing_callable (imports)
+- core_utils_angle_detector_py → core_utils_angle_detector_py_import_typing_dict (imports)
+- core_utils_angle_detector_py → core_utils_angle_detector_py_import_typing_list (imports)
+- core_utils_angle_detector_py → core_utils_angle_detector_py_import_typing_tuple (imports)
+- core_utils_angle_detector_py → core_utils_angle_detector_py_import_core_config_orientation_enabled (imports)
+- core_utils_angle_detector_py → core_utils_angle_detector_py_import_core_config_orientation_early_exit_conf (imports)
+- core_utils_angle_detector_py → core_utils_angle_detector_py_import_core_config_orientation_angles (imports)
+- core_utils_angle_detector_py → core_utils_angle_detector_py_import_core_ocr_paddle_get_doc_orientation_model (imports)
+- core_utils_angle_detector_py → core_utils_angle_detector_py_get_doc_orientation_hint (defines)
+- core_utils_angle_detector_py → core_utils_angle_detector_py_rotate_image (defines)
+- core_utils_angle_detector_py → core_utils_angle_detector_py_rotate_image_affine (defines)
+- core_utils_angle_detector_py → core_utils_angle_detector_py_rotate_by_angle (defines)
+- core_utils_angle_detector_py → core_utils_angle_detector_py_find_best_orientation (defines)
+- core_utils_angle_detector_py_rotate_by_angle → core_utils_angle_detector_py_rotate_image_affine (calls)
+- core_utils_angle_detector_py_rotate_by_angle → core_utils_angle_detector_py_rotate_image (calls)
+- core_utils_angle_detector_py_find_best_orientation → core_utils_angle_detector_py_rotate_by_angle (calls)
+- core_utils_angle_detector_py_find_best_orientation → core_utils_angle_detector_py_get_doc_orientation_hint (calls)
+

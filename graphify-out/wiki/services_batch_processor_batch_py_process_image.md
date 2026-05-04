@@ -1,0 +1,15 @@
+# _process_image()
+
+- **ID:** `services_batch_processor_batch_py_process_image`
+- **Type:** Function
+- **File:** `./services/batch-processor/batch.py`
+- **Location:** L451
+- **Community:** 25 (run_batch_s3())
+
+## Relationships
+
+- services_batch_processor_batch_py → services_batch_processor_batch_py_process_image (defines, Extracted)
+- services_batch_processor_batch_py_process_pdf → services_batch_processor_batch_py_process_image (calls, Inferred)
+- services_batch_processor_batch_py_run_batch → services_batch_processor_batch_py_process_image (calls, Inferred)
+- services_batch_processor_batch_py_run_batch_s3 → services_batch_processor_batch_py_process_image (calls, Inferred)
+

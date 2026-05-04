@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>rotate_image_affine() — Community 8</title>
+<script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, sans-serif; display: flex; height: 100vh; overflow: hidden; }
+#sidebar { width: 320px; min-width: 320px; background: #1a1a2e; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; border-right: 1px solid #2a2a4a; }
+#sidebar h2 { font-size: 18px; color: #9C755F; margin-bottom: 4px; }
+#sidebar h3 { font-size: 14px; color: #9ca3af; margin-bottom: 8px; }
+.nav-link { display: flex; align-items: center; gap: 8px; font-size: 13px; padding: 6px 8px; border-radius: 4px; color: #e0e0e0; text-decoration: none; }
+.nav-link:hover { background: #2a2a4a; }
+.legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+#graph-container { flex: 1; position: relative; }
+#search { width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #3a3a5a; background: #0f0f1a; color: #e0e0e0; font-size: 14px; }
+#search:focus { outline: none; border-color: #9C755F; }
+#info-panel { background: #0f0f1a; border-radius: 8px; padding: 12px; font-size: 13px; line-height: 1.6; min-height: 100px; }
+#info-panel .prop { color: #9ca3af; }
+#info-panel .val { color: #e0e0e0; }
+</style>
+</head>
+<body>
+<div id="sidebar">
+    <div>
+        <h2>rotate_image_affine()</h2>
+        <p style="font-size:12px;color:#666;">18 nodes · Community 8</p>
+    </div>
+    <input id="search" type="text" placeholder="Search nodes…" />
+    <div>
+        <h3>Node Info</h3>
+        <div id="info-panel"><i style="color:#666">Click a node to see details</i></div>
+    </div>
+    <div>
+        <h3>Navigation</h3>
+        <a href="index.html" class="nav-link" style="font-weight:bold;">← Overview</a>
+    </div>
+</div>
+<div id="graph-container"></div>
+<script>
+(function() {
+    var nodesData = [{id:"core_utils_angle_detector_py",label:"angle_detector",title:"angle_detector\nType: File\nFile: ./core/utils/angle_detector.py\nDegree: 17",color:"#9C755F",size:24.5},{id:"core_utils_angle_detector_py_import_cv2",label:"cv2",title:"cv2\nType: Module\nFile: ./core/utils/angle_detector.py\nDegree: 1",color:"#9C755F",size:12.0},{id:"core_utils_angle_detector_py_import_numpy",label:"numpy",title:"numpy\nType: Module\nFile: ./core/utils/angle_detector.py\nDegree: 1",color:"#9C755F",size:12.0},{id:"core_utils_angle_detector_py_import_logging",label:"logging",title:"logging\nType: Module\nFile: ./core/utils/angle_detector.py\nDegree: 1",color:"#9C755F",size:12.0},{id:"core_utils_angle_detector_py_import_typing_any",label:"typing.Any",title:"typing.Any\nType: Module\nFile: ./core/utils/angle_detector.py\nDegree: 1",color:"#9C755F",size:12.0},{id:"core_utils_angle_detector_py_import_typing_callable",label:"typing.Callable",title:"typing.Callable\nType: Module\nFile: ./core/utils/angle_detector.py\nDegree: 1",color:"#9C755F",size:12.0},{id:"core_utils_angle_detector_py_import_typing_dict",label:"typing.Dict",title:"typing.Dict\nType: Module\nFile: ./core/utils/angle_detector.py\nDegree: 1",color:"#9C755F",size:12.0},{id:"core_utils_angle_detector_py_import_typing_list",label:"typing.List",title:"typing.List\nType: Module\nFile: ./core/utils/angle_detector.py\nDegree: 1",color:"#9C755F",size:12.0},{id:"core_utils_angle_detector_py_import_typing_tuple",label:"typing.Tuple",title:"typing.Tuple\nType: Module\nFile: ./core/utils/angle_detector.py\nDegree: 1",color:"#9C755F",size:12.0},{id:"core_utils_angle_detector_py_import_core_config_orientation_enabled",label:"core.config.ORIENTATION_ENABLED",title:"core.config.ORIENTATION_ENABLED\nType: Module\nFile: ./core/utils/angle_detector.py\nDegree: 1",color:"#9C755F",size:12.0},{id:"core_utils_angle_detector_py_import_core_config_orientation_early_exit_conf",label:"core.config.ORIENTATION_EARLY_EXIT_CONF",title:"core.config.ORIENTATION_EARLY_EXIT_CONF\nType: Module\nFile: ./core/utils/angle_detector.py\nDegree: 1",color:"#9C755F",size:12.0},{id:"core_utils_angle_detector_py_import_core_config_orientation_angles",label:"core.config.ORIENTATION_ANGLES",title:"core.config.ORIENTATION_ANGLES\nType: Module\nFile: ./core/utils/angle_detector.py\nDegree: 1",color:"#9C755F",size:12.0},{id:"core_utils_angle_detector_py_import_core_ocr_paddle_get_doc_orientation_model",label:"core.ocr.paddle.get_doc_orientation_model",title:"core.ocr.paddle.get_doc_orientation_model\nType: Module\nFile: ./core/utils/angle_detector.py\nDegree: 1",color:"#9C755F",size:12.0},{id:"core_utils_angle_detector_py_get_doc_orientation_hint",label:"_get_doc_orientation_hint()",title:"_get_doc_orientation_hint()\nType: Function\nFile: ./core/utils/angle_detector.py\nDegree: 2",color:"#9C755F",size:13.7},{id:"core_utils_angle_detector_py_rotate_image",label:"rotate_image()",title:"rotate_image()\nType: Function\nFile: ./core/utils/angle_detector.py\nDegree: 2",color:"#9C755F",size:13.7},{id:"core_utils_angle_detector_py_rotate_image_affine",label:"rotate_image_affine()",title:"rotate_image_affine()\nType: Function\nFile: ./core/utils/angle_detector.py\nDegree: 2",color:"#9C755F",size:13.7},{id:"core_utils_angle_detector_py_rotate_by_angle",label:"_rotate_by_angle()",title:"_rotate_by_angle()\nType: Function\nFile: ./core/utils/angle_detector.py\nDegree: 4",color:"#9C755F",size:16.0},{id:"core_utils_angle_detector_py_find_best_orientation",label:"find_best_orientation()",title:"find_best_orientation()\nType: Function\nFile: ./core/utils/angle_detector.py\nDegree: 3",color:"#9C755F",size:14.9}];
+    var edgesData = [{from:"core_utils_angle_detector_py",to:"core_utils_angle_detector_py_import_cv2",label:"imports",dashes:false,title:"imports: core_utils_angle_detector_py → core_utils_angle_detector_py_import_cv2\nConfidence: Extracted"},{from:"core_utils_angle_detector_py",to:"core_utils_angle_detector_py_import_numpy",label:"imports",dashes:false,title:"imports: core_utils_angle_detector_py → core_utils_angle_detector_py_import_numpy\nConfidence: Extracted"},{from:"core_utils_angle_detector_py",to:"core_utils_angle_detector_py_import_logging",label:"imports",dashes:false,title:"imports: core_utils_angle_detector_py → core_utils_angle_detector_py_import_logging\nConfidence: Extracted"},{from:"core_utils_angle_detector_py",to:"core_utils_angle_detector_py_import_typing_any",label:"imports",dashes:false,title:"imports: core_utils_angle_detector_py → core_utils_angle_detector_py_import_typing_any\nConfidence: Extracted"},{from:"core_utils_angle_detector_py",to:"core_utils_angle_detector_py_import_typing_callable",label:"imports",dashes:false,title:"imports: core_utils_angle_detector_py → core_utils_angle_detector_py_import_typing_callable\nConfidence: Extracted"},{from:"core_utils_angle_detector_py",to:"core_utils_angle_detector_py_import_typing_dict",label:"imports",dashes:false,title:"imports: core_utils_angle_detector_py → core_utils_angle_detector_py_import_typing_dict\nConfidence: Extracted"},{from:"core_utils_angle_detector_py",to:"core_utils_angle_detector_py_import_typing_list",label:"imports",dashes:false,title:"imports: core_utils_angle_detector_py → core_utils_angle_detector_py_import_typing_list\nConfidence: Extracted"},{from:"core_utils_angle_detector_py",to:"core_utils_angle_detector_py_import_typing_tuple",label:"imports",dashes:false,title:"imports: core_utils_angle_detector_py → core_utils_angle_detector_py_import_typing_tuple\nConfidence: Extracted"},{from:"core_utils_angle_detector_py",to:"core_utils_angle_detector_py_import_core_config_orientation_enabled",label:"imports",dashes:false,title:"imports: core_utils_angle_detector_py → core_utils_angle_detector_py_import_core_config_orientation_enabled\nConfidence: Extracted"},{from:"core_utils_angle_detector_py",to:"core_utils_angle_detector_py_import_core_config_orientation_early_exit_conf",label:"imports",dashes:false,title:"imports: core_utils_angle_detector_py → core_utils_angle_detector_py_import_core_config_orientation_early_exit_conf\nConfidence: Extracted"},{from:"core_utils_angle_detector_py",to:"core_utils_angle_detector_py_import_core_config_orientation_angles",label:"imports",dashes:false,title:"imports: core_utils_angle_detector_py → core_utils_angle_detector_py_import_core_config_orientation_angles\nConfidence: Extracted"},{from:"core_utils_angle_detector_py",to:"core_utils_angle_detector_py_import_core_ocr_paddle_get_doc_orientation_model",label:"imports",dashes:false,title:"imports: core_utils_angle_detector_py → core_utils_angle_detector_py_import_core_ocr_paddle_get_doc_orientation_model\nConfidence: Extracted"},{from:"core_utils_angle_detector_py",to:"core_utils_angle_detector_py_get_doc_orientation_hint",label:"defines",dashes:false,title:"defines: core_utils_angle_detector_py → core_utils_angle_detector_py_get_doc_orientation_hint\nConfidence: Extracted"},{from:"core_utils_angle_detector_py",to:"core_utils_angle_detector_py_rotate_image",label:"defines",dashes:false,title:"defines: core_utils_angle_detector_py → core_utils_angle_detector_py_rotate_image\nConfidence: Extracted"},{from:"core_utils_angle_detector_py",to:"core_utils_angle_detector_py_rotate_image_affine",label:"defines",dashes:false,title:"defines: core_utils_angle_detector_py → core_utils_angle_detector_py_rotate_image_affine\nConfidence: Extracted"},{from:"core_utils_angle_detector_py",to:"core_utils_angle_detector_py_rotate_by_angle",label:"defines",dashes:false,title:"defines: core_utils_angle_detector_py → core_utils_angle_detector_py_rotate_by_angle\nConfidence: Extracted"},{from:"core_utils_angle_detector_py",to:"core_utils_angle_detector_py_find_best_orientation",label:"defines",dashes:false,title:"defines: core_utils_angle_detector_py → core_utils_angle_detector_py_find_best_orientation\nConfidence: Extracted"},{from:"core_utils_angle_detector_py_rotate_by_angle",to:"core_utils_angle_detector_py_rotate_image_affine",label:"calls",dashes:true,title:"calls: core_utils_angle_detector_py_rotate_by_angle → core_utils_angle_detector_py_rotate_image_affine\nConfidence: Inferred"},{from:"core_utils_angle_detector_py_rotate_by_angle",to:"core_utils_angle_detector_py_rotate_image",label:"calls",dashes:true,title:"calls: core_utils_angle_detector_py_rotate_by_angle → core_utils_angle_detector_py_rotate_image\nConfidence: Inferred"},{from:"core_utils_angle_detector_py_find_best_orientation",to:"core_utils_angle_detector_py_rotate_by_angle",label:"calls",dashes:true,title:"calls: core_utils_angle_detector_py_find_best_orientation → core_utils_angle_detector_py_rotate_by_angle\nConfidence: Inferred"},{from:"core_utils_angle_detector_py_find_best_orientation",to:"core_utils_angle_detector_py_get_doc_orientation_hint",label:"calls",dashes:true,title:"calls: core_utils_angle_detector_py_find_best_orientation → core_utils_angle_detector_py_get_doc_orientation_hint\nConfidence: Inferred"}];
+    var container = document.getElementById('graph-container');
+    var nodes = new vis.DataSet(nodesData);
+    var edges = new vis.DataSet(edgesData);
+    var options = {
+        physics: {solver:'forceAtlas2Based',forceAtlas2Based:{gravitationalConstant:-50,centralGravity:0.01,springLength:120,springConstant:0.08,damping:0.4,avoidOverlap:0.5},stabilization:{iterations:200}},
+        nodes: { shape: 'dot', font: { color: '#e0e0e0', size: 12 }, borderWidth: 2 },
+        edges: { color: { color: '#4a4a6a', highlight: '#9C755F', hover: '#9C755F' }, font: { color: '#888', size: 10 }, arrows: { to: { enabled: false } }, smooth: { type: 'continuous' } },
+        interaction: { hover: true, tooltipDelay: 200, zoomView: true, dragView: true }
+    };
+    var network = new vis.Network(container, { nodes: nodes, edges: edges }, options);
+    network.on('stabilizationIterationsDone', function() { network.setOptions({ physics: { enabled: false } }); });
+    network.on('click', function(params) {
+        var panel = document.getElementById('info-panel');
+        if (params.nodes.length > 0) {
+            var node = nodes.get(params.nodes[0]);
+            if (node) {
+                panel.innerHTML = '<div><span class="prop">Label:</span> <span class="val">' + node.label + '</span></div><div><span class="prop">ID:</span> <span class="val">' + node.id + '</span></div>';
+                network.focus(params.nodes[0], { scale: 1.2, animation: true });
+            }
+        }
+    });
+    var searchEl = document.getElementById('search');
+    var sTimer = null;
+    searchEl.addEventListener('input', function() {
+        clearTimeout(sTimer);
+        sTimer = setTimeout(function() {
+            var term = searchEl.value.toLowerCase();
+            var updates = [];
+            nodes.forEach(function(n) {
+                var h = term && !n.label.toLowerCase().includes(term);
+                if (n.hidden !== h) { updates.push({ id: n.id, hidden: h }); }
+            });
+            if (updates.length > 0) { nodes.update(updates); }
+        }, 200);
+    });
+})();
+</script>
+</body>
+</html>
