@@ -127,7 +127,7 @@ def run_full_gate_scoring(
     # Step 1: Greyscale preprocessing (done ONCE, reused by main.pt and fb)
     grey, dilated = _preprocess_greyscale(image)
 
-    # Step 2: Run main.pt on dilated greyscale
+    # Step 2: Run main.pt on dilated — convert to BGR (main.pt trained on 3-channel)
     yolo_main = get_yolo_main()
     dilated_bgr = cv2.cvtColor(dilated, cv2.COLOR_GRAY2BGR)
     results_main = yolo_main(dilated_bgr, half=True)[0]
@@ -225,3 +225,4 @@ def run_full_gate_scoring(
     gate_result["best_qr_conf"] = max(best_qr_confs) if best_qr_confs else 0.0
 
     return score, gate_result
+

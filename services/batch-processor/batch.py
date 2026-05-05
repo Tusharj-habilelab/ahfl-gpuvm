@@ -1014,3 +1014,4 @@ if __name__ == "__main__":
             log_to_db=not args.no_db,
             dry_run=args.dry_run,
         )
+
