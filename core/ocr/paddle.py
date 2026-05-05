@@ -27,15 +27,13 @@ def _env_int(name: str, default: int) -> int:
 def create_paddle_ocr() -> PaddleOCR:
     """
     Build a PaddleOCR instance for Aadhaar text extraction (PaddleOCR 3.4.0+).
-    Models are auto-downloaded to /root/.paddlex on first call and cached permanently.
-    GPU mode imports from core.config — single source of truth for GPU_ENABLED default.
+    Models cached to /root/.paddlex/official_models/ (volume-mounted, downloaded once on first run).
     """
-    # Import here to avoid circular imports (paddle.py is imported by core/pipeline.py)
-    from core.config import GPU_ENABLED as _use_gpu, PADDLE_MODEL_DIR as _model_dir
+    from core.config import PADDLE_MODEL_DIR as _model_dir
     return PaddleOCR(
         lang="en",
         use_textline_orientation=True,
-        device="gpu:0" if _use_gpu else "cpu",
+        device="gpu:0",
         det_model_dir=os.path.join(_model_dir, "det"),
         rec_model_dir=os.path.join(_model_dir, "rec"),
         cls_model_dir=os.path.join(_model_dir, "cls"),
@@ -50,15 +48,17 @@ def get_doc_orientation_model() -> DocImgOrientationClassification:
     """
     Lazy-load shared DocImgOrientationClassification instance.
 
-    Model: PP-LCNet_x1_0_doc_ori (7MB, ~3ms CPU inference).
+    Model: PP-LCNet_x1_0_doc_ori (7MB, ~3ms inference).
     Predicts whole-document rotation: 0 / 90 / 180 / 270 degrees.
-    Auto-downloaded to /root/.paddlex on first call and cached permanently.
+    Cached to /root/.paddlex/official_models/ (auto-downloaded once, reused offline).
     """
     global _doc_ori_model
     if _doc_ori_model is None:
         with _doc_ori_lock:
             if _doc_ori_model is None:
-                _doc_ori_model = DocImgOrientationClassification()
+                _doc_ori_model = DocImgOrientationClassification(
+                    device="gpu:0",
+                )
     return _doc_ori_model
 
 

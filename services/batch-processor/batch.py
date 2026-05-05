@@ -486,9 +486,11 @@ def _process_image(image_path: str) -> dict:
     This wrapper handles only file I/O and GPU memory cleanup.
     """
     try:
-        image = cv2.imread(image_path)
+        image = cv2.imread(image_path, cv2.IMREAD_COLOR)
         if image is None:
             raise ValueError(f"Cannot read image: {image_path}")
+        if image.ndim == 2:
+            image = cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)
 
         masked_image, report = process_image(image, skip_keywords_enabled=True)
         if not cv2.imwrite(image_path, masked_image):
@@ -923,16 +925,10 @@ def run_batch_s3(prefix: str = "", log_to_db: bool = True, dry_run: bool = False
                     page_reports = {"1": _process_image(local_input)}
                     upload_path = local_input
 
-                # Upload — staging key first, then copy to final on success
-                staging_key = f"_staging/{uuid.uuid4()}/{s3_key}"
+                # Upload directly to final key in MASKED_BUCKET.
+                # No S3 staging object is created, copied, or deleted.
                 try:
-                    s3.upload_file(upload_path, MASKED_BUCKET, staging_key)
-                    s3.copy_object(
-                        Bucket=MASKED_BUCKET,
-                        CopySource={"Bucket": MASKED_BUCKET, "Key": staging_key},
-                        Key=s3_key,
-                    )
-                    s3.delete_object(Bucket=MASKED_BUCKET, Key=staging_key)
+                    s3.upload_file(upload_path, MASKED_BUCKET, s3_key)
                     log.debug(f"Uploaded → s3://{MASKED_BUCKET}/{s3_key}")
                 except ClientError as s3_err:
                     code = s3_err.response["Error"]["Code"]

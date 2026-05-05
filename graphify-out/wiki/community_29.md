@@ -1,19 +1,22 @@
-# Community 29: log_file_paths_to_csv()
+# Community 29: _normalize_bbox()
 
 **Members:** 5
 
 ## Nodes
 
-- **log_file_paths** (`scripts_operational_log_file_paths_py`, File, degree: 4)
-- **argparse** (`scripts_operational_log_file_paths_py_import_argparse`, Module, degree: 1)
-- **csv** (`scripts_operational_log_file_paths_py_import_csv`, Module, degree: 1)
-- **os** (`scripts_operational_log_file_paths_py_import_os`, Module, degree: 1)
-- **log_file_paths_to_csv()** (`scripts_operational_log_file_paths_py_log_file_paths_to_csv`, Function, degree: 1)
+- **ocr_adapter** (`core_ocr_ocr_adapter_py`, File, degree: 4)
+- **adapt_paddle_result()** (`core_ocr_ocr_adapter_py_adapt_paddle_result`, Function, degree: 3)
+- **_append_v3_result()** (`core_ocr_ocr_adapter_py_append_v3_result`, Function, degree: 3)
+- **get_texts_and_boxes()** (`core_ocr_ocr_adapter_py_get_texts_and_boxes`, Function, degree: 2)
+- **_normalize_bbox()** (`core_ocr_ocr_adapter_py_normalize_bbox`, Function, degree: 2)
 
 ## Relationships
 
-- scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_import_os (imports)
-- scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_import_csv (imports)
-- scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_import_argparse (imports)
-- scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_log_file_paths_to_csv (defines)
+- core_ocr_ocr_adapter_py → core_ocr_ocr_adapter_py_normalize_bbox (defines)
+- core_ocr_ocr_adapter_py → core_ocr_ocr_adapter_py_append_v3_result (defines)
+- core_ocr_ocr_adapter_py → core_ocr_ocr_adapter_py_adapt_paddle_result (defines)
+- core_ocr_ocr_adapter_py → core_ocr_ocr_adapter_py_get_texts_and_boxes (defines)
+- core_ocr_ocr_adapter_py_append_v3_result → core_ocr_ocr_adapter_py_normalize_bbox (calls)
+- core_ocr_ocr_adapter_py_adapt_paddle_result → core_ocr_ocr_adapter_py_append_v3_result (calls)
+- core_ocr_ocr_adapter_py_get_texts_and_boxes → core_ocr_ocr_adapter_py_adapt_paddle_result (calls)
 

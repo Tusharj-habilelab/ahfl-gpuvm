@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>get_failed_paths() — Community 24</title>
+<title>levenshtein_score() — Community 24</title>
 <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,8 +25,8 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
 <body>
 <div id="sidebar">
     <div>
-        <h2>get_failed_paths()</h2>
-        <p style="font-size:12px;color:#666;">6 nodes · Community 24</p>
+        <h2>levenshtein_score()</h2>
+        <p style="font-size:12px;color:#666;">7 nodes · Community 24</p>
     </div>
     <input id="search" type="text" placeholder="Search nodes…" />
     <div>
@@ -35,14 +35,14 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
     </div>
     <div>
         <h3>Navigation</h3>
-        <a href="index.html" class="nav-link" style="font-weight:bold;">← Overview</a>
+        <a href="index.html" class="nav-link" style="font-weight:bold;">← Overview</a><a href="community_6.html" class="nav-link"><span class="legend-dot" style="background:#B07AA1"></span>yolo_results_to_detections() (8 links)</a>
     </div>
 </div>
 <div id="graph-container"></div>
 <script>
 (function() {
-    var nodesData = [{id:"services_batch_processor_utils_file_paths_py",label:"file_paths",title:"file_paths\nType: File\nFile: ./services/batch-processor/utils/file_paths.py\nDegree: 5",color:"#59A14F",size:16.9},{id:"services_batch_processor_utils_file_paths_py_import_os",label:"os",title:"os\nType: Module\nFile: ./services/batch-processor/utils/file_paths.py\nDegree: 1",color:"#59A14F",size:12.0},{id:"services_batch_processor_utils_file_paths_py_import_boto3_dynamodb_conditions_attr",label:"boto3.dynamodb.conditions.Attr",title:"boto3.dynamodb.conditions.Attr\nType: Module\nFile: ./services/batch-processor/utils/file_paths.py\nDegree: 1",color:"#59A14F",size:12.0},{id:"services_batch_processor_utils_file_paths_py_import_core_get_dynamo_table",label:"core.get_dynamo_table",title:"core.get_dynamo_table\nType: Module\nFile: ./services/batch-processor/utils/file_paths.py\nDegree: 1",color:"#59A14F",size:12.0},{id:"services_batch_processor_utils_file_paths_py_get_completed_paths",label:"get_completed_paths()",title:"get_completed_paths()\nType: Function\nFile: ./services/batch-processor/utils/file_paths.py\nDegree: 1",color:"#59A14F",size:12.0},{id:"services_batch_processor_utils_file_paths_py_get_failed_paths",label:"get_failed_paths()",title:"get_failed_paths()\nType: Function\nFile: ./services/batch-processor/utils/file_paths.py\nDegree: 1",color:"#59A14F",size:12.0}];
-    var edgesData = [{from:"services_batch_processor_utils_file_paths_py",to:"services_batch_processor_utils_file_paths_py_import_os",label:"imports",dashes:false,title:"imports: services_batch_processor_utils_file_paths_py → services_batch_processor_utils_file_paths_py_import_os\nConfidence: Extracted"},{from:"services_batch_processor_utils_file_paths_py",to:"services_batch_processor_utils_file_paths_py_import_boto3_dynamodb_conditions_attr",label:"imports",dashes:false,title:"imports: services_batch_processor_utils_file_paths_py → services_batch_processor_utils_file_paths_py_import_boto3_dynamodb_conditions_attr\nConfidence: Extracted"},{from:"services_batch_processor_utils_file_paths_py",to:"services_batch_processor_utils_file_paths_py_import_core_get_dynamo_table",label:"imports",dashes:false,title:"imports: services_batch_processor_utils_file_paths_py → services_batch_processor_utils_file_paths_py_import_core_get_dynamo_table\nConfidence: Extracted"},{from:"services_batch_processor_utils_file_paths_py",to:"services_batch_processor_utils_file_paths_py_get_completed_paths",label:"defines",dashes:false,title:"defines: services_batch_processor_utils_file_paths_py → services_batch_processor_utils_file_paths_py_get_completed_paths\nConfidence: Extracted"},{from:"services_batch_processor_utils_file_paths_py",to:"services_batch_processor_utils_file_paths_py_get_failed_paths",label:"defines",dashes:false,title:"defines: services_batch_processor_utils_file_paths_py → services_batch_processor_utils_file_paths_py_get_failed_paths\nConfidence: Extracted"}];
+    var nodesData = [{id:"core_ocr_masking_py_cosine_similarity",label:"cosine_similarity()",title:"cosine_similarity()\nType: Function\nFile: ./core/ocr/masking.py\nDegree: 2",color:"#59A14F",size:13.7},{id:"core_ocr_masking_py_levenshtein_score",label:"levenshtein_score()",title:"levenshtein_score()\nType: Function\nFile: ./core/ocr/masking.py\nDegree: 2",color:"#59A14F",size:13.7},{id:"core_ocr_masking_py_is_four_digit_number",label:"is_four_digit_number()",title:"is_four_digit_number()\nType: Function\nFile: ./core/ocr/masking.py\nDegree: 2",color:"#59A14F",size:13.7},{id:"core_ocr_masking_py_is_twelve_digit_number",label:"is_twelve_digit_number()",title:"is_twelve_digit_number()\nType: Function\nFile: ./core/ocr/masking.py\nDegree: 2",color:"#59A14F",size:13.7},{id:"core_ocr_masking_py_extract_number_coordinates",label:"extract_number_coordinates()",title:"extract_number_coordinates()\nType: Function\nFile: ./core/ocr/masking.py\nDegree: 2",color:"#59A14F",size:13.7},{id:"core_ocr_masking_py_extract_target_coordinates",label:"extract_target_coordinates()",title:"extract_target_coordinates()\nType: Function\nFile: ./core/ocr/masking.py\nDegree: 2",color:"#59A14F",size:13.7},{id:"core_ocr_masking_py_find_aadhaar_patterns",label:"find_aadhaar_patterns()",title:"find_aadhaar_patterns()\nType: Function\nFile: ./core/ocr/masking.py\nDegree: 8",color:"#59A14F",size:19.3}];
+    var edgesData = [{from:"core_ocr_masking_py_find_aadhaar_patterns",to:"core_ocr_masking_py_is_four_digit_number",label:"calls",dashes:true,title:"calls: core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_is_four_digit_number\nConfidence: Inferred"},{from:"core_ocr_masking_py_find_aadhaar_patterns",to:"core_ocr_masking_py_is_twelve_digit_number",label:"calls",dashes:true,title:"calls: core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_is_twelve_digit_number\nConfidence: Inferred"},{from:"core_ocr_masking_py_find_aadhaar_patterns",to:"core_ocr_masking_py_extract_target_coordinates",label:"calls",dashes:true,title:"calls: core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_extract_target_coordinates\nConfidence: Inferred"},{from:"core_ocr_masking_py_find_aadhaar_patterns",to:"core_ocr_masking_py_cosine_similarity",label:"calls",dashes:true,title:"calls: core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_cosine_similarity\nConfidence: Inferred"},{from:"core_ocr_masking_py_find_aadhaar_patterns",to:"core_ocr_masking_py_levenshtein_score",label:"calls",dashes:true,title:"calls: core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_levenshtein_score\nConfidence: Inferred"},{from:"core_ocr_masking_py_find_aadhaar_patterns",to:"core_ocr_masking_py_extract_number_coordinates",label:"calls",dashes:true,title:"calls: core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_extract_number_coordinates\nConfidence: Inferred"}];
     var container = document.getElementById('graph-container');
     var nodes = new vis.DataSet(nodesData);
     var edges = new vis.DataSet(edgesData);

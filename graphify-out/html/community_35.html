@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>shutil (35) — Community 35</title>
+<title>count_pdf_pages() — Community 35</title>
 <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,7 +25,7 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
 <body>
 <div id="sidebar">
     <div>
-        <h2>shutil (35)</h2>
+        <h2>count_pdf_pages()</h2>
         <p style="font-size:12px;color:#666;">4 nodes · Community 35</p>
     </div>
     <input id="search" type="text" placeholder="Search nodes…" />
@@ -41,8 +41,8 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
 <div id="graph-container"></div>
 <script>
 (function() {
-    var nodesData = [{id:"scripts_operational_copy_files_py",label:"copy_files",title:"copy_files\nType: File\nFile: ./scripts/operational/copy_files.py\nDegree: 3",color:"#EDC948",size:14.9},{id:"scripts_operational_copy_files_py_import_shutil",label:"shutil",title:"shutil\nType: Module\nFile: ./scripts/operational/copy_files.py\nDegree: 1",color:"#EDC948",size:12.0},{id:"scripts_operational_copy_files_py_import_pandas",label:"pandas",title:"pandas\nType: Module\nFile: ./scripts/operational/copy_files.py\nDegree: 1",color:"#EDC948",size:12.0},{id:"scripts_operational_copy_files_py_import_os",label:"os",title:"os\nType: Module\nFile: ./scripts/operational/copy_files.py\nDegree: 1",color:"#EDC948",size:12.0}];
-    var edgesData = [{from:"scripts_operational_copy_files_py",to:"scripts_operational_copy_files_py_import_shutil",label:"imports",dashes:false,title:"imports: scripts_operational_copy_files_py → scripts_operational_copy_files_py_import_shutil\nConfidence: Extracted"},{from:"scripts_operational_copy_files_py",to:"scripts_operational_copy_files_py_import_pandas",label:"imports",dashes:false,title:"imports: scripts_operational_copy_files_py → scripts_operational_copy_files_py_import_pandas\nConfidence: Extracted"},{from:"scripts_operational_copy_files_py",to:"scripts_operational_copy_files_py_import_os",label:"imports",dashes:false,title:"imports: scripts_operational_copy_files_py → scripts_operational_copy_files_py_import_os\nConfidence: Extracted"}];
+    var nodesData = [{id:"core_utils_counts_py",label:"counts",title:"counts\nType: File\nFile: ./core/utils/counts.py\nDegree: 3",color:"#EDC948",size:14.9},{id:"core_utils_counts_py_import_os",label:"os",title:"os\nType: Module\nFile: ./core/utils/counts.py\nDegree: 1",color:"#EDC948",size:12.0},{id:"core_utils_counts_py_count_files_in_folder",label:"count_files_in_folder()",title:"count_files_in_folder()\nType: Function\nFile: ./core/utils/counts.py\nDegree: 1",color:"#EDC948",size:12.0},{id:"core_utils_counts_py_count_pdf_pages",label:"count_pdf_pages()",title:"count_pdf_pages()\nType: Function\nFile: ./core/utils/counts.py\nDegree: 1",color:"#EDC948",size:12.0}];
+    var edgesData = [{from:"core_utils_counts_py",to:"core_utils_counts_py_import_os",label:"imports",dashes:false,title:"imports: core_utils_counts_py → core_utils_counts_py_import_os\nConfidence: Extracted"},{from:"core_utils_counts_py",to:"core_utils_counts_py_count_files_in_folder",label:"defines",dashes:false,title:"defines: core_utils_counts_py → core_utils_counts_py_count_files_in_folder\nConfidence: Extracted"},{from:"core_utils_counts_py",to:"core_utils_counts_py_count_pdf_pages",label:"defines",dashes:false,title:"defines: core_utils_counts_py → core_utils_counts_py_count_pdf_pages\nConfidence: Extracted"}];
     var container = document.getElementById('graph-container');
     var nodes = new vis.DataSet(nodesData);
     var edges = new vis.DataSet(edgesData);

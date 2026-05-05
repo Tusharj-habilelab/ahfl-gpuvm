@@ -1,23 +1,25 @@
-# Community 20: levenshtein_score()
+# Community 20: create_table()
 
-**Members:** 7
+**Members:** 8
 
 ## Nodes
 
-- **cosine_similarity()** (`core_ocr_masking_py_cosine_similarity`, Function, degree: 2)
-- **extract_number_coordinates()** (`core_ocr_masking_py_extract_number_coordinates`, Function, degree: 2)
-- **extract_target_coordinates()** (`core_ocr_masking_py_extract_target_coordinates`, Function, degree: 2)
-- **find_aadhaar_patterns()** (`core_ocr_masking_py_find_aadhaar_patterns`, Function, degree: 8)
-- **is_four_digit_number()** (`core_ocr_masking_py_is_four_digit_number`, Function, degree: 2)
-- **is_twelve_digit_number()** (`core_ocr_masking_py_is_twelve_digit_number`, Function, degree: 2)
-- **levenshtein_score()** (`core_ocr_masking_py_levenshtein_score`, Function, degree: 2)
+- **create_dynamo_table** (`scripts_create_dynamo_table_py`, File, degree: 7)
+- **create_table()** (`scripts_create_dynamo_table_py_create_table`, Function, degree: 1)
+- **argparse** (`scripts_create_dynamo_table_py_import_argparse`, Module, degree: 1)
+- **boto3** (`scripts_create_dynamo_table_py_import_boto3`, Module, degree: 1)
+- **botocore.exceptions.ClientError** (`scripts_create_dynamo_table_py_import_botocore_exceptions_clienterror`, Module, degree: 1)
+- **dotenv.load_dotenv** (`scripts_create_dynamo_table_py_import_dotenv_load_dotenv`, Module, degree: 1)
+- **os** (`scripts_create_dynamo_table_py_import_os`, Module, degree: 1)
+- **sys** (`scripts_create_dynamo_table_py_import_sys`, Module, degree: 1)
 
 ## Relationships
 
-- core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_levenshtein_score (calls)
-- core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_is_twelve_digit_number (calls)
-- core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_extract_number_coordinates (calls)
-- core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_cosine_similarity (calls)
-- core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_extract_target_coordinates (calls)
-- core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_is_four_digit_number (calls)
+- scripts_create_dynamo_table_py → scripts_create_dynamo_table_py_import_argparse (imports)
+- scripts_create_dynamo_table_py → scripts_create_dynamo_table_py_import_os (imports)
+- scripts_create_dynamo_table_py → scripts_create_dynamo_table_py_import_sys (imports)
+- scripts_create_dynamo_table_py → scripts_create_dynamo_table_py_import_boto3 (imports)
+- scripts_create_dynamo_table_py → scripts_create_dynamo_table_py_import_botocore_exceptions_clienterror (imports)
+- scripts_create_dynamo_table_py → scripts_create_dynamo_table_py_import_dotenv_load_dotenv (imports)
+- scripts_create_dynamo_table_py → scripts_create_dynamo_table_py_create_table (defines)
 

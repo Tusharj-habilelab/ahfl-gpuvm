@@ -1,29 +1,27 @@
-# Community 18: map_dets_to_crop()
+# Community 18: analyze_records()
 
 **Members:** 9
 
 ## Nodes
 
-- **spatial** (`core_spatial_py`, File, degree: 8)
-- **compute_intersection_area()** (`core_spatial_py_compute_intersection_area`, Function, degree: 3)
-- **filter_dets_inside_box()** (`core_spatial_py_filter_dets_inside_box`, Function, degree: 2)
-- **find_aadhaar_card_boxes()** (`core_spatial_py_find_aadhaar_card_boxes`, Function, degree: 1)
-- **find_qr_boxes()** (`core_spatial_py_find_qr_boxes`, Function, degree: 1)
-- **typing.List** (`core_spatial_py_import_typing_list`, Module, degree: 1)
-- **is_inside_aadhaar_by_area()** (`core_spatial_py_is_inside_aadhaar_by_area`, Function, degree: 2)
-- **map_crop_dets_to_full()** (`core_spatial_py_map_crop_dets_to_full`, Function, degree: 1)
-- **map_dets_to_crop()** (`core_spatial_py_map_dets_to_crop`, Function, degree: 1)
+- **logs** (`scripts_operational_logs_py`, File, degree: 8)
+- **analyze_records()** (`scripts_operational_logs_py_analyze_records`, Function, degree: 1)
+- **argparse** (`scripts_operational_logs_py_import_argparse`, Module, degree: 1)
+- **boto3.dynamodb.conditions.Attr** (`scripts_operational_logs_py_import_boto3_dynamodb_conditions_attr`, Module, degree: 1)
+- **core.get_dynamo_table** (`scripts_operational_logs_py_import_core_get_dynamo_table`, Module, degree: 1)
+- **csv** (`scripts_operational_logs_py_import_csv`, Module, degree: 1)
+- **dotenv.load_dotenv** (`scripts_operational_logs_py_import_dotenv_load_dotenv`, Module, degree: 1)
+- **pathlib.Path** (`scripts_operational_logs_py_import_pathlib_path`, Module, degree: 1)
+- **sys** (`scripts_operational_logs_py_import_sys`, Module, degree: 1)
 
 ## Relationships
 
-- core_spatial_py → core_spatial_py_import_typing_list (imports)
-- core_spatial_py → core_spatial_py_compute_intersection_area (defines)
-- core_spatial_py → core_spatial_py_is_inside_aadhaar_by_area (defines)
-- core_spatial_py → core_spatial_py_find_aadhaar_card_boxes (defines)
-- core_spatial_py → core_spatial_py_find_qr_boxes (defines)
-- core_spatial_py → core_spatial_py_filter_dets_inside_box (defines)
-- core_spatial_py → core_spatial_py_map_dets_to_crop (defines)
-- core_spatial_py → core_spatial_py_map_crop_dets_to_full (defines)
-- core_spatial_py_is_inside_aadhaar_by_area → core_spatial_py_compute_intersection_area (calls)
-- core_spatial_py_filter_dets_inside_box → core_spatial_py_compute_intersection_area (calls)
+- scripts_operational_logs_py → scripts_operational_logs_py_import_sys (imports)
+- scripts_operational_logs_py → scripts_operational_logs_py_import_pathlib_path (imports)
+- scripts_operational_logs_py → scripts_operational_logs_py_import_argparse (imports)
+- scripts_operational_logs_py → scripts_operational_logs_py_import_csv (imports)
+- scripts_operational_logs_py → scripts_operational_logs_py_import_dotenv_load_dotenv (imports)
+- scripts_operational_logs_py → scripts_operational_logs_py_import_boto3_dynamodb_conditions_attr (imports)
+- scripts_operational_logs_py → scripts_operational_logs_py_import_core_get_dynamo_table (imports)
+- scripts_operational_logs_py → scripts_operational_logs_py_analyze_records (defines)
 

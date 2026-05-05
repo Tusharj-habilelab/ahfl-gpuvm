@@ -3,7 +3,7 @@
 - **ID:** `core_config_py`
 - **Type:** File
 - **File:** `./core/config.py`
-- **Community:** 26 (validate_required_env_vars())
+- **Community:** 27 (validate_required_env_vars())
 
 ## Relationships
 

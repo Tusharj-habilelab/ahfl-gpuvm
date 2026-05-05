@@ -3,7 +3,7 @@
 - **ID:** `core_ocr_ocr_adapter_py`
 - **Type:** File
 - **File:** `./core/ocr/ocr_adapter.py`
-- **Community:** 30 (_normalize_bbox())
+- **Community:** 29 (_normalize_bbox())
 
 ## Relationships
 

@@ -46,6 +46,7 @@ services:
       - /ahfl-models:/app/models
       - masked_output:/app/output/masked
       - /ahfl-models/.paddlex:/root/.paddlex
+      - ./logs:/logs
     restart: unless-stopped
     deploy:
       resources:
@@ -74,6 +75,7 @@ services:
     volumes:
       - /ahfl-models:/app/models:ro
       - /ahfl-models/.paddlex:/root/.paddlex
+      - ./logs:/logs
     profiles:
       - batch
     restart: "no"

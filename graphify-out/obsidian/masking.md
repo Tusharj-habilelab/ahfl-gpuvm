@@ -2,7 +2,7 @@
 id: core_ocr_masking_py
 type: File
 source: ./core/ocr/masking.py
-community: 5
+community: 6
 community_label: yolo_results_to_detections()
 ---
 

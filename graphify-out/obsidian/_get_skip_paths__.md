@@ -2,7 +2,7 @@
 id: services_batch_processor_batch_py_get_skip_paths
 type: Function
 source: ./services/batch-processor/batch.py
-community: 27
+community: 33
 community_label: _write_pending()
 ---
 

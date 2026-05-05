@@ -2,7 +2,7 @@
 id: scripts_reporting_export_logs_py
 type: File
 source: ./scripts/reporting/export_logs.py
-community: 16
+community: 17
 community_label: export_to_csv()
 ---
 

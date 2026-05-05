@@ -3,7 +3,7 @@
 - **ID:** `core_spatial_py`
 - **Type:** File
 - **File:** `./core/spatial.py`
-- **Community:** 18 (map_dets_to_crop())
+- **Community:** 19 (map_dets_to_crop())
 
 ## Relationships
 

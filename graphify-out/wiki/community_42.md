@@ -1,13 +1,15 @@
-# Community 42: pandas (42)
+# Community 42: pandas
 
-**Members:** 2
+**Members:** 3
 
 ## Nodes
 
-- **mapping** (`scripts_reporting_mapping_py`, File, degree: 1)
-- **pandas** (`scripts_reporting_mapping_py_import_pandas`, Module, degree: 1)
+- **merge_metadata** (`scripts_reporting_merge_metadata_py`, File, degree: 2)
+- **os** (`scripts_reporting_merge_metadata_py_import_os`, Module, degree: 1)
+- **pandas** (`scripts_reporting_merge_metadata_py_import_pandas`, Module, degree: 1)
 
 ## Relationships
 
-- scripts_reporting_mapping_py → scripts_reporting_mapping_py_import_pandas (imports)
+- scripts_reporting_merge_metadata_py → scripts_reporting_merge_metadata_py_import_pandas (imports)
+- scripts_reporting_merge_metadata_py → scripts_reporting_merge_metadata_py_import_os (imports)
 

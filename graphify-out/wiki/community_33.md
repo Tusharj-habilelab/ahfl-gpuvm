@@ -1,17 +1,19 @@
-# Community 33: count_pdf_pages()
+# Community 33: _write_pending()
 
-**Members:** 4
+**Members:** 5
 
 ## Nodes
 
-- **counts** (`core_utils_counts_py`, File, degree: 3)
-- **count_files_in_folder()** (`core_utils_counts_py_count_files_in_folder`, Function, degree: 1)
-- **count_pdf_pages()** (`core_utils_counts_py_count_pdf_pages`, Function, degree: 1)
-- **os** (`core_utils_counts_py_import_os`, Module, degree: 1)
+- **_get_skip_paths()** (`services_batch_processor_batch_py_get_skip_paths`, Function, degree: 3)
+- **_is_password_protected_pdf()** (`services_batch_processor_batch_py_is_password_protected_pdf`, Function, degree: 3)
+- **run_batch()** (`services_batch_processor_batch_py_run_batch`, Function, degree: 9)
+- **_update_to_processing()** (`services_batch_processor_batch_py_update_to_processing`, Function, degree: 2)
+- **_write_pending()** (`services_batch_processor_batch_py_write_pending`, Function, degree: 2)
 
 ## Relationships
 
-- core_utils_counts_py → core_utils_counts_py_import_os (imports)
-- core_utils_counts_py → core_utils_counts_py_count_files_in_folder (defines)
-- core_utils_counts_py → core_utils_counts_py_count_pdf_pages (defines)
+- services_batch_processor_batch_py_run_batch → services_batch_processor_batch_py_is_password_protected_pdf (calls)
+- services_batch_processor_batch_py_run_batch → services_batch_processor_batch_py_get_skip_paths (calls)
+- services_batch_processor_batch_py_run_batch → services_batch_processor_batch_py_update_to_processing (calls)
+- services_batch_processor_batch_py_run_batch → services_batch_processor_batch_py_write_pending (calls)
 

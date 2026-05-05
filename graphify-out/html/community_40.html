@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>pandas (40) — Community 40</title>
+<title>.log_writer.write_mask_log — Community 40</title>
 <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,7 +25,7 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
 <body>
 <div id="sidebar">
     <div>
-        <h2>pandas (40)</h2>
+        <h2>.log_writer.write_mask_log</h2>
         <p style="font-size:12px;color:#666;">3 nodes · Community 40</p>
     </div>
     <input id="search" type="text" placeholder="Search nodes…" />
@@ -41,8 +41,8 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
 <div id="graph-container"></div>
 <script>
 (function() {
-    var nodesData = [{id:"scripts_reporting_main_py",label:"main",title:"main\nType: File\nFile: ./scripts/reporting/main.py\nDegree: 2",color:"#4E79A7",size:13.7},{id:"scripts_reporting_main_py_import_pandas",label:"pandas",title:"pandas\nType: Module\nFile: ./scripts/reporting/main.py\nDegree: 1",color:"#4E79A7",size:12.0},{id:"scripts_reporting_main_py_import_os",label:"os",title:"os\nType: Module\nFile: ./scripts/reporting/main.py\nDegree: 1",color:"#4E79A7",size:12.0}];
-    var edgesData = [{from:"scripts_reporting_main_py",to:"scripts_reporting_main_py_import_pandas",label:"imports",dashes:false,title:"imports: scripts_reporting_main_py → scripts_reporting_main_py_import_pandas\nConfidence: Extracted"},{from:"scripts_reporting_main_py",to:"scripts_reporting_main_py_import_os",label:"imports",dashes:false,title:"imports: scripts_reporting_main_py → scripts_reporting_main_py_import_os\nConfidence: Extracted"}];
+    var nodesData = [{id:"core_db_init_py",label:"__init__",title:"__init__\nType: File\nFile: ./core/db/__init__.py\nDegree: 2",color:"#4E79A7",size:13.7},{id:"core_db_init_py_import_database_get_dynamo_table",label:".database.get_dynamo_table",title:".database.get_dynamo_table\nType: Module\nFile: ./core/db/__init__.py\nDegree: 1",color:"#4E79A7",size:12.0},{id:"core_db_init_py_import_log_writer_write_mask_log",label:".log_writer.write_mask_log",title:".log_writer.write_mask_log\nType: Module\nFile: ./core/db/__init__.py\nDegree: 1",color:"#4E79A7",size:12.0}];
+    var edgesData = [{from:"core_db_init_py",to:"core_db_init_py_import_database_get_dynamo_table",label:"imports",dashes:false,title:"imports: core_db_init_py → core_db_init_py_import_database_get_dynamo_table\nConfidence: Extracted"},{from:"core_db_init_py",to:"core_db_init_py_import_log_writer_write_mask_log",label:"imports",dashes:false,title:"imports: core_db_init_py → core_db_init_py_import_log_writer_write_mask_log\nConfidence: Extracted"}];
     var container = document.getElementById('graph-container');
     var nodes = new vis.DataSet(nodesData);
     var edges = new vis.DataSet(edgesData);

@@ -2,7 +2,7 @@
 id: core_ocr_ocr_adapter_py_adapt_paddle_result
 type: Function
 source: ./core/ocr/ocr_adapter.py
-community: 30
+community: 29
 community_label: _normalize_bbox()
 ---
 

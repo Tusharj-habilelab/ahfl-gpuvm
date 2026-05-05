@@ -3,7 +3,7 @@
 - **ID:** `scripts_reporting_export_logs_py`
 - **Type:** File
 - **File:** `./scripts/reporting/export_logs.py`
-- **Community:** 16 (export_to_csv())
+- **Community:** 17 (export_to_csv())
 
 ## Relationships
 

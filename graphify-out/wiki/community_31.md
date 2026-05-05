@@ -1,19 +1,19 @@
-# Community 31: get_all_files_recursive()
+# Community 31: _update_to_error()
 
 **Members:** 5
 
 ## Nodes
 
-- **count_total_application** (`scripts_operational_count_total_application_py`, File, degree: 4)
-- **count_unique_applications()** (`scripts_operational_count_total_application_py_count_unique_applications`, Function, degree: 1)
-- **get_all_files_recursive()** (`scripts_operational_count_total_application_py_get_all_files_recursive`, Function, degree: 1)
-- **os** (`scripts_operational_count_total_application_py_import_os`, Module, degree: 1)
-- **sys** (`scripts_operational_count_total_application_py_import_sys`, Module, degree: 1)
+- **_cleanup_stale_processing_records()** (`services_batch_processor_batch_py_cleanup_stale_processing_records`, Function, degree: 2)
+- **_dynamo_retry()** (`services_batch_processor_batch_py_dynamo_retry`, Function, degree: 2)
+- **_list_s3_keys()** (`services_batch_processor_batch_py_list_s3_keys`, Function, degree: 2)
+- **run_batch_s3()** (`services_batch_processor_batch_py_run_batch_s3`, Function, degree: 9)
+- **_update_to_error()** (`services_batch_processor_batch_py_update_to_error`, Function, degree: 3)
 
 ## Relationships
 
-- scripts_operational_count_total_application_py → scripts_operational_count_total_application_py_import_os (imports)
-- scripts_operational_count_total_application_py → scripts_operational_count_total_application_py_import_sys (imports)
-- scripts_operational_count_total_application_py → scripts_operational_count_total_application_py_get_all_files_recursive (defines)
-- scripts_operational_count_total_application_py → scripts_operational_count_total_application_py_count_unique_applications (defines)
+- services_batch_processor_batch_py_run_batch_s3 → services_batch_processor_batch_py_update_to_error (calls)
+- services_batch_processor_batch_py_run_batch_s3 → services_batch_processor_batch_py_cleanup_stale_processing_records (calls)
+- services_batch_processor_batch_py_run_batch_s3 → services_batch_processor_batch_py_list_s3_keys (calls)
+- services_batch_processor_batch_py_run_batch_s3 → services_batch_processor_batch_py_dynamo_retry (calls)
 

@@ -2,7 +2,7 @@
 id: services_batch_processor_utils_file_paths_py
 type: File
 source: ./services/batch-processor/utils/file_paths.py
-community: 24
+community: 26
 community_label: get_failed_paths()
 ---
 

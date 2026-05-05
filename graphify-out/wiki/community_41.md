@@ -1,15 +1,15 @@
-# Community 41: pandas
+# Community 41: pandas (41)
 
 **Members:** 3
 
 ## Nodes
 
-- **count_processed_files** (`core_utils_count_processed_files_py`, File, degree: 2)
-- **os** (`core_utils_count_processed_files_py_import_os`, Module, degree: 1)
-- **pandas** (`core_utils_count_processed_files_py_import_pandas`, Module, degree: 1)
+- **merge_csvs** (`scripts_reporting_merge_csvs_py`, File, degree: 2)
+- **os** (`scripts_reporting_merge_csvs_py_import_os`, Module, degree: 1)
+- **pandas** (`scripts_reporting_merge_csvs_py_import_pandas`, Module, degree: 1)
 
 ## Relationships
 
-- core_utils_count_processed_files_py → core_utils_count_processed_files_py_import_pandas (imports)
-- core_utils_count_processed_files_py → core_utils_count_processed_files_py_import_os (imports)
+- scripts_reporting_merge_csvs_py → scripts_reporting_merge_csvs_py_import_pandas (imports)
+- scripts_reporting_merge_csvs_py → scripts_reporting_merge_csvs_py_import_os (imports)
 

@@ -3,7 +3,7 @@
 - **ID:** `scripts_operational_creates_batches_py`
 - **Type:** File
 - **File:** `./scripts/operational/creates_batches.py`
-- **Community:** 23 (split_folder_by_applications())
+- **Community:** 21 (split_folder_by_applications())
 
 ## Relationships
 

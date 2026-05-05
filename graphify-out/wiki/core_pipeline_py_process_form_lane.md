@@ -1,0 +1,18 @@
+# _process_form_lane()
+
+- **ID:** `core_pipeline_py_process_form_lane`
+- **Type:** Function
+- **File:** `./core/pipeline.py`
+- **Location:** L204
+- **Community:** 15 (_verify_skip_pan())
+
+## Relationships
+
+- core_pipeline_py → core_pipeline_py_process_form_lane (defines, Extracted)
+- core_pipeline_py_process_form_lane → core_pipeline_py_run_ocr_on_region (calls, Inferred)
+- core_pipeline_py_process_form_lane → core_pipeline_py_report_mask_counts (calls, Inferred)
+- core_pipeline_py_process_form_lane → core_pipeline_py_correct_doc_orientation (calls, Inferred)
+- core_pipeline_py_process_form_lane → core_pipeline_py_verify_skip_pan (calls, Inferred)
+- core_pipeline_py_process_form_lane → core_pipeline_py_empty_yolo_report (calls, Inferred)
+- core_pipeline_py_process_image → core_pipeline_py_process_form_lane (calls, Inferred)
+

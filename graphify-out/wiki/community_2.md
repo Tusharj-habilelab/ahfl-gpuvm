@@ -1,16 +1,18 @@
 # Community 2: startup_event()
 
-**Members:** 35
+**Members:** 37
 
 ## Nodes
 
-- **engine** (`services_masking_engine_engine_py`, File, degree: 34)
+- **engine** (`services_masking_engine_engine_py`, File, degree: 36)
 - **get_output_file()** (`services_masking_engine_engine_py_get_output_file`, Function, degree: 1)
 - **health()** (`services_masking_engine_engine_py_health`, Function, degree: 1)
 - **health_detailed()** (`services_masking_engine_engine_py_health_detailed`, Function, degree: 1)
 - **asyncio** (`services_masking_engine_engine_py_import_asyncio`, Module, degree: 1)
 - **core.config.GPU_ENABLED** (`services_masking_engine_engine_py_import_core_config_gpu_enabled`, Module, degree: 1)
+- **core.config.GPU_MEMORY_FRACTION** (`services_masking_engine_engine_py_import_core_config_gpu_memory_fraction`, Module, degree: 1)
 - **core.config.MAX_FILE_SIZE** (`services_masking_engine_engine_py_import_core_config_max_file_size`, Module, degree: 1)
+- **core.config.PDF_CHUNK_SIZE** (`services_masking_engine_engine_py_import_core_config_pdf_chunk_size`, Module, degree: 1)
 - **core.config.validate_required_env_vars** (`services_masking_engine_engine_py_import_core_config_validate_required_env_vars`, Module, degree: 1)
 - **core.get_yolo_best** (`services_masking_engine_engine_py_import_core_get_yolo_best`, Module, degree: 1)
 - **core.get_yolo_main** (`services_masking_engine_engine_py_import_core_get_yolo_main`, Module, degree: 1)
@@ -65,8 +67,10 @@
 - services_masking_engine_engine_py → services_masking_engine_engine_py_import_torch (imports)
 - services_masking_engine_engine_py → services_masking_engine_engine_py_import_core_get_yolo_main (imports)
 - services_masking_engine_engine_py → services_masking_engine_engine_py_import_core_get_yolo_best (imports)
-- services_masking_engine_engine_py → services_masking_engine_engine_py_import_core_config_validate_required_env_vars (imports)
+- services_masking_engine_engine_py → services_masking_engine_engine_py_import_core_config_gpu_memory_fraction (imports)
 - services_masking_engine_engine_py → services_masking_engine_engine_py_import_core_config_max_file_size (imports)
+- services_masking_engine_engine_py → services_masking_engine_engine_py_import_core_config_pdf_chunk_size (imports)
+- services_masking_engine_engine_py → services_masking_engine_engine_py_import_core_config_validate_required_env_vars (imports)
 - services_masking_engine_engine_py → services_masking_engine_engine_py_import_core_config_gpu_enabled (imports)
 - services_masking_engine_engine_py → services_masking_engine_engine_py_startup_event (defines)
 - services_masking_engine_engine_py → services_masking_engine_engine_py_mask_single_image (defines)

@@ -3,7 +3,7 @@
 - **ID:** `core_ocr_masking_py`
 - **Type:** File
 - **File:** `./core/ocr/masking.py`
-- **Community:** 5 (yolo_results_to_detections())
+- **Community:** 6 (yolo_results_to_detections())
 
 ## Relationships
 

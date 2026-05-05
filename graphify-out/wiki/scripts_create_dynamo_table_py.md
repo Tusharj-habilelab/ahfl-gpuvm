@@ -3,7 +3,7 @@
 - **ID:** `scripts_create_dynamo_table_py`
 - **Type:** File
 - **File:** `./scripts/create_dynamo_table.py`
-- **Community:** 19 (create_table())
+- **Community:** 20 (create_table())
 
 ## Relationships
 

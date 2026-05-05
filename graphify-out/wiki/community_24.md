@@ -1,21 +1,23 @@
-# Community 24: get_failed_paths()
+# Community 24: levenshtein_score()
 
-**Members:** 6
+**Members:** 7
 
 ## Nodes
 
-- **file_paths** (`services_batch_processor_utils_file_paths_py`, File, degree: 5)
-- **get_completed_paths()** (`services_batch_processor_utils_file_paths_py_get_completed_paths`, Function, degree: 1)
-- **get_failed_paths()** (`services_batch_processor_utils_file_paths_py_get_failed_paths`, Function, degree: 1)
-- **boto3.dynamodb.conditions.Attr** (`services_batch_processor_utils_file_paths_py_import_boto3_dynamodb_conditions_attr`, Module, degree: 1)
-- **core.get_dynamo_table** (`services_batch_processor_utils_file_paths_py_import_core_get_dynamo_table`, Module, degree: 1)
-- **os** (`services_batch_processor_utils_file_paths_py_import_os`, Module, degree: 1)
+- **cosine_similarity()** (`core_ocr_masking_py_cosine_similarity`, Function, degree: 2)
+- **extract_number_coordinates()** (`core_ocr_masking_py_extract_number_coordinates`, Function, degree: 2)
+- **extract_target_coordinates()** (`core_ocr_masking_py_extract_target_coordinates`, Function, degree: 2)
+- **find_aadhaar_patterns()** (`core_ocr_masking_py_find_aadhaar_patterns`, Function, degree: 8)
+- **is_four_digit_number()** (`core_ocr_masking_py_is_four_digit_number`, Function, degree: 2)
+- **is_twelve_digit_number()** (`core_ocr_masking_py_is_twelve_digit_number`, Function, degree: 2)
+- **levenshtein_score()** (`core_ocr_masking_py_levenshtein_score`, Function, degree: 2)
 
 ## Relationships
 
-- services_batch_processor_utils_file_paths_py → services_batch_processor_utils_file_paths_py_import_os (imports)
-- services_batch_processor_utils_file_paths_py → services_batch_processor_utils_file_paths_py_import_boto3_dynamodb_conditions_attr (imports)
-- services_batch_processor_utils_file_paths_py → services_batch_processor_utils_file_paths_py_import_core_get_dynamo_table (imports)
-- services_batch_processor_utils_file_paths_py → services_batch_processor_utils_file_paths_py_get_completed_paths (defines)
-- services_batch_processor_utils_file_paths_py → services_batch_processor_utils_file_paths_py_get_failed_paths (defines)
+- core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_is_four_digit_number (calls)
+- core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_is_twelve_digit_number (calls)
+- core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_extract_target_coordinates (calls)
+- core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_cosine_similarity (calls)
+- core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_levenshtein_score (calls)
+- core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_extract_number_coordinates (calls)
 

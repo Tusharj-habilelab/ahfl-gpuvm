@@ -1,8 +1,15 @@
-# Community 43: dms_push
+# Community 43: pandas (43)
 
-**Members:** 1
+**Members:** 3
 
 ## Nodes
 
-- **dms_push** (`scripts_operational_dms_push_py`, File, degree: 0)
+- **main** (`scripts_reporting_main_py`, File, degree: 2)
+- **os** (`scripts_reporting_main_py_import_os`, Module, degree: 1)
+- **pandas** (`scripts_reporting_main_py_import_pandas`, Module, degree: 1)
+
+## Relationships
+
+- scripts_reporting_main_py → scripts_reporting_main_py_import_pandas (imports)
+- scripts_reporting_main_py → scripts_reporting_main_py_import_os (imports)
 

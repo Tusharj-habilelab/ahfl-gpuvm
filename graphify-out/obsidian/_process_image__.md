@@ -2,8 +2,8 @@
 id: services_batch_processor_batch_py_process_image
 type: Function
 source: ./services/batch-processor/batch.py
-community: 25
-community_label: run_batch_s3()
+community: 1
+community_label: _validate_s3_buckets()
 ---
 
 ## Connections

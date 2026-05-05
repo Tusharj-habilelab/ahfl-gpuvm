@@ -2,7 +2,7 @@
 id: core_db_log_writer_py
 type: File
 source: ./core/db/log_writer.py
-community: 10
+community: 9
 community_label: write_mask_log()
 ---
 

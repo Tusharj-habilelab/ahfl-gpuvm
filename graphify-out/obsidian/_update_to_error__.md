@@ -2,8 +2,8 @@
 id: services_batch_processor_batch_py_update_to_error
 type: Function
 source: ./services/batch-processor/batch.py
-community: 27
-community_label: _write_pending()
+community: 31
+community_label: _update_to_error()
 ---
 
 ## Connections

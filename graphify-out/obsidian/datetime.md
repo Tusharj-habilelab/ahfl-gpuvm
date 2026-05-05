@@ -2,7 +2,7 @@
 id: scripts_inspect_yolo_models_py_import_datetime
 type: Module
 source: ./scripts/inspect_yolo_models.py
-community: 21
+community: 22
 community_label: format_report()
 ---
 

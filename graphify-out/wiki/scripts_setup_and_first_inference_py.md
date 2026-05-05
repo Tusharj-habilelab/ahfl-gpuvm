@@ -3,7 +3,7 @@
 - **ID:** `scripts_setup_and_first_inference_py`
 - **Type:** File
 - **File:** `./scripts/setup_and_first_inference.py`
-- **Community:** 15 (run_inference())
+- **Community:** 16 (run_inference())
 
 ## Relationships
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>pandas — Community 41</title>
+<title>pandas (41) — Community 41</title>
 <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,7 +25,7 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
 <body>
 <div id="sidebar">
     <div>
-        <h2>pandas</h2>
+        <h2>pandas (41)</h2>
         <p style="font-size:12px;color:#666;">3 nodes · Community 41</p>
     </div>
     <input id="search" type="text" placeholder="Search nodes…" />
@@ -41,8 +41,8 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
 <div id="graph-container"></div>
 <script>
 (function() {
-    var nodesData = [{id:"core_utils_count_processed_files_py",label:"count_processed_files",title:"count_processed_files\nType: File\nFile: ./core/utils/count_processed_files.py\nDegree: 2",color:"#F28E2B",size:13.7},{id:"core_utils_count_processed_files_py_import_pandas",label:"pandas",title:"pandas\nType: Module\nFile: ./core/utils/count_processed_files.py\nDegree: 1",color:"#F28E2B",size:12.0},{id:"core_utils_count_processed_files_py_import_os",label:"os",title:"os\nType: Module\nFile: ./core/utils/count_processed_files.py\nDegree: 1",color:"#F28E2B",size:12.0}];
-    var edgesData = [{from:"core_utils_count_processed_files_py",to:"core_utils_count_processed_files_py_import_pandas",label:"imports",dashes:false,title:"imports: core_utils_count_processed_files_py → core_utils_count_processed_files_py_import_pandas\nConfidence: Extracted"},{from:"core_utils_count_processed_files_py",to:"core_utils_count_processed_files_py_import_os",label:"imports",dashes:false,title:"imports: core_utils_count_processed_files_py → core_utils_count_processed_files_py_import_os\nConfidence: Extracted"}];
+    var nodesData = [{id:"scripts_reporting_merge_csvs_py",label:"merge_csvs",title:"merge_csvs\nType: File\nFile: ./scripts/reporting/merge_csvs.py\nDegree: 2",color:"#F28E2B",size:13.7},{id:"scripts_reporting_merge_csvs_py_import_pandas",label:"pandas",title:"pandas\nType: Module\nFile: ./scripts/reporting/merge_csvs.py\nDegree: 1",color:"#F28E2B",size:12.0},{id:"scripts_reporting_merge_csvs_py_import_os",label:"os",title:"os\nType: Module\nFile: ./scripts/reporting/merge_csvs.py\nDegree: 1",color:"#F28E2B",size:12.0}];
+    var edgesData = [{from:"scripts_reporting_merge_csvs_py",to:"scripts_reporting_merge_csvs_py_import_pandas",label:"imports",dashes:false,title:"imports: scripts_reporting_merge_csvs_py → scripts_reporting_merge_csvs_py_import_pandas\nConfidence: Extracted"},{from:"scripts_reporting_merge_csvs_py",to:"scripts_reporting_merge_csvs_py_import_os",label:"imports",dashes:false,title:"imports: scripts_reporting_merge_csvs_py → scripts_reporting_merge_csvs_py_import_os\nConfidence: Extracted"}];
     var container = document.getElementById('graph-container');
     var nodes = new vis.DataSet(nodesData);
     var edges = new vis.DataSet(edgesData);

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>YOLORunner — Community 32</title>
+<title>log_file_paths_to_csv() — Community 32</title>
 <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,7 +25,7 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
 <body>
 <div id="sidebar">
     <div>
-        <h2>YOLORunner</h2>
+        <h2>log_file_paths_to_csv()</h2>
         <p style="font-size:12px;color:#666;">5 nodes · Community 32</p>
     </div>
     <input id="search" type="text" placeholder="Search nodes…" />
@@ -35,14 +35,14 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
     </div>
     <div>
         <h3>Navigation</h3>
-        <a href="index.html" class="nav-link" style="font-weight:bold;">← Overview</a><a href="community_12.html" class="nav-link"><span class="legend-dot" style="background:#E15759"></span>reset_models() (1 links)</a>
+        <a href="index.html" class="nav-link" style="font-weight:bold;">← Overview</a>
     </div>
 </div>
 <div id="graph-container"></div>
 <script>
 (function() {
-    var nodesData = [{id:"core_models_yolo_runner_py_yolorunner",label:"YOLORunner",title:"YOLORunner\nType: Class\nFile: ./core/models/yolo_runner.py\nDegree: 5",color:"#E15759",size:16.9},{id:"core_models_yolo_runner_py_yolorunner_init",label:".__init__()",title:".__init__()\nType: Method\nFile: ./core/models/yolo_runner.py\nDegree: 1",color:"#E15759",size:12.0},{id:"core_models_yolo_runner_py_yolorunner_get_main",label:".get_main()",title:".get_main()\nType: Method\nFile: ./core/models/yolo_runner.py\nDegree: 2",color:"#E15759",size:13.7},{id:"core_models_yolo_runner_py_yolorunner_get_best",label:".get_best()",title:".get_best()\nType: Method\nFile: ./core/models/yolo_runner.py\nDegree: 2",color:"#E15759",size:13.7},{id:"core_models_yolo_runner_py_yolorunner_run_inference",label:".run_inference()",title:".run_inference()\nType: Method\nFile: ./core/models/yolo_runner.py\nDegree: 3",color:"#E15759",size:14.9}];
-    var edgesData = [{from:"core_models_yolo_runner_py_yolorunner",to:"core_models_yolo_runner_py_yolorunner_init",label:"defines",dashes:false,title:"defines: core_models_yolo_runner_py_yolorunner → core_models_yolo_runner_py_yolorunner_init\nConfidence: Extracted"},{from:"core_models_yolo_runner_py_yolorunner",to:"core_models_yolo_runner_py_yolorunner_get_main",label:"defines",dashes:false,title:"defines: core_models_yolo_runner_py_yolorunner → core_models_yolo_runner_py_yolorunner_get_main\nConfidence: Extracted"},{from:"core_models_yolo_runner_py_yolorunner",to:"core_models_yolo_runner_py_yolorunner_get_best",label:"defines",dashes:false,title:"defines: core_models_yolo_runner_py_yolorunner → core_models_yolo_runner_py_yolorunner_get_best\nConfidence: Extracted"},{from:"core_models_yolo_runner_py_yolorunner",to:"core_models_yolo_runner_py_yolorunner_run_inference",label:"defines",dashes:false,title:"defines: core_models_yolo_runner_py_yolorunner → core_models_yolo_runner_py_yolorunner_run_inference\nConfidence: Extracted"},{from:"core_models_yolo_runner_py_yolorunner_run_inference",to:"core_models_yolo_runner_py_yolorunner_get_best",label:"calls",dashes:true,title:"calls: core_models_yolo_runner_py_yolorunner_run_inference → core_models_yolo_runner_py_yolorunner_get_best\nConfidence: Inferred"},{from:"core_models_yolo_runner_py_yolorunner_run_inference",to:"core_models_yolo_runner_py_yolorunner_get_main",label:"calls",dashes:true,title:"calls: core_models_yolo_runner_py_yolorunner_run_inference → core_models_yolo_runner_py_yolorunner_get_main\nConfidence: Inferred"}];
+    var nodesData = [{id:"scripts_operational_log_file_paths_py",label:"log_file_paths",title:"log_file_paths\nType: File\nFile: ./scripts/operational/log_file_paths.py\nDegree: 4",color:"#E15759",size:16.0},{id:"scripts_operational_log_file_paths_py_import_os",label:"os",title:"os\nType: Module\nFile: ./scripts/operational/log_file_paths.py\nDegree: 1",color:"#E15759",size:12.0},{id:"scripts_operational_log_file_paths_py_import_csv",label:"csv",title:"csv\nType: Module\nFile: ./scripts/operational/log_file_paths.py\nDegree: 1",color:"#E15759",size:12.0},{id:"scripts_operational_log_file_paths_py_import_argparse",label:"argparse",title:"argparse\nType: Module\nFile: ./scripts/operational/log_file_paths.py\nDegree: 1",color:"#E15759",size:12.0},{id:"scripts_operational_log_file_paths_py_log_file_paths_to_csv",label:"log_file_paths_to_csv()",title:"log_file_paths_to_csv()\nType: Function\nFile: ./scripts/operational/log_file_paths.py\nDegree: 1",color:"#E15759",size:12.0}];
+    var edgesData = [{from:"scripts_operational_log_file_paths_py",to:"scripts_operational_log_file_paths_py_import_os",label:"imports",dashes:false,title:"imports: scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_import_os\nConfidence: Extracted"},{from:"scripts_operational_log_file_paths_py",to:"scripts_operational_log_file_paths_py_import_csv",label:"imports",dashes:false,title:"imports: scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_import_csv\nConfidence: Extracted"},{from:"scripts_operational_log_file_paths_py",to:"scripts_operational_log_file_paths_py_import_argparse",label:"imports",dashes:false,title:"imports: scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_import_argparse\nConfidence: Extracted"},{from:"scripts_operational_log_file_paths_py",to:"scripts_operational_log_file_paths_py_log_file_paths_to_csv",label:"defines",dashes:false,title:"defines: scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_log_file_paths_to_csv\nConfidence: Extracted"}];
     var container = document.getElementById('graph-container');
     var nodes = new vis.DataSet(nodesData);
     var edges = new vis.DataSet(edgesData);

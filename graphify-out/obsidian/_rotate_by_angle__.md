@@ -9,6 +9,6 @@ community_label: rotate_image_affine()
 ## Connections
 
 - [[angle_detector]] (defines)
-- [[rotate_image_affine__]] (calls)
 - [[rotate_image__]] (calls)
+- [[rotate_image_affine__]] (calls)
 - [[find_best_orientation__]] (calls)

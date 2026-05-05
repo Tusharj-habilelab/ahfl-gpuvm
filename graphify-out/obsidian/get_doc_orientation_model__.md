@@ -2,7 +2,7 @@
 id: core_ocr_paddle_py_get_doc_orientation_model
 type: Function
 source: ./core/ocr/paddle.py
-community: 13
+community: 11
 community_label: scale_adapted_ocr_results()
 ---
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>pandas (42) — Community 42</title>
+<title>pandas — Community 42</title>
 <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,8 +25,8 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
 <body>
 <div id="sidebar">
     <div>
-        <h2>pandas (42)</h2>
-        <p style="font-size:12px;color:#666;">2 nodes · Community 42</p>
+        <h2>pandas</h2>
+        <p style="font-size:12px;color:#666;">3 nodes · Community 42</p>
     </div>
     <input id="search" type="text" placeholder="Search nodes…" />
     <div>
@@ -41,8 +41,8 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
 <div id="graph-container"></div>
 <script>
 (function() {
-    var nodesData = [{id:"scripts_reporting_mapping_py",label:"mapping",title:"mapping\nType: File\nFile: ./scripts/reporting/mapping.py\nDegree: 1",color:"#E15759",size:12.0},{id:"scripts_reporting_mapping_py_import_pandas",label:"pandas",title:"pandas\nType: Module\nFile: ./scripts/reporting/mapping.py\nDegree: 1",color:"#E15759",size:12.0}];
-    var edgesData = [{from:"scripts_reporting_mapping_py",to:"scripts_reporting_mapping_py_import_pandas",label:"imports",dashes:false,title:"imports: scripts_reporting_mapping_py → scripts_reporting_mapping_py_import_pandas\nConfidence: Extracted"}];
+    var nodesData = [{id:"scripts_reporting_merge_metadata_py",label:"merge_metadata",title:"merge_metadata\nType: File\nFile: ./scripts/reporting/merge_metadata.py\nDegree: 2",color:"#E15759",size:13.7},{id:"scripts_reporting_merge_metadata_py_import_pandas",label:"pandas",title:"pandas\nType: Module\nFile: ./scripts/reporting/merge_metadata.py\nDegree: 1",color:"#E15759",size:12.0},{id:"scripts_reporting_merge_metadata_py_import_os",label:"os",title:"os\nType: Module\nFile: ./scripts/reporting/merge_metadata.py\nDegree: 1",color:"#E15759",size:12.0}];
+    var edgesData = [{from:"scripts_reporting_merge_metadata_py",to:"scripts_reporting_merge_metadata_py_import_pandas",label:"imports",dashes:false,title:"imports: scripts_reporting_merge_metadata_py → scripts_reporting_merge_metadata_py_import_pandas\nConfidence: Extracted"},{from:"scripts_reporting_merge_metadata_py",to:"scripts_reporting_merge_metadata_py_import_os",label:"imports",dashes:false,title:"imports: scripts_reporting_merge_metadata_py → scripts_reporting_merge_metadata_py_import_os\nConfidence: Extracted"}];
     var container = document.getElementById('graph-container');
     var nodes = new vis.DataSet(nodesData);
     var edges = new vis.DataSet(edgesData);

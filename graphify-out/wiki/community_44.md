@@ -1,8 +1,13 @@
-# Community 44: merge_chat_sessions
+# Community 44: pandas (44)
 
-**Members:** 1
+**Members:** 2
 
 ## Nodes
 
-- **merge_chat_sessions** (`scripts_merge_chat_sessions_py`, File, degree: 0)
+- **mapping** (`scripts_reporting_mapping_py`, File, degree: 1)
+- **pandas** (`scripts_reporting_mapping_py_import_pandas`, Module, degree: 1)
+
+## Relationships
+
+- scripts_reporting_mapping_py → scripts_reporting_mapping_py_import_pandas (imports)
 
