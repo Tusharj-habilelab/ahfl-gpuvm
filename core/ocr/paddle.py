@@ -29,14 +29,10 @@ def create_paddle_ocr() -> PaddleOCR:
     Build a PaddleOCR instance for Aadhaar text extraction (PaddleOCR 3.4.0+).
     Models cached to /root/.paddlex/official_models/ (volume-mounted, downloaded once on first run).
     """
-    from core.config import PADDLE_MODEL_DIR as _model_dir
     return PaddleOCR(
         lang="en",
         use_textline_orientation=True,
         device="gpu:0",
-        det_model_dir=os.path.join(_model_dir, "det"),
-        rec_model_dir=os.path.join(_model_dir, "rec"),
-        cls_model_dir=os.path.join(_model_dir, "cls"),
     )
 
 
