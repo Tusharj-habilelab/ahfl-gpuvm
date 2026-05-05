@@ -2,7 +2,7 @@
 id: scripts_inspect_yolo_models_py
 type: File
 source: ./scripts/inspect_yolo_models.py
-community: 22
+community: 21
 community_label: format_report()
 ---
 

@@ -3,7 +3,7 @@
 - **ID:** `core_db_log_writer_py`
 - **Type:** File
 - **File:** `./core/db/log_writer.py`
-- **Community:** 9 (write_mask_log())
+- **Community:** 11 (write_mask_log())
 
 ## Relationships
 

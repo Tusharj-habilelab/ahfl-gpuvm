@@ -3,7 +3,7 @@
 - **ID:** `core_classifiers_py`
 - **Type:** File
 - **File:** `./core/classifiers.py`
-- **Community:** 5 (normalize_aadhaar_keyword())
+- **Community:** 6 (normalize_aadhaar_keyword())
 
 ## Relationships
 

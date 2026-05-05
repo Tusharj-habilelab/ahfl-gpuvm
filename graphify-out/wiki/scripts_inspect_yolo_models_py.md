@@ -3,7 +3,7 @@
 - **ID:** `scripts_inspect_yolo_models_py`
 - **Type:** File
 - **File:** `./scripts/inspect_yolo_models.py`
-- **Community:** 22 (format_report())
+- **Community:** 21 (format_report())
 
 ## Relationships
 

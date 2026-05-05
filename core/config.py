@@ -53,6 +53,16 @@ GPU_MEMORY_FRACTION = float(os.environ.get("TORCH_CUDA_MAX_MEMORY_FRAC", "0.7"))
 GPU_WARMUP_ENABLED = os.environ.get("GPU_WARMUP", "true").lower() == "true"
 
 # ────────────────────────────────────────────────────────
+# YOLO Preprocessing Configuration
+# ────────────────────────────────────────────────────────
+
+# main.pt greyscale preprocessing: whether to dilate edges for better card detection
+# Set to "false" for undilated greyscale (faster, less preprocessing overhead).
+# Set to "true" to dilate greyscale (thickens card edges, may improve faded card detection).
+# Default: false (no dilation) — model receives undilated greyscale-as-BGR
+YOLO_MAIN_DILATE_ENABLED = os.environ.get("YOLO_MAIN_DILATE_ENABLED", "false").lower() == "true"
+
+# ────────────────────────────────────────────────────────
 # Orientation Configuration
 # ────────────────────────────────────────────────────────
 
@@ -102,12 +112,12 @@ ROUTER_FORM_CONF_DIVISOR = float(os.environ.get("ROUTER_FORM_CONF_DIVISOR", "6.0
 ROUTER_MIXED_CONFIDENCE = float(os.environ.get("ROUTER_MIXED_CONFIDENCE", "0.3"))
 
 # Composite scoring thresholds for orientation
-ORIENTATION_TARGET_THRESHOLD = float(os.environ.get("ORIENTATION_TARGET_THRESHOLD", "0.45"))
-ORIENTATION_STRONG_THRESHOLD = float(os.environ.get("ORIENTATION_STRONG_THRESHOLD", "0.60"))
+ORIENTATION_TARGET_THRESHOLD = float(os.environ.get("ORIENTATION_TARGET_THRESHOLD", "0.7"))
+ORIENTATION_STRONG_THRESHOLD = float(os.environ.get("ORIENTATION_STRONG_THRESHOLD", "0.75"))
 
 # OCR + detection thresholds
 PADDLE_OCR_MAX_SIDE = max(640, int(os.environ.get("PADDLE_OCR_MAX_SIDE", "1600")))
-PVC_PERSON_CONFIDENCE_THRESHOLD = float(os.environ.get("PVC_PERSON_CONFIDENCE_THRESHOLD", "0.2"))
+PVC_PERSON_CONFIDENCE_THRESHOLD = float(os.environ.get("PVC_PERSON_CONFIDENCE_THRESHOLD", "0.5"))
 PVC_MAX_ROTATIONS = int(os.environ.get("PVC_MAX_ROTATIONS", "2"))
 
 # ────────────────────────────────────────────────────────

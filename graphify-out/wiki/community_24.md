@@ -1,23 +1,24 @@
-# Community 24: levenshtein_score()
+# Community 24: _normalize_bbox()
 
-**Members:** 7
+**Members:** 6
 
 ## Nodes
 
-- **cosine_similarity()** (`core_ocr_masking_py_cosine_similarity`, Function, degree: 2)
-- **extract_number_coordinates()** (`core_ocr_masking_py_extract_number_coordinates`, Function, degree: 2)
-- **extract_target_coordinates()** (`core_ocr_masking_py_extract_target_coordinates`, Function, degree: 2)
-- **find_aadhaar_patterns()** (`core_ocr_masking_py_find_aadhaar_patterns`, Function, degree: 8)
-- **is_four_digit_number()** (`core_ocr_masking_py_is_four_digit_number`, Function, degree: 2)
-- **is_twelve_digit_number()** (`core_ocr_masking_py_is_twelve_digit_number`, Function, degree: 2)
-- **levenshtein_score()** (`core_ocr_masking_py_levenshtein_score`, Function, degree: 2)
+- **ocr_adapter** (`core_ocr_ocr_adapter_py`, File, degree: 5)
+- **adapt_paddle_result()** (`core_ocr_ocr_adapter_py_adapt_paddle_result`, Function, degree: 3)
+- **_append_v3_result()** (`core_ocr_ocr_adapter_py_append_v3_result`, Function, degree: 3)
+- **get_texts_and_boxes()** (`core_ocr_ocr_adapter_py_get_texts_and_boxes`, Function, degree: 2)
+- **logging** (`core_ocr_ocr_adapter_py_import_logging`, Module, degree: 1)
+- **_normalize_bbox()** (`core_ocr_ocr_adapter_py_normalize_bbox`, Function, degree: 2)
 
 ## Relationships
 
-- core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_is_four_digit_number (calls)
-- core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_is_twelve_digit_number (calls)
-- core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_extract_target_coordinates (calls)
-- core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_cosine_similarity (calls)
-- core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_levenshtein_score (calls)
-- core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_extract_number_coordinates (calls)
+- core_ocr_ocr_adapter_py → core_ocr_ocr_adapter_py_import_logging (imports)
+- core_ocr_ocr_adapter_py → core_ocr_ocr_adapter_py_normalize_bbox (defines)
+- core_ocr_ocr_adapter_py → core_ocr_ocr_adapter_py_append_v3_result (defines)
+- core_ocr_ocr_adapter_py → core_ocr_ocr_adapter_py_adapt_paddle_result (defines)
+- core_ocr_ocr_adapter_py → core_ocr_ocr_adapter_py_get_texts_and_boxes (defines)
+- core_ocr_ocr_adapter_py_append_v3_result → core_ocr_ocr_adapter_py_normalize_bbox (calls)
+- core_ocr_ocr_adapter_py_adapt_paddle_result → core_ocr_ocr_adapter_py_append_v3_result (calls)
+- core_ocr_ocr_adapter_py_get_texts_and_boxes → core_ocr_ocr_adapter_py_adapt_paddle_result (calls)
 

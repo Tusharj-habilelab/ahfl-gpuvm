@@ -2,7 +2,7 @@
 id: core_ocr_masking_py_is_twelve_digit_number
 type: Function
 source: ./core/ocr/masking.py
-community: 24
+community: 23
 community_label: levenshtein_score()
 ---
 

@@ -327,6 +327,10 @@ def _process_card_like_lane(
         report["mask_counts"] = _report_mask_counts(report)
         return image, report
 
+    pvc_stats = {"pvc_cards_processed": 0, "pvc_cards_masked": 0}
+    if aadhaar_crops:
+        image, pvc_stats = mask_pvc_aadhaar(image, aadhaar_crops)
+
     image, yolo_report = mask_yolo_detections(
         image,
         gate_result.get("merged_dets", []),
@@ -335,10 +339,6 @@ def _process_card_like_lane(
         ocr=ocr,
         aadhaar_boxes=gate_result.get("aadhaar_boxes"),
     )
-
-    pvc_stats = {"pvc_cards_processed": 0, "pvc_cards_masked": 0}
-    if aadhaar_crops:
-        image, pvc_stats = mask_pvc_aadhaar(image, aadhaar_crops)
 
     tokens_list = [
         {"text": t, "coordinates": b, "confidence": c}
@@ -378,6 +378,11 @@ def process_image(
     """Single entry point for masking-engine and batch-processor."""
     if image is None or image.size == 0:
         raise ValueError("Input image is None or empty")
+
+    if image.ndim == 2:
+        image = cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)
+    elif image.ndim == 3 and image.shape[2] == 4:
+        image = cv2.cvtColor(image, cv2.COLOR_BGRA2BGR)
 
     stats: Dict[str, Any] = {}
     start_time = time.perf_counter()

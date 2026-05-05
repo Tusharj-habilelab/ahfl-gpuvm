@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>YOLORunner — Community 30</title>
+<title>get_all_files_recursive() (30) — Community 30</title>
 <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,7 +25,7 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
 <body>
 <div id="sidebar">
     <div>
-        <h2>YOLORunner</h2>
+        <h2>get_all_files_recursive() (30)</h2>
         <p style="font-size:12px;color:#666;">5 nodes · Community 30</p>
     </div>
     <input id="search" type="text" placeholder="Search nodes…" />
@@ -35,14 +35,14 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
     </div>
     <div>
         <h3>Navigation</h3>
-        <a href="index.html" class="nav-link" style="font-weight:bold;">← Overview</a><a href="community_13.html" class="nav-link"><span class="legend-dot" style="background:#76B7B2"></span>reset_models() (1 links)</a>
+        <a href="index.html" class="nav-link" style="font-weight:bold;">← Overview</a>
     </div>
 </div>
 <div id="graph-container"></div>
 <script>
 (function() {
-    var nodesData = [{id:"core_models_yolo_runner_py_yolorunner",label:"YOLORunner",title:"YOLORunner\nType: Class\nFile: ./core/models/yolo_runner.py\nDegree: 5",color:"#4E79A7",size:16.9},{id:"core_models_yolo_runner_py_yolorunner_init",label:".__init__()",title:".__init__()\nType: Method\nFile: ./core/models/yolo_runner.py\nDegree: 1",color:"#4E79A7",size:12.0},{id:"core_models_yolo_runner_py_yolorunner_get_main",label:".get_main()",title:".get_main()\nType: Method\nFile: ./core/models/yolo_runner.py\nDegree: 2",color:"#4E79A7",size:13.7},{id:"core_models_yolo_runner_py_yolorunner_get_best",label:".get_best()",title:".get_best()\nType: Method\nFile: ./core/models/yolo_runner.py\nDegree: 2",color:"#4E79A7",size:13.7},{id:"core_models_yolo_runner_py_yolorunner_run_inference",label:".run_inference()",title:".run_inference()\nType: Method\nFile: ./core/models/yolo_runner.py\nDegree: 3",color:"#4E79A7",size:14.9}];
-    var edgesData = [{from:"core_models_yolo_runner_py_yolorunner",to:"core_models_yolo_runner_py_yolorunner_init",label:"defines",dashes:false,title:"defines: core_models_yolo_runner_py_yolorunner → core_models_yolo_runner_py_yolorunner_init\nConfidence: Extracted"},{from:"core_models_yolo_runner_py_yolorunner",to:"core_models_yolo_runner_py_yolorunner_get_main",label:"defines",dashes:false,title:"defines: core_models_yolo_runner_py_yolorunner → core_models_yolo_runner_py_yolorunner_get_main\nConfidence: Extracted"},{from:"core_models_yolo_runner_py_yolorunner",to:"core_models_yolo_runner_py_yolorunner_get_best",label:"defines",dashes:false,title:"defines: core_models_yolo_runner_py_yolorunner → core_models_yolo_runner_py_yolorunner_get_best\nConfidence: Extracted"},{from:"core_models_yolo_runner_py_yolorunner",to:"core_models_yolo_runner_py_yolorunner_run_inference",label:"defines",dashes:false,title:"defines: core_models_yolo_runner_py_yolorunner → core_models_yolo_runner_py_yolorunner_run_inference\nConfidence: Extracted"},{from:"core_models_yolo_runner_py_yolorunner_run_inference",to:"core_models_yolo_runner_py_yolorunner_get_best",label:"calls",dashes:true,title:"calls: core_models_yolo_runner_py_yolorunner_run_inference → core_models_yolo_runner_py_yolorunner_get_best\nConfidence: Inferred"},{from:"core_models_yolo_runner_py_yolorunner_run_inference",to:"core_models_yolo_runner_py_yolorunner_get_main",label:"calls",dashes:true,title:"calls: core_models_yolo_runner_py_yolorunner_run_inference → core_models_yolo_runner_py_yolorunner_get_main\nConfidence: Inferred"}];
+    var nodesData = [{id:"scripts_operational_count_total_application_py",label:"count_total_application",title:"count_total_application\nType: File\nFile: ./scripts/operational/count_total_application.py\nDegree: 4",color:"#4E79A7",size:16.0},{id:"scripts_operational_count_total_application_py_import_os",label:"os",title:"os\nType: Module\nFile: ./scripts/operational/count_total_application.py\nDegree: 1",color:"#4E79A7",size:12.0},{id:"scripts_operational_count_total_application_py_import_sys",label:"sys",title:"sys\nType: Module\nFile: ./scripts/operational/count_total_application.py\nDegree: 1",color:"#4E79A7",size:12.0},{id:"scripts_operational_count_total_application_py_get_all_files_recursive",label:"get_all_files_recursive()",title:"get_all_files_recursive()\nType: Function\nFile: ./scripts/operational/count_total_application.py\nDegree: 1",color:"#4E79A7",size:12.0},{id:"scripts_operational_count_total_application_py_count_unique_applications",label:"count_unique_applications()",title:"count_unique_applications()\nType: Function\nFile: ./scripts/operational/count_total_application.py\nDegree: 1",color:"#4E79A7",size:12.0}];
+    var edgesData = [{from:"scripts_operational_count_total_application_py",to:"scripts_operational_count_total_application_py_import_os",label:"imports",dashes:false,title:"imports: scripts_operational_count_total_application_py → scripts_operational_count_total_application_py_import_os\nConfidence: Extracted"},{from:"scripts_operational_count_total_application_py",to:"scripts_operational_count_total_application_py_import_sys",label:"imports",dashes:false,title:"imports: scripts_operational_count_total_application_py → scripts_operational_count_total_application_py_import_sys\nConfidence: Extracted"},{from:"scripts_operational_count_total_application_py",to:"scripts_operational_count_total_application_py_get_all_files_recursive",label:"defines",dashes:false,title:"defines: scripts_operational_count_total_application_py → scripts_operational_count_total_application_py_get_all_files_recursive\nConfidence: Extracted"},{from:"scripts_operational_count_total_application_py",to:"scripts_operational_count_total_application_py_count_unique_applications",label:"defines",dashes:false,title:"defines: scripts_operational_count_total_application_py → scripts_operational_count_total_application_py_count_unique_applications\nConfidence: Extracted"}];
     var container = document.getElementById('graph-container');
     var nodes = new vis.DataSet(nodesData);
     var edges = new vis.DataSet(edgesData);

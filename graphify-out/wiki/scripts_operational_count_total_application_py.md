@@ -3,7 +3,7 @@
 - **ID:** `scripts_operational_count_total_application_py`
 - **Type:** File
 - **File:** `./scripts/operational/count_total_application.py`
-- **Community:** 34 (get_all_files_recursive() (34))
+- **Community:** 30 (get_all_files_recursive() (30))
 
 ## Relationships
 

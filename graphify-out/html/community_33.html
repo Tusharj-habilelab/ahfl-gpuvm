@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>_write_pending() — Community 33</title>
+<title>log_file_paths_to_csv() — Community 33</title>
 <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,7 +25,7 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
 <body>
 <div id="sidebar">
     <div>
-        <h2>_write_pending()</h2>
+        <h2>log_file_paths_to_csv()</h2>
         <p style="font-size:12px;color:#666;">5 nodes · Community 33</p>
     </div>
     <input id="search" type="text" placeholder="Search nodes…" />
@@ -35,14 +35,14 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
     </div>
     <div>
         <h3>Navigation</h3>
-        <a href="index.html" class="nav-link" style="font-weight:bold;">← Overview</a><a href="community_1.html" class="nav-link"><span class="legend-dot" style="background:#F28E2B"></span>_validate_s3_buckets() (8 links)</a><a href="community_31.html" class="nav-link"><span class="legend-dot" style="background:#F28E2B"></span>_update_to_error() (3 links)</a>
+        <a href="index.html" class="nav-link" style="font-weight:bold;">← Overview</a>
     </div>
 </div>
 <div id="graph-container"></div>
 <script>
 (function() {
-    var nodesData = [{id:"services_batch_processor_batch_py_get_skip_paths",label:"_get_skip_paths()",title:"_get_skip_paths()\nType: Function\nFile: ./services/batch-processor/batch.py\nDegree: 3",color:"#76B7B2",size:14.9},{id:"services_batch_processor_batch_py_write_pending",label:"_write_pending()",title:"_write_pending()\nType: Function\nFile: ./services/batch-processor/batch.py\nDegree: 2",color:"#76B7B2",size:13.7},{id:"services_batch_processor_batch_py_update_to_processing",label:"_update_to_processing()",title:"_update_to_processing()\nType: Function\nFile: ./services/batch-processor/batch.py\nDegree: 2",color:"#76B7B2",size:13.7},{id:"services_batch_processor_batch_py_is_password_protected_pdf",label:"_is_password_protected_pdf()",title:"_is_password_protected_pdf()\nType: Function\nFile: ./services/batch-processor/batch.py\nDegree: 3",color:"#76B7B2",size:14.9},{id:"services_batch_processor_batch_py_run_batch",label:"run_batch()",title:"run_batch()\nType: Function\nFile: ./services/batch-processor/batch.py\nDegree: 9",color:"#76B7B2",size:20.0}];
-    var edgesData = [{from:"services_batch_processor_batch_py_run_batch",to:"services_batch_processor_batch_py_is_password_protected_pdf",label:"calls",dashes:true,title:"calls: services_batch_processor_batch_py_run_batch → services_batch_processor_batch_py_is_password_protected_pdf\nConfidence: Inferred"},{from:"services_batch_processor_batch_py_run_batch",to:"services_batch_processor_batch_py_get_skip_paths",label:"calls",dashes:true,title:"calls: services_batch_processor_batch_py_run_batch → services_batch_processor_batch_py_get_skip_paths\nConfidence: Inferred"},{from:"services_batch_processor_batch_py_run_batch",to:"services_batch_processor_batch_py_update_to_processing",label:"calls",dashes:true,title:"calls: services_batch_processor_batch_py_run_batch → services_batch_processor_batch_py_update_to_processing\nConfidence: Inferred"},{from:"services_batch_processor_batch_py_run_batch",to:"services_batch_processor_batch_py_write_pending",label:"calls",dashes:true,title:"calls: services_batch_processor_batch_py_run_batch → services_batch_processor_batch_py_write_pending\nConfidence: Inferred"}];
+    var nodesData = [{id:"scripts_operational_log_file_paths_py",label:"log_file_paths",title:"log_file_paths\nType: File\nFile: ./scripts/operational/log_file_paths.py\nDegree: 4",color:"#76B7B2",size:16.0},{id:"scripts_operational_log_file_paths_py_import_os",label:"os",title:"os\nType: Module\nFile: ./scripts/operational/log_file_paths.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"scripts_operational_log_file_paths_py_import_csv",label:"csv",title:"csv\nType: Module\nFile: ./scripts/operational/log_file_paths.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"scripts_operational_log_file_paths_py_import_argparse",label:"argparse",title:"argparse\nType: Module\nFile: ./scripts/operational/log_file_paths.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"scripts_operational_log_file_paths_py_log_file_paths_to_csv",label:"log_file_paths_to_csv()",title:"log_file_paths_to_csv()\nType: Function\nFile: ./scripts/operational/log_file_paths.py\nDegree: 1",color:"#76B7B2",size:12.0}];
+    var edgesData = [{from:"scripts_operational_log_file_paths_py",to:"scripts_operational_log_file_paths_py_import_os",label:"imports",dashes:false,title:"imports: scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_import_os\nConfidence: Extracted"},{from:"scripts_operational_log_file_paths_py",to:"scripts_operational_log_file_paths_py_import_csv",label:"imports",dashes:false,title:"imports: scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_import_csv\nConfidence: Extracted"},{from:"scripts_operational_log_file_paths_py",to:"scripts_operational_log_file_paths_py_import_argparse",label:"imports",dashes:false,title:"imports: scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_import_argparse\nConfidence: Extracted"},{from:"scripts_operational_log_file_paths_py",to:"scripts_operational_log_file_paths_py_log_file_paths_to_csv",label:"defines",dashes:false,title:"defines: scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_log_file_paths_to_csv\nConfidence: Extracted"}];
     var container = document.getElementById('graph-container');
     var nodes = new vis.DataSet(nodesData);
     var edges = new vis.DataSet(edgesData);

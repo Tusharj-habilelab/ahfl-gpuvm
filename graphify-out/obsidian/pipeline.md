@@ -2,8 +2,8 @@
 id: core_pipeline_py
 type: File
 source: ./core/pipeline.py
-community: 3
-community_label: typing.Tuple
+community: 2
+community_label: _verify_skip_pan()
 ---
 
 ## Connections

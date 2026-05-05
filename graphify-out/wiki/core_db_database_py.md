@@ -3,7 +3,7 @@
 - **ID:** `core_db_database_py`
 - **Type:** File
 - **File:** `./core/db/database.py`
-- **Community:** 28 (get_dynamo_table())
+- **Community:** 26 (get_dynamo_table())
 
 ## Relationships
 

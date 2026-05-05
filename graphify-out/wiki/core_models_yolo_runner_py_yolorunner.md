@@ -4,7 +4,7 @@
 - **Type:** Class
 - **File:** `./core/models/yolo_runner.py`
 - **Location:** L36
-- **Community:** 30 (YOLORunner)
+- **Community:** 32 (YOLORunner)
 
 ## Relationships
 

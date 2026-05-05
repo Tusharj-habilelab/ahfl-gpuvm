@@ -3,7 +3,7 @@
 - **ID:** `services_batch_processor_batch_py_process_pdf`
 - **Type:** Function
 - **File:** `./services/batch-processor/batch.py`
-- **Location:** L506
+- **Location:** L508
 - **Community:** 1 (_validate_s3_buckets())
 
 ## Relationships

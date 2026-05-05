@@ -3,7 +3,7 @@
 - **ID:** `scripts_operational_logs_py`
 - **Type:** File
 - **File:** `./scripts/operational/logs.py`
-- **Community:** 18 (analyze_records())
+- **Community:** 17 (analyze_records())
 
 ## Relationships
 

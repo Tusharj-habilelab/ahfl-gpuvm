@@ -1,10 +1,28 @@
 # AHFL-Masking 1.1 GPU — Comprehensive Handoff Document
 
-**Date:** 2026-05-01  
+**Date:** 2026-05-01 | **Last Update:** 2026-05-05  
 **Generated for:** Continuation of GPU pipeline work after folder restructuring  
 **Canonical Repository Path:** `/Users/tusharjain/projects/AHFL/AHFL-GPU/ahfl-working-Gpu`
 **Output Location:** `/Users/tusharjain/projects/AHFL/AHFL-GPU/ahfl-working-Gpu/HANDOFF.md`  
 **Status:** In-repo canonical handoff document (not temp)
+
+---
+
+## 🎯 D4 GPU Deployment — Status Update (2026-05-05)
+
+**ALL 3 CRITICAL ISSUES FIXED & VERIFIED LOCALLY** ✅
+
+| Issue | Location | Fix | Status |
+|-------|----------|-----|--------|
+| PaddleOCR Model Path | core/ocr/paddle.py | Removed model_dir params from create_paddle_ocr() + get_doc_orientation_model() | ✅ Ready |
+| OpenCV Channel Mismatch | services/batch-processor/batch.py, services/masking-engine/engine.py | Added cv2.imread(IMREAD_COLOR) + grayscale→BGR conversion | ✅ Ready |
+| PADDLE_MODEL_DIR References | core/config.py | Config exists but NOT used in active code paths | ✅ No Blockers |
+
+**Pipeline Verified:** image read (IMREAD_COLOR) → core/pipeline → create_paddle_ocr (auto-download to `/root/.paddlex`) → YOLO (3-channel) → masking
+
+**GPU VM Patches:** 2/3 applied (batch.py ✅, masking-engine ✅), 1 already correct (paddle.py ✅)
+
+**Next:** Docker rebuild → test with sample PDF
 
 ---
 

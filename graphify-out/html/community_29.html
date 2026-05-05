@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>_normalize_bbox() — Community 29</title>
+<title>run_batch_s3() — Community 29</title>
 <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,7 +25,7 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
 <body>
 <div id="sidebar">
     <div>
-        <h2>_normalize_bbox()</h2>
+        <h2>run_batch_s3()</h2>
         <p style="font-size:12px;color:#666;">5 nodes · Community 29</p>
     </div>
     <input id="search" type="text" placeholder="Search nodes…" />
@@ -35,14 +35,14 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
     </div>
     <div>
         <h3>Navigation</h3>
-        <a href="index.html" class="nav-link" style="font-weight:bold;">← Overview</a>
+        <a href="index.html" class="nav-link" style="font-weight:bold;">← Overview</a><a href="community_1.html" class="nav-link"><span class="legend-dot" style="background:#F28E2B"></span>_validate_s3_buckets() (7 links)</a><a href="community_31.html" class="nav-link"><span class="legend-dot" style="background:#F28E2B"></span>_write_pending() (3 links)</a>
     </div>
 </div>
 <div id="graph-container"></div>
 <script>
 (function() {
-    var nodesData = [{id:"core_ocr_ocr_adapter_py",label:"ocr_adapter",title:"ocr_adapter\nType: File\nFile: ./core/ocr/ocr_adapter.py\nDegree: 4",color:"#BAB0AC",size:16.0},{id:"core_ocr_ocr_adapter_py_normalize_bbox",label:"_normalize_bbox()",title:"_normalize_bbox()\nType: Function\nFile: ./core/ocr/ocr_adapter.py\nDegree: 2",color:"#BAB0AC",size:13.7},{id:"core_ocr_ocr_adapter_py_append_v3_result",label:"_append_v3_result()",title:"_append_v3_result()\nType: Function\nFile: ./core/ocr/ocr_adapter.py\nDegree: 3",color:"#BAB0AC",size:14.9},{id:"core_ocr_ocr_adapter_py_adapt_paddle_result",label:"adapt_paddle_result()",title:"adapt_paddle_result()\nType: Function\nFile: ./core/ocr/ocr_adapter.py\nDegree: 3",color:"#BAB0AC",size:14.9},{id:"core_ocr_ocr_adapter_py_get_texts_and_boxes",label:"get_texts_and_boxes()",title:"get_texts_and_boxes()\nType: Function\nFile: ./core/ocr/ocr_adapter.py\nDegree: 2",color:"#BAB0AC",size:13.7}];
-    var edgesData = [{from:"core_ocr_ocr_adapter_py",to:"core_ocr_ocr_adapter_py_normalize_bbox",label:"defines",dashes:false,title:"defines: core_ocr_ocr_adapter_py → core_ocr_ocr_adapter_py_normalize_bbox\nConfidence: Extracted"},{from:"core_ocr_ocr_adapter_py",to:"core_ocr_ocr_adapter_py_append_v3_result",label:"defines",dashes:false,title:"defines: core_ocr_ocr_adapter_py → core_ocr_ocr_adapter_py_append_v3_result\nConfidence: Extracted"},{from:"core_ocr_ocr_adapter_py",to:"core_ocr_ocr_adapter_py_adapt_paddle_result",label:"defines",dashes:false,title:"defines: core_ocr_ocr_adapter_py → core_ocr_ocr_adapter_py_adapt_paddle_result\nConfidence: Extracted"},{from:"core_ocr_ocr_adapter_py",to:"core_ocr_ocr_adapter_py_get_texts_and_boxes",label:"defines",dashes:false,title:"defines: core_ocr_ocr_adapter_py → core_ocr_ocr_adapter_py_get_texts_and_boxes\nConfidence: Extracted"},{from:"core_ocr_ocr_adapter_py_append_v3_result",to:"core_ocr_ocr_adapter_py_normalize_bbox",label:"calls",dashes:true,title:"calls: core_ocr_ocr_adapter_py_append_v3_result → core_ocr_ocr_adapter_py_normalize_bbox\nConfidence: Inferred"},{from:"core_ocr_ocr_adapter_py_adapt_paddle_result",to:"core_ocr_ocr_adapter_py_append_v3_result",label:"calls",dashes:true,title:"calls: core_ocr_ocr_adapter_py_adapt_paddle_result → core_ocr_ocr_adapter_py_append_v3_result\nConfidence: Inferred"},{from:"core_ocr_ocr_adapter_py_get_texts_and_boxes",to:"core_ocr_ocr_adapter_py_adapt_paddle_result",label:"calls",dashes:true,title:"calls: core_ocr_ocr_adapter_py_get_texts_and_boxes → core_ocr_ocr_adapter_py_adapt_paddle_result\nConfidence: Inferred"}];
+    var nodesData = [{id:"services_batch_processor_batch_py_is_password_protected_pdf",label:"_is_password_protected_pdf()",title:"_is_password_protected_pdf()\nType: Function\nFile: ./services/batch-processor/batch.py\nDegree: 3",color:"#BAB0AC",size:14.9},{id:"services_batch_processor_batch_py_dynamo_retry",label:"_dynamo_retry()",title:"_dynamo_retry()\nType: Function\nFile: ./services/batch-processor/batch.py\nDegree: 2",color:"#BAB0AC",size:13.7},{id:"services_batch_processor_batch_py_cleanup_stale_processing_records",label:"_cleanup_stale_processing_records()",title:"_cleanup_stale_processing_records()\nType: Function\nFile: ./services/batch-processor/batch.py\nDegree: 2",color:"#BAB0AC",size:13.7},{id:"services_batch_processor_batch_py_list_s3_keys",label:"_list_s3_keys()",title:"_list_s3_keys()\nType: Function\nFile: ./services/batch-processor/batch.py\nDegree: 2",color:"#BAB0AC",size:13.7},{id:"services_batch_processor_batch_py_run_batch_s3",label:"run_batch_s3()",title:"run_batch_s3()\nType: Function\nFile: ./services/batch-processor/batch.py\nDegree: 9",color:"#BAB0AC",size:20.0}];
+    var edgesData = [{from:"services_batch_processor_batch_py_run_batch_s3",to:"services_batch_processor_batch_py_cleanup_stale_processing_records",label:"calls",dashes:true,title:"calls: services_batch_processor_batch_py_run_batch_s3 → services_batch_processor_batch_py_cleanup_stale_processing_records\nConfidence: Inferred"},{from:"services_batch_processor_batch_py_run_batch_s3",to:"services_batch_processor_batch_py_is_password_protected_pdf",label:"calls",dashes:true,title:"calls: services_batch_processor_batch_py_run_batch_s3 → services_batch_processor_batch_py_is_password_protected_pdf\nConfidence: Inferred"},{from:"services_batch_processor_batch_py_run_batch_s3",to:"services_batch_processor_batch_py_dynamo_retry",label:"calls",dashes:true,title:"calls: services_batch_processor_batch_py_run_batch_s3 → services_batch_processor_batch_py_dynamo_retry\nConfidence: Inferred"},{from:"services_batch_processor_batch_py_run_batch_s3",to:"services_batch_processor_batch_py_list_s3_keys",label:"calls",dashes:true,title:"calls: services_batch_processor_batch_py_run_batch_s3 → services_batch_processor_batch_py_list_s3_keys\nConfidence: Inferred"}];
     var container = document.getElementById('graph-container');
     var nodes = new vis.DataSet(nodesData);
     var edges = new vis.DataSet(edgesData);

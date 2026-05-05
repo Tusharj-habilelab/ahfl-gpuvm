@@ -2,7 +2,7 @@
 id: core_ocr_masking_py_verhoeff_validate
 type: Function
 source: ./core/ocr/masking.py
-community: 6
+community: 4
 community_label: yolo_results_to_detections()
 ---
 

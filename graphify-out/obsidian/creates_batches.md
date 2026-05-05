@@ -2,7 +2,7 @@
 id: scripts_operational_creates_batches_py
 type: File
 source: ./scripts/operational/creates_batches.py
-community: 21
+community: 20
 community_label: split_folder_by_applications()
 ---
 

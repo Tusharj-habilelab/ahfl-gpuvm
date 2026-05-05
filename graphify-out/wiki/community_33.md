@@ -1,19 +1,19 @@
-# Community 33: _write_pending()
+# Community 33: log_file_paths_to_csv()
 
 **Members:** 5
 
 ## Nodes
 
-- **_get_skip_paths()** (`services_batch_processor_batch_py_get_skip_paths`, Function, degree: 3)
-- **_is_password_protected_pdf()** (`services_batch_processor_batch_py_is_password_protected_pdf`, Function, degree: 3)
-- **run_batch()** (`services_batch_processor_batch_py_run_batch`, Function, degree: 9)
-- **_update_to_processing()** (`services_batch_processor_batch_py_update_to_processing`, Function, degree: 2)
-- **_write_pending()** (`services_batch_processor_batch_py_write_pending`, Function, degree: 2)
+- **log_file_paths** (`scripts_operational_log_file_paths_py`, File, degree: 4)
+- **argparse** (`scripts_operational_log_file_paths_py_import_argparse`, Module, degree: 1)
+- **csv** (`scripts_operational_log_file_paths_py_import_csv`, Module, degree: 1)
+- **os** (`scripts_operational_log_file_paths_py_import_os`, Module, degree: 1)
+- **log_file_paths_to_csv()** (`scripts_operational_log_file_paths_py_log_file_paths_to_csv`, Function, degree: 1)
 
 ## Relationships
 
-- services_batch_processor_batch_py_run_batch → services_batch_processor_batch_py_is_password_protected_pdf (calls)
-- services_batch_processor_batch_py_run_batch → services_batch_processor_batch_py_get_skip_paths (calls)
-- services_batch_processor_batch_py_run_batch → services_batch_processor_batch_py_update_to_processing (calls)
-- services_batch_processor_batch_py_run_batch → services_batch_processor_batch_py_write_pending (calls)
+- scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_import_os (imports)
+- scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_import_csv (imports)
+- scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_import_argparse (imports)
+- scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_log_file_paths_to_csv (defines)
 

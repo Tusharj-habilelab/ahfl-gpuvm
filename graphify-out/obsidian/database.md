@@ -2,7 +2,7 @@
 id: core_db_database_py
 type: File
 source: ./core/db/database.py
-community: 28
+community: 26
 community_label: get_dynamo_table()
 ---
 

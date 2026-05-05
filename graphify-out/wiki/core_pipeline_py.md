@@ -3,7 +3,7 @@
 - **ID:** `core_pipeline_py`
 - **Type:** File
 - **File:** `./core/pipeline.py`
-- **Community:** 3 (typing.Tuple)
+- **Community:** 2 (_verify_skip_pan())
 
 ## Relationships
 

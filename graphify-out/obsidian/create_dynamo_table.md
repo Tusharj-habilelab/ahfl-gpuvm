@@ -2,7 +2,7 @@
 id: scripts_create_dynamo_table_py
 type: File
 source: ./scripts/create_dynamo_table.py
-community: 20
+community: 19
 community_label: create_table()
 ---
 
