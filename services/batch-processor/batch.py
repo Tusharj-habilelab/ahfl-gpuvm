@@ -486,9 +486,11 @@ def _process_image(image_path: str) -> dict:
     This wrapper handles only file I/O and GPU memory cleanup.
     """
     try:
-        image = cv2.imread(image_path)
+        image = cv2.imread(image_path, cv2.IMREAD_COLOR)
         if image is None:
             raise ValueError(f"Cannot read image: {image_path}")
+        if image.ndim == 2:
+            image = cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)
 
         masked_image, report = process_image(image, skip_keywords_enabled=True)
         if not cv2.imwrite(image_path, masked_image):
@@ -545,7 +547,7 @@ def _process_pdf(pdf_path: str, dest_path: str) -> dict:
 
             for page in pages:
                 img_path = os.path.join(tmp, f"p{page_idx:04d}.jpg")
-                page.save(img_path, "JPEG")
+                page.convert('RGB').save(img_path, "JPEG")  # Force RGB — YOLO requires 3 channels
                 del page
 
                 try:

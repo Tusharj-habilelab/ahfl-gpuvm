@@ -181,9 +181,11 @@ def _mask_single_image(image_path: str) -> dict:
     import cv2
 
     try:
-        image = cv2.imread(image_path)
+        image = cv2.imread(image_path, cv2.IMREAD_COLOR)
         if image is None:
             raise ValueError(f"Cannot read image: {image_path}")
+        if image.ndim == 2:
+            image = cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)
 
         from core.pipeline import process_image
         masked_image, report = process_image(image, skip_keywords_enabled=True)

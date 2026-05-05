@@ -129,7 +129,8 @@ def run_full_gate_scoring(
 
     # Step 2: Run main.pt on dilated greyscale
     yolo_main = get_yolo_main()
-    results_main = yolo_main(dilated, half=True)[0]
+    dilated_bgr = cv2.cvtColor(dilated, cv2.COLOR_GRAY2BGR)
+    results_main = yolo_main(dilated_bgr, half=True)[0]
     main_dets = yolo_results_to_detections(results_main, model_name="main")
     del results_main
 
