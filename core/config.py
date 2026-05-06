@@ -117,8 +117,8 @@ ORIENTATION_STRONG_THRESHOLD = float(os.environ.get("ORIENTATION_STRONG_THRESHOL
 
 # OCR + detection thresholds
 PADDLE_OCR_MAX_SIDE = max(640, int(os.environ.get("PADDLE_OCR_MAX_SIDE", "1600")))
-PVC_PERSON_CONFIDENCE_THRESHOLD = float(os.environ.get("PVC_PERSON_CONFIDENCE_THRESHOLD", "0.5"))
-PVC_MAX_ROTATIONS = int(os.environ.get("PVC_MAX_ROTATIONS", "2"))
+PVC_PERSON_CONFIDENCE_THRESHOLD = float(os.environ.get("PVC_PERSON_CONFIDENCE_THRESHOLD", "0.2"))
+# PVC_MAX_ROTATIONS = int(os.environ.get("PVC_MAX_ROTATIONS", "2"))
 
 # ────────────────────────────────────────────────────────
 # Batch Processor Configuration

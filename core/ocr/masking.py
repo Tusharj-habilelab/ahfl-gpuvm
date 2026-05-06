@@ -490,6 +490,10 @@ def mask_yolo_detections(image, merged_detections, debug=False, stats=None, ocr=
                     report_data["is_xx"] += 1
         elif "xx" in label:
             report_data["is_xx"] += 1
+    log.info(
+        f"mask_yolo: number={report_data['is_number']} masked={report_data['is_number_masked']} "
+        f"qr={report_data['is_qr']} qr_masked={report_data['is_qr_masked']} xx={report_data['is_xx']}"
+    )
     return image, report_data
 
 
@@ -709,6 +713,7 @@ def find_aadhaar_patterns(tokens_list):
                             "type": "number_safety"
                         })
 
+    log.info(f"find_aadhaar_patterns: {len(detected_words)} patterns found (cersai={cersai_found} crif={crif_found} aadhar={aadhar_found})")
     return detected_words
 
 

@@ -90,6 +90,7 @@ def _process_single_aadhaar_crop(
     results_best = yolo_best(crop, half=True)[0]
     dets_best_crop = yolo_results_to_detections(results_best, model_name="best")
     del results_best
+    log.debug(f"Gate crop [{x1},{y1},{x2},{y2}]: best.pt={len(dets_best_crop)} dets")
 
     dets_best_full = map_crop_dets_to_full(dets_best_crop, crop_box)
     main_inside = filter_dets_inside_box(filtered_dets, crop_box)
@@ -160,6 +161,7 @@ def run_full_gate_scoring(
         }
         for c, l, cf, meta in zip(f_coords, f_labels, f_confs, f_metadata)
     ]
+    log.info(f"Gate: main.pt={len(main_dets)} dets → fb_filtered={len(filtered_dets)}")
     del grey, preprocessed  # free full-resolution arrays (called up to 8× in orientation loop)
 
     # Compute score from confirmed Aadhaar detections
@@ -169,6 +171,7 @@ def run_full_gate_scoring(
     ]
     fb_confirmed = len(aadhaar_confs) > 0
     max_aadhaar_conf = max(aadhaar_confs) if aadhaar_confs else 0.0
+    log.info(f"Gate: fb_confirmed={fb_confirmed}, aadhaar_count={len(aadhaar_confs)}, max_conf={max_aadhaar_conf:.3f}")
 
     if aadhaar_confs:
         score = max_aadhaar_conf + min(len(aadhaar_confs), 3) * 0.05 + 0.1
@@ -188,6 +191,7 @@ def run_full_gate_scoring(
         if d.get("label", "").lower() == "aadhaar"
     ]
     aadhaar_boxes = [d["box"] for d in aadhaar_dets]
+    log.info(f"Gate: {len(aadhaar_boxes)} Aadhaar card boxes found, score={score:.4f}")
 
     # Step 5: Run best.pt on each Aadhaar crop (RGB)
     if aadhaar_boxes:
