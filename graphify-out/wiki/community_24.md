@@ -1,21 +1,24 @@
-# Community 24: get_failed_paths()
+# Community 24: _normalize_bbox()
 
 **Members:** 6
 
 ## Nodes
 
-- **file_paths** (`services_batch_processor_utils_file_paths_py`, File, degree: 5)
-- **get_completed_paths()** (`services_batch_processor_utils_file_paths_py_get_completed_paths`, Function, degree: 1)
-- **get_failed_paths()** (`services_batch_processor_utils_file_paths_py_get_failed_paths`, Function, degree: 1)
-- **boto3.dynamodb.conditions.Attr** (`services_batch_processor_utils_file_paths_py_import_boto3_dynamodb_conditions_attr`, Module, degree: 1)
-- **core.get_dynamo_table** (`services_batch_processor_utils_file_paths_py_import_core_get_dynamo_table`, Module, degree: 1)
-- **os** (`services_batch_processor_utils_file_paths_py_import_os`, Module, degree: 1)
+- **ocr_adapter** (`core_ocr_ocr_adapter_py`, File, degree: 5)
+- **adapt_paddle_result()** (`core_ocr_ocr_adapter_py_adapt_paddle_result`, Function, degree: 3)
+- **_append_v3_result()** (`core_ocr_ocr_adapter_py_append_v3_result`, Function, degree: 3)
+- **get_texts_and_boxes()** (`core_ocr_ocr_adapter_py_get_texts_and_boxes`, Function, degree: 2)
+- **logging** (`core_ocr_ocr_adapter_py_import_logging`, Module, degree: 1)
+- **_normalize_bbox()** (`core_ocr_ocr_adapter_py_normalize_bbox`, Function, degree: 2)
 
 ## Relationships
 
-- services_batch_processor_utils_file_paths_py → services_batch_processor_utils_file_paths_py_import_os (imports)
-- services_batch_processor_utils_file_paths_py → services_batch_processor_utils_file_paths_py_import_boto3_dynamodb_conditions_attr (imports)
-- services_batch_processor_utils_file_paths_py → services_batch_processor_utils_file_paths_py_import_core_get_dynamo_table (imports)
-- services_batch_processor_utils_file_paths_py → services_batch_processor_utils_file_paths_py_get_completed_paths (defines)
-- services_batch_processor_utils_file_paths_py → services_batch_processor_utils_file_paths_py_get_failed_paths (defines)
+- core_ocr_ocr_adapter_py → core_ocr_ocr_adapter_py_import_logging (imports)
+- core_ocr_ocr_adapter_py → core_ocr_ocr_adapter_py_normalize_bbox (defines)
+- core_ocr_ocr_adapter_py → core_ocr_ocr_adapter_py_append_v3_result (defines)
+- core_ocr_ocr_adapter_py → core_ocr_ocr_adapter_py_adapt_paddle_result (defines)
+- core_ocr_ocr_adapter_py → core_ocr_ocr_adapter_py_get_texts_and_boxes (defines)
+- core_ocr_ocr_adapter_py_append_v3_result → core_ocr_ocr_adapter_py_normalize_bbox (calls)
+- core_ocr_ocr_adapter_py_adapt_paddle_result → core_ocr_ocr_adapter_py_append_v3_result (calls)
+- core_ocr_ocr_adapter_py_get_texts_and_boxes → core_ocr_ocr_adapter_py_adapt_paddle_result (calls)
 

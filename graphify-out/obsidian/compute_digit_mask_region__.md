@@ -2,7 +2,7 @@
 id: core_ocr_masking_py_compute_digit_mask_region
 type: Function
 source: ./core/ocr/masking.py
-community: 5
+community: 4
 community_label: yolo_results_to_detections()
 ---
 

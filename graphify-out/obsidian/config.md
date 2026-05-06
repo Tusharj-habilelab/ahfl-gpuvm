@@ -2,7 +2,7 @@
 id: core_config_py
 type: File
 source: ./core/config.py
-community: 26
+community: 25
 community_label: validate_required_env_vars()
 ---
 

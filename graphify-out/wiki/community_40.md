@@ -4,12 +4,12 @@
 
 ## Nodes
 
-- **main** (`scripts_reporting_main_py`, File, degree: 2)
-- **os** (`scripts_reporting_main_py_import_os`, Module, degree: 1)
-- **pandas** (`scripts_reporting_main_py_import_pandas`, Module, degree: 1)
+- **merge_metadata** (`scripts_reporting_merge_metadata_py`, File, degree: 2)
+- **os** (`scripts_reporting_merge_metadata_py_import_os`, Module, degree: 1)
+- **pandas** (`scripts_reporting_merge_metadata_py_import_pandas`, Module, degree: 1)
 
 ## Relationships
 
-- scripts_reporting_main_py → scripts_reporting_main_py_import_pandas (imports)
-- scripts_reporting_main_py → scripts_reporting_main_py_import_os (imports)
+- scripts_reporting_merge_metadata_py → scripts_reporting_merge_metadata_py_import_pandas (imports)
+- scripts_reporting_merge_metadata_py → scripts_reporting_merge_metadata_py_import_os (imports)
 

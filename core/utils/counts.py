@@ -5,6 +5,9 @@ utils/counts.py — File and page counting utilities for AHFL-Masking 1.1.
 """
 
 import os
+import logging
+
+log = logging.getLogger(__name__)
 
 
 def count_files_in_folder(folder_path: str, extensions=(".pdf", ".jpg", ".jpeg", ".png")) -> dict:
@@ -31,5 +34,6 @@ def count_pdf_pages(pdf_path: str) -> int:
         from pdf2image import pdfinfo_from_path
         info = pdfinfo_from_path(pdf_path)
         return info.get("Pages", 1)
-    except Exception:
+    except Exception as e:
+        log.warning(f"count_pdf_pages failed for {pdf_path}: {e} — defaulting to 1")
         return 1

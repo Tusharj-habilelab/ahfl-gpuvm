@@ -2,7 +2,7 @@
 id: core_utils_angle_detector_py_import_typing_callable
 type: Module
 source: ./core/utils/angle_detector.py
-community: 8
+community: 7
 community_label: rotate_image_affine()
 ---
 

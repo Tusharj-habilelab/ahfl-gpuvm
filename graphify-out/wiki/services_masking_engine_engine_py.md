@@ -3,7 +3,7 @@
 - **ID:** `services_masking_engine_engine_py`
 - **Type:** File
 - **File:** `./services/masking-engine/engine.py`
-- **Community:** 2 (startup_event())
+- **Community:** 3 (startup_event())
 
 ## Relationships
 
@@ -30,8 +30,10 @@
 - services_masking_engine_engine_py → services_masking_engine_engine_py_import_torch (imports, Extracted)
 - services_masking_engine_engine_py → services_masking_engine_engine_py_import_core_get_yolo_main (imports, Extracted)
 - services_masking_engine_engine_py → services_masking_engine_engine_py_import_core_get_yolo_best (imports, Extracted)
-- services_masking_engine_engine_py → services_masking_engine_engine_py_import_core_config_validate_required_env_vars (imports, Extracted)
+- services_masking_engine_engine_py → services_masking_engine_engine_py_import_core_config_gpu_memory_fraction (imports, Extracted)
 - services_masking_engine_engine_py → services_masking_engine_engine_py_import_core_config_max_file_size (imports, Extracted)
+- services_masking_engine_engine_py → services_masking_engine_engine_py_import_core_config_pdf_chunk_size (imports, Extracted)
+- services_masking_engine_engine_py → services_masking_engine_engine_py_import_core_config_validate_required_env_vars (imports, Extracted)
 - services_masking_engine_engine_py → services_masking_engine_engine_py_import_core_config_gpu_enabled (imports, Extracted)
 - services_masking_engine_engine_py → services_masking_engine_engine_py_startup_event (defines, Extracted)
 - services_masking_engine_engine_py → services_masking_engine_engine_py_mask_single_image (defines, Extracted)

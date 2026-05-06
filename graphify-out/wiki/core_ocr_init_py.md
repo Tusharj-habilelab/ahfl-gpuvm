@@ -3,7 +3,7 @@
 - **ID:** `core_ocr_init_py`
 - **Type:** File
 - **File:** `./core/ocr/__init__.py`
-- **Community:** 9 (.paddle.scale_adapted_ocr_results)
+- **Community:** 10 (.paddle.scale_adapted_ocr_results)
 
 ## Relationships
 

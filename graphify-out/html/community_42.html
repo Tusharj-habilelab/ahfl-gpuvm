@@ -26,7 +26,7 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
 <div id="sidebar">
     <div>
         <h2>pandas (42)</h2>
-        <p style="font-size:12px;color:#666;">2 nodes · Community 42</p>
+        <p style="font-size:12px;color:#666;">3 nodes · Community 42</p>
     </div>
     <input id="search" type="text" placeholder="Search nodes…" />
     <div>
@@ -41,8 +41,8 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
 <div id="graph-container"></div>
 <script>
 (function() {
-    var nodesData = [{id:"scripts_reporting_mapping_py",label:"mapping",title:"mapping\nType: File\nFile: ./scripts/reporting/mapping.py\nDegree: 1",color:"#E15759",size:12.0},{id:"scripts_reporting_mapping_py_import_pandas",label:"pandas",title:"pandas\nType: Module\nFile: ./scripts/reporting/mapping.py\nDegree: 1",color:"#E15759",size:12.0}];
-    var edgesData = [{from:"scripts_reporting_mapping_py",to:"scripts_reporting_mapping_py_import_pandas",label:"imports",dashes:false,title:"imports: scripts_reporting_mapping_py → scripts_reporting_mapping_py_import_pandas\nConfidence: Extracted"}];
+    var nodesData = [{id:"scripts_reporting_main_py",label:"main",title:"main\nType: File\nFile: ./scripts/reporting/main.py\nDegree: 2",color:"#E15759",size:13.7},{id:"scripts_reporting_main_py_import_pandas",label:"pandas",title:"pandas\nType: Module\nFile: ./scripts/reporting/main.py\nDegree: 1",color:"#E15759",size:12.0},{id:"scripts_reporting_main_py_import_os",label:"os",title:"os\nType: Module\nFile: ./scripts/reporting/main.py\nDegree: 1",color:"#E15759",size:12.0}];
+    var edgesData = [{from:"scripts_reporting_main_py",to:"scripts_reporting_main_py_import_pandas",label:"imports",dashes:false,title:"imports: scripts_reporting_main_py → scripts_reporting_main_py_import_pandas\nConfidence: Extracted"},{from:"scripts_reporting_main_py",to:"scripts_reporting_main_py_import_os",label:"imports",dashes:false,title:"imports: scripts_reporting_main_py → scripts_reporting_main_py_import_os\nConfidence: Extracted"}];
     var container = document.getElementById('graph-container');
     var nodes = new vis.DataSet(nodesData);
     var edges = new vis.DataSet(edgesData);

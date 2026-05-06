@@ -1,22 +1,19 @@
-# Community 30: _normalize_bbox()
+# Community 30: get_all_files_recursive() (30)
 
 **Members:** 5
 
 ## Nodes
 
-- **ocr_adapter** (`core_ocr_ocr_adapter_py`, File, degree: 4)
-- **adapt_paddle_result()** (`core_ocr_ocr_adapter_py_adapt_paddle_result`, Function, degree: 3)
-- **_append_v3_result()** (`core_ocr_ocr_adapter_py_append_v3_result`, Function, degree: 3)
-- **get_texts_and_boxes()** (`core_ocr_ocr_adapter_py_get_texts_and_boxes`, Function, degree: 2)
-- **_normalize_bbox()** (`core_ocr_ocr_adapter_py_normalize_bbox`, Function, degree: 2)
+- **count_total_application** (`scripts_operational_count_total_application_py`, File, degree: 4)
+- **count_unique_applications()** (`scripts_operational_count_total_application_py_count_unique_applications`, Function, degree: 1)
+- **get_all_files_recursive()** (`scripts_operational_count_total_application_py_get_all_files_recursive`, Function, degree: 1)
+- **os** (`scripts_operational_count_total_application_py_import_os`, Module, degree: 1)
+- **sys** (`scripts_operational_count_total_application_py_import_sys`, Module, degree: 1)
 
 ## Relationships
 
-- core_ocr_ocr_adapter_py → core_ocr_ocr_adapter_py_normalize_bbox (defines)
-- core_ocr_ocr_adapter_py → core_ocr_ocr_adapter_py_append_v3_result (defines)
-- core_ocr_ocr_adapter_py → core_ocr_ocr_adapter_py_adapt_paddle_result (defines)
-- core_ocr_ocr_adapter_py → core_ocr_ocr_adapter_py_get_texts_and_boxes (defines)
-- core_ocr_ocr_adapter_py_append_v3_result → core_ocr_ocr_adapter_py_normalize_bbox (calls)
-- core_ocr_ocr_adapter_py_adapt_paddle_result → core_ocr_ocr_adapter_py_append_v3_result (calls)
-- core_ocr_ocr_adapter_py_get_texts_and_boxes → core_ocr_ocr_adapter_py_adapt_paddle_result (calls)
+- scripts_operational_count_total_application_py → scripts_operational_count_total_application_py_import_os (imports)
+- scripts_operational_count_total_application_py → scripts_operational_count_total_application_py_import_sys (imports)
+- scripts_operational_count_total_application_py → scripts_operational_count_total_application_py_get_all_files_recursive (defines)
+- scripts_operational_count_total_application_py → scripts_operational_count_total_application_py_count_unique_applications (defines)
 

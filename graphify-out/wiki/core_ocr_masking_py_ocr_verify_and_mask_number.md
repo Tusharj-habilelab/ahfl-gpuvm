@@ -3,8 +3,8 @@
 - **ID:** `core_ocr_masking_py_ocr_verify_and_mask_number`
 - **Type:** Function
 - **File:** `./core/ocr/masking.py`
-- **Location:** L364
-- **Community:** 5 (yolo_results_to_detections())
+- **Location:** L367
+- **Community:** 4 (yolo_results_to_detections())
 
 ## Relationships
 

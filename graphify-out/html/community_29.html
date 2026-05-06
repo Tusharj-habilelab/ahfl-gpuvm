@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>log_file_paths_to_csv() — Community 29</title>
+<title>run_batch_s3() — Community 29</title>
 <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,7 +25,7 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
 <body>
 <div id="sidebar">
     <div>
-        <h2>log_file_paths_to_csv()</h2>
+        <h2>run_batch_s3()</h2>
         <p style="font-size:12px;color:#666;">5 nodes · Community 29</p>
     </div>
     <input id="search" type="text" placeholder="Search nodes…" />
@@ -35,14 +35,14 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
     </div>
     <div>
         <h3>Navigation</h3>
-        <a href="index.html" class="nav-link" style="font-weight:bold;">← Overview</a>
+        <a href="index.html" class="nav-link" style="font-weight:bold;">← Overview</a><a href="community_1.html" class="nav-link"><span class="legend-dot" style="background:#F28E2B"></span>_validate_s3_buckets() (7 links)</a><a href="community_31.html" class="nav-link"><span class="legend-dot" style="background:#F28E2B"></span>_write_pending() (3 links)</a>
     </div>
 </div>
 <div id="graph-container"></div>
 <script>
 (function() {
-    var nodesData = [{id:"scripts_operational_log_file_paths_py",label:"log_file_paths",title:"log_file_paths\nType: File\nFile: ./scripts/operational/log_file_paths.py\nDegree: 4",color:"#BAB0AC",size:16.0},{id:"scripts_operational_log_file_paths_py_import_os",label:"os",title:"os\nType: Module\nFile: ./scripts/operational/log_file_paths.py\nDegree: 1",color:"#BAB0AC",size:12.0},{id:"scripts_operational_log_file_paths_py_import_csv",label:"csv",title:"csv\nType: Module\nFile: ./scripts/operational/log_file_paths.py\nDegree: 1",color:"#BAB0AC",size:12.0},{id:"scripts_operational_log_file_paths_py_import_argparse",label:"argparse",title:"argparse\nType: Module\nFile: ./scripts/operational/log_file_paths.py\nDegree: 1",color:"#BAB0AC",size:12.0},{id:"scripts_operational_log_file_paths_py_log_file_paths_to_csv",label:"log_file_paths_to_csv()",title:"log_file_paths_to_csv()\nType: Function\nFile: ./scripts/operational/log_file_paths.py\nDegree: 1",color:"#BAB0AC",size:12.0}];
-    var edgesData = [{from:"scripts_operational_log_file_paths_py",to:"scripts_operational_log_file_paths_py_import_os",label:"imports",dashes:false,title:"imports: scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_import_os\nConfidence: Extracted"},{from:"scripts_operational_log_file_paths_py",to:"scripts_operational_log_file_paths_py_import_csv",label:"imports",dashes:false,title:"imports: scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_import_csv\nConfidence: Extracted"},{from:"scripts_operational_log_file_paths_py",to:"scripts_operational_log_file_paths_py_import_argparse",label:"imports",dashes:false,title:"imports: scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_import_argparse\nConfidence: Extracted"},{from:"scripts_operational_log_file_paths_py",to:"scripts_operational_log_file_paths_py_log_file_paths_to_csv",label:"defines",dashes:false,title:"defines: scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_log_file_paths_to_csv\nConfidence: Extracted"}];
+    var nodesData = [{id:"services_batch_processor_batch_py_is_password_protected_pdf",label:"_is_password_protected_pdf()",title:"_is_password_protected_pdf()\nType: Function\nFile: ./services/batch-processor/batch.py\nDegree: 3",color:"#BAB0AC",size:14.9},{id:"services_batch_processor_batch_py_dynamo_retry",label:"_dynamo_retry()",title:"_dynamo_retry()\nType: Function\nFile: ./services/batch-processor/batch.py\nDegree: 2",color:"#BAB0AC",size:13.7},{id:"services_batch_processor_batch_py_cleanup_stale_processing_records",label:"_cleanup_stale_processing_records()",title:"_cleanup_stale_processing_records()\nType: Function\nFile: ./services/batch-processor/batch.py\nDegree: 2",color:"#BAB0AC",size:13.7},{id:"services_batch_processor_batch_py_list_s3_keys",label:"_list_s3_keys()",title:"_list_s3_keys()\nType: Function\nFile: ./services/batch-processor/batch.py\nDegree: 2",color:"#BAB0AC",size:13.7},{id:"services_batch_processor_batch_py_run_batch_s3",label:"run_batch_s3()",title:"run_batch_s3()\nType: Function\nFile: ./services/batch-processor/batch.py\nDegree: 9",color:"#BAB0AC",size:20.0}];
+    var edgesData = [{from:"services_batch_processor_batch_py_run_batch_s3",to:"services_batch_processor_batch_py_cleanup_stale_processing_records",label:"calls",dashes:true,title:"calls: services_batch_processor_batch_py_run_batch_s3 → services_batch_processor_batch_py_cleanup_stale_processing_records\nConfidence: Inferred"},{from:"services_batch_processor_batch_py_run_batch_s3",to:"services_batch_processor_batch_py_is_password_protected_pdf",label:"calls",dashes:true,title:"calls: services_batch_processor_batch_py_run_batch_s3 → services_batch_processor_batch_py_is_password_protected_pdf\nConfidence: Inferred"},{from:"services_batch_processor_batch_py_run_batch_s3",to:"services_batch_processor_batch_py_dynamo_retry",label:"calls",dashes:true,title:"calls: services_batch_processor_batch_py_run_batch_s3 → services_batch_processor_batch_py_dynamo_retry\nConfidence: Inferred"},{from:"services_batch_processor_batch_py_run_batch_s3",to:"services_batch_processor_batch_py_list_s3_keys",label:"calls",dashes:true,title:"calls: services_batch_processor_batch_py_run_batch_s3 → services_batch_processor_batch_py_list_s3_keys\nConfidence: Inferred"}];
     var container = document.getElementById('graph-container');
     var nodes = new vis.DataSet(nodesData);
     var edges = new vis.DataSet(edgesData);

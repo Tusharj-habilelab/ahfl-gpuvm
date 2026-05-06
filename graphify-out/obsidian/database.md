@@ -2,7 +2,7 @@
 id: core_db_database_py
 type: File
 source: ./core/db/database.py
-community: 28
+community: 26
 community_label: get_dynamo_table()
 ---
 
@@ -11,4 +11,5 @@ community_label: get_dynamo_table()
 - [[os]] (imports)
 - [[boto3]] (imports)
 - [[dotenv_load_dotenv]] (imports)
+- [[build_default_record__]] (defines)
 - [[get_dynamo_table__]] (defines)

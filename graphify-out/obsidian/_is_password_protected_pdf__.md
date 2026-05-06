@@ -2,8 +2,8 @@
 id: services_batch_processor_batch_py_is_password_protected_pdf
 type: Function
 source: ./services/batch-processor/batch.py
-community: 27
-community_label: _write_pending()
+community: 29
+community_label: run_batch_s3()
 ---
 
 ## Connections

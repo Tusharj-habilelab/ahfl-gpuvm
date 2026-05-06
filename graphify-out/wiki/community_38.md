@@ -1,4 +1,4 @@
-# Community 38: pandas (38)
+# Community 38: pandas
 
 **Members:** 3
 

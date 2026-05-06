@@ -1,17 +1,19 @@
-# Community 33: count_pdf_pages()
+# Community 33: log_file_paths_to_csv()
 
-**Members:** 4
+**Members:** 5
 
 ## Nodes
 
-- **counts** (`core_utils_counts_py`, File, degree: 3)
-- **count_files_in_folder()** (`core_utils_counts_py_count_files_in_folder`, Function, degree: 1)
-- **count_pdf_pages()** (`core_utils_counts_py_count_pdf_pages`, Function, degree: 1)
-- **os** (`core_utils_counts_py_import_os`, Module, degree: 1)
+- **log_file_paths** (`scripts_operational_log_file_paths_py`, File, degree: 4)
+- **argparse** (`scripts_operational_log_file_paths_py_import_argparse`, Module, degree: 1)
+- **csv** (`scripts_operational_log_file_paths_py_import_csv`, Module, degree: 1)
+- **os** (`scripts_operational_log_file_paths_py_import_os`, Module, degree: 1)
+- **log_file_paths_to_csv()** (`scripts_operational_log_file_paths_py_log_file_paths_to_csv`, Function, degree: 1)
 
 ## Relationships
 
-- core_utils_counts_py → core_utils_counts_py_import_os (imports)
-- core_utils_counts_py → core_utils_counts_py_count_files_in_folder (defines)
-- core_utils_counts_py → core_utils_counts_py_count_pdf_pages (defines)
+- scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_import_os (imports)
+- scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_import_csv (imports)
+- scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_import_argparse (imports)
+- scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_log_file_paths_to_csv (defines)
 

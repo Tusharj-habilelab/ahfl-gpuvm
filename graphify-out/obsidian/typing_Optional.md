@@ -1,11 +1,11 @@
 ---
-id: core_models_yolo_runner_py_import_typing_optional
+id: core_pipeline_py_import_typing_optional
 type: Module
-source: ./core/models/yolo_runner.py
-community: 12
-community_label: reset_models()
+source: ./core/pipeline.py
+community: 2
+community_label: _verify_skip_pan()
 ---
 
 ## Connections
 
-- [[yolo_runner]] (imports)
+- [[pipeline]] (imports)

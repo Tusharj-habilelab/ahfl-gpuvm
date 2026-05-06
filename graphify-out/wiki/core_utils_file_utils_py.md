@@ -3,7 +3,7 @@
 - **ID:** `core_utils_file_utils_py`
 - **Type:** File
 - **File:** `./core/utils/file_utils.py`
-- **Community:** 11 (validate_file_size())
+- **Community:** 12 (validate_file_size())
 
 ## Relationships
 

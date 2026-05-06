@@ -10,6 +10,11 @@ works unchanged regardless of the OCR engine version.
 """
 
 
+import logging
+
+log = logging.getLogger(__name__)
+
+
 def _normalize_bbox(bbox):
     """Convert a PaddleOCR bbox/polygon into four (x, y) float tuples."""
     if bbox is None:
@@ -101,6 +106,7 @@ def adapt_paddle_result(paddle_result):
                 log.debug(f"Skipped malformed detection: {e}")
                 continue
 
+    log.debug(f"adapt_paddle_result: {len(adapted)} tokens adapted")
     return adapted
 
 

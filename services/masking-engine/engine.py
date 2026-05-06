@@ -181,9 +181,11 @@ def _mask_single_image(image_path: str) -> dict:
     import cv2
 
     try:
-        image = cv2.imread(image_path)
+        image = cv2.imread(image_path, cv2.IMREAD_COLOR)
         if image is None:
             raise ValueError(f"Cannot read image: {image_path}")
+        if image.ndim == 2:
+            image = cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)
 
         from core.pipeline import process_image
         masked_image, report = process_image(image, skip_keywords_enabled=True)
@@ -238,7 +240,7 @@ def _mask_pdf(pdf_path: str) -> dict:
 
             for page in pages:
                 img_path = os.path.join(tmp_dir, f"p{page_idx:04d}.jpg")
-                page.save(img_path, "JPEG")
+                page.convert('RGB').save(img_path, "JPEG")  # Force RGB — YOLO requires 3 channels
                 del page
 
                 try:
@@ -361,7 +363,7 @@ async def mask_file(file: UploadFile = File(...)):
         shutil.copyfileobj(file.file, buf)
 
     try:
-        loop = asyncio.get_event_loop()
+        loop = asyncio.get_running_loop()
         if ext == "pdf":
             page_reports = await loop.run_in_executor(None, _mask_pdf, str(output_path))
         else:

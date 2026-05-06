@@ -105,7 +105,7 @@ def find_best_orientation(
         return image, 0, data_0
 
     if _check_composite_early_exit(data_0):
-        log.debug(
+        log.info(
             "Orientation: early exit at 0° "
             f"(aadhaar={data_0.get('max_aadhaar_conf', 0):.3f}, "
             f"number={data_0.get('best_number_conf', 0):.3f}, "
@@ -121,7 +121,7 @@ def find_best_orientation(
         hint_score, hint_data = score_fn(hint_rotated)
         scored_cache[hint_angle] = (hint_rotated, hint_score, hint_data)
         if _check_composite_early_exit(hint_data):
-            log.debug(
+            log.info(
                 f"Orientation: doc hint early exit at {hint_angle}° "
                 f"(aadhaar={hint_data.get('max_aadhaar_conf', 0):.3f}, "
                 f"number={hint_data.get('best_number_conf', 0):.3f}, "
@@ -142,7 +142,7 @@ def find_best_orientation(
             score, data = score_fn(rotated)
 
         if _check_composite_early_exit(data):
-            log.debug(
+            log.info(
                 f"Orientation: early exit at {angle}° "
                 f"(aadhaar={data.get('max_aadhaar_conf', 0):.3f}, "
                 f"number={data.get('best_number_conf', 0):.3f}, "
@@ -156,7 +156,7 @@ def find_best_orientation(
             best_image = rotated
             best_data = data
 
-    log.debug(
+    log.info(
         f"Orientation: selected {best_angle}° "
         f"(score={best_score:.4f}, tried={len(ORIENTATION_ANGLES)} angles)"
     )

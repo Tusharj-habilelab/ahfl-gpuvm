@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>get_dynamo_table() — Community 28</title>
+<title>write_file() — Community 28</title>
 <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,8 +25,8 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
 <body>
 <div id="sidebar">
     <div>
-        <h2>get_dynamo_table()</h2>
-        <p style="font-size:12px;color:#666;">5 nodes · Community 28</p>
+        <h2>write_file()</h2>
+        <p style="font-size:12px;color:#666;">6 nodes · Community 28</p>
     </div>
     <input id="search" type="text" placeholder="Search nodes…" />
     <div>
@@ -41,8 +41,8 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
 <div id="graph-container"></div>
 <script>
 (function() {
-    var nodesData = [{id:"core_db_database_py",label:"database",title:"database\nType: File\nFile: ./core/db/database.py\nDegree: 4",color:"#9C755F",size:16.0},{id:"core_db_database_py_import_os",label:"os",title:"os\nType: Module\nFile: ./core/db/database.py\nDegree: 1",color:"#9C755F",size:12.0},{id:"core_db_database_py_import_boto3",label:"boto3",title:"boto3\nType: Module\nFile: ./core/db/database.py\nDegree: 1",color:"#9C755F",size:12.0},{id:"core_db_database_py_import_dotenv_load_dotenv",label:"dotenv.load_dotenv",title:"dotenv.load_dotenv\nType: Module\nFile: ./core/db/database.py\nDegree: 1",color:"#9C755F",size:12.0},{id:"core_db_database_py_get_dynamo_table",label:"get_dynamo_table()",title:"get_dynamo_table()\nType: Function\nFile: ./core/db/database.py\nDegree: 1",color:"#9C755F",size:12.0}];
-    var edgesData = [{from:"core_db_database_py",to:"core_db_database_py_import_os",label:"imports",dashes:false,title:"imports: core_db_database_py → core_db_database_py_import_os\nConfidence: Extracted"},{from:"core_db_database_py",to:"core_db_database_py_import_boto3",label:"imports",dashes:false,title:"imports: core_db_database_py → core_db_database_py_import_boto3\nConfidence: Extracted"},{from:"core_db_database_py",to:"core_db_database_py_import_dotenv_load_dotenv",label:"imports",dashes:false,title:"imports: core_db_database_py → core_db_database_py_import_dotenv_load_dotenv\nConfidence: Extracted"},{from:"core_db_database_py",to:"core_db_database_py_get_dynamo_table",label:"defines",dashes:false,title:"defines: core_db_database_py → core_db_database_py_get_dynamo_table\nConfidence: Extracted"}];
+    var nodesData = [{id:"gpu_master_sync_d4_complete_py",label:"GPU_MASTER_SYNC_D4_COMPLETE",title:"GPU_MASTER_SYNC_D4_COMPLETE\nType: File\nFile: ./GPU_MASTER_SYNC_D4_COMPLETE.py\nDegree: 5",color:"#9C755F",size:16.9},{id:"gpu_master_sync_d4_complete_py_import_os",label:"os",title:"os\nType: Module\nFile: ./GPU_MASTER_SYNC_D4_COMPLETE.py\nDegree: 1",color:"#9C755F",size:12.0},{id:"gpu_master_sync_d4_complete_py_import_sys",label:"sys",title:"sys\nType: Module\nFile: ./GPU_MASTER_SYNC_D4_COMPLETE.py\nDegree: 1",color:"#9C755F",size:12.0},{id:"gpu_master_sync_d4_complete_py_patch",label:"patch()",title:"patch()\nType: Function\nFile: ./GPU_MASTER_SYNC_D4_COMPLETE.py\nDegree: 1",color:"#9C755F",size:12.0},{id:"gpu_master_sync_d4_complete_py_append_after",label:"append_after()",title:"append_after()\nType: Function\nFile: ./GPU_MASTER_SYNC_D4_COMPLETE.py\nDegree: 1",color:"#9C755F",size:12.0},{id:"gpu_master_sync_d4_complete_py_write_file",label:"write_file()",title:"write_file()\nType: Function\nFile: ./GPU_MASTER_SYNC_D4_COMPLETE.py\nDegree: 1",color:"#9C755F",size:12.0}];
+    var edgesData = [{from:"gpu_master_sync_d4_complete_py",to:"gpu_master_sync_d4_complete_py_import_os",label:"imports",dashes:false,title:"imports: gpu_master_sync_d4_complete_py → gpu_master_sync_d4_complete_py_import_os\nConfidence: Extracted"},{from:"gpu_master_sync_d4_complete_py",to:"gpu_master_sync_d4_complete_py_import_sys",label:"imports",dashes:false,title:"imports: gpu_master_sync_d4_complete_py → gpu_master_sync_d4_complete_py_import_sys\nConfidence: Extracted"},{from:"gpu_master_sync_d4_complete_py",to:"gpu_master_sync_d4_complete_py_patch",label:"defines",dashes:false,title:"defines: gpu_master_sync_d4_complete_py → gpu_master_sync_d4_complete_py_patch\nConfidence: Extracted"},{from:"gpu_master_sync_d4_complete_py",to:"gpu_master_sync_d4_complete_py_append_after",label:"defines",dashes:false,title:"defines: gpu_master_sync_d4_complete_py → gpu_master_sync_d4_complete_py_append_after\nConfidence: Extracted"},{from:"gpu_master_sync_d4_complete_py",to:"gpu_master_sync_d4_complete_py_write_file",label:"defines",dashes:false,title:"defines: gpu_master_sync_d4_complete_py → gpu_master_sync_d4_complete_py_write_file\nConfidence: Extracted"}];
     var container = document.getElementById('graph-container');
     var nodes = new vis.DataSet(nodesData);
     var edges = new vis.DataSet(edgesData);

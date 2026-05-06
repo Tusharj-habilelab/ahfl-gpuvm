@@ -2,7 +2,7 @@
 id: core_ocr_masking_py_extract_target_coordinates
 type: Function
 source: ./core/ocr/masking.py
-community: 20
+community: 23
 community_label: levenshtein_score()
 ---
 

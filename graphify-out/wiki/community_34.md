@@ -1,17 +1,17 @@
-# Community 34: shutil
+# Community 34: .yolo_runner.YOLORunner
 
 **Members:** 4
 
 ## Nodes
 
-- **copy_files** (`scripts_reporting_copy_files_py`, File, degree: 3)
-- **os** (`scripts_reporting_copy_files_py_import_os`, Module, degree: 1)
-- **pandas** (`scripts_reporting_copy_files_py_import_pandas`, Module, degree: 1)
-- **shutil** (`scripts_reporting_copy_files_py_import_shutil`, Module, degree: 1)
+- **__init__** (`core_models_init_py`, File, degree: 3)
+- **.yolo_runner.get_yolo_best** (`core_models_init_py_import_yolo_runner_get_yolo_best`, Module, degree: 1)
+- **.yolo_runner.get_yolo_main** (`core_models_init_py_import_yolo_runner_get_yolo_main`, Module, degree: 1)
+- **.yolo_runner.YOLORunner** (`core_models_init_py_import_yolo_runner_yolorunner`, Module, degree: 1)
 
 ## Relationships
 
-- scripts_reporting_copy_files_py → scripts_reporting_copy_files_py_import_shutil (imports)
-- scripts_reporting_copy_files_py → scripts_reporting_copy_files_py_import_pandas (imports)
-- scripts_reporting_copy_files_py → scripts_reporting_copy_files_py_import_os (imports)
+- core_models_init_py → core_models_init_py_import_yolo_runner_yolorunner (imports)
+- core_models_init_py → core_models_init_py_import_yolo_runner_get_yolo_main (imports)
+- core_models_init_py → core_models_init_py_import_yolo_runner_get_yolo_best (imports)
 

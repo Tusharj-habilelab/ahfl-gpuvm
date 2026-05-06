@@ -3,7 +3,7 @@
 - **ID:** `services_api_gateway_main_py`
 - **Type:** File
 - **File:** `./services/api-gateway/main.py`
-- **Community:** 4 (_validate_api_key())
+- **Community:** 5 (_validate_api_key())
 
 ## Relationships
 

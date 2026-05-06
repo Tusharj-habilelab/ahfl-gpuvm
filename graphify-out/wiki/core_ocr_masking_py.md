@@ -3,7 +3,7 @@
 - **ID:** `core_ocr_masking_py`
 - **Type:** File
 - **File:** `./core/ocr/masking.py`
-- **Community:** 5 (yolo_results_to_detections())
+- **Community:** 4 (yolo_results_to_detections())
 
 ## Relationships
 
@@ -15,6 +15,8 @@
 - core_ocr_masking_py → core_ocr_masking_py_import_numpy (imports, Extracted)
 - core_ocr_masking_py → core_ocr_masking_py_import_collections_counter (imports, Extracted)
 - core_ocr_masking_py → core_ocr_masking_py_import_core_ocr_paddle_create_paddle_ocr (imports, Extracted)
+- core_ocr_masking_py → core_ocr_masking_py_import_core_ocr_ocr_adapter_adapt_paddle_result (imports, Extracted)
+- core_ocr_masking_py → core_ocr_masking_py_import_core_ocr_ocr_adapter_get_texts_and_boxes (imports, Extracted)
 - core_ocr_masking_py → core_ocr_masking_py_verhoeff_validate (defines, Extracted)
 - core_ocr_masking_py → core_ocr_masking_py_is_valid_aadhaar_number (defines, Extracted)
 - core_ocr_masking_py → core_ocr_masking_py_compute_digit_mask_region (defines, Extracted)

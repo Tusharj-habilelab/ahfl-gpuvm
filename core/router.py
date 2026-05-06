@@ -189,8 +189,7 @@ def classify_document_lane(
     # Check skip signals first
     should_skip, skip_keyword = _contains_skip_signals(normalized)
     if should_skip:
-        if debug:
-            log.debug(f"Router: Skip keyword detected: {skip_keyword}")
+        log.info(f"Router: skip keyword detected: '{skip_keyword}'")
         return {
             'lane': 'form',  # Route to form lane for skip processing
             'confidence': 1.0,
@@ -244,8 +243,9 @@ def classify_document_lane(
         'skip_keyword': None,
         'reasoning': reasoning
     }
-    
+
+    log.info(f"Router: lane={lane} confidence={confidence:.2f} reasoning={reasoning[:80]}")
     if debug:
-        log.debug(f"Router decision: {result}")
-    
+        log.debug(f"Router decision detail: {result}")
+
     return result

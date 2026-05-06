@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>count_pdf_pages() — Community 33</title>
+<title>log_file_paths_to_csv() — Community 33</title>
 <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,8 +25,8 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
 <body>
 <div id="sidebar">
     <div>
-        <h2>count_pdf_pages()</h2>
-        <p style="font-size:12px;color:#666;">4 nodes · Community 33</p>
+        <h2>log_file_paths_to_csv()</h2>
+        <p style="font-size:12px;color:#666;">5 nodes · Community 33</p>
     </div>
     <input id="search" type="text" placeholder="Search nodes…" />
     <div>
@@ -41,8 +41,8 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
 <div id="graph-container"></div>
 <script>
 (function() {
-    var nodesData = [{id:"core_utils_counts_py",label:"counts",title:"counts\nType: File\nFile: ./core/utils/counts.py\nDegree: 3",color:"#76B7B2",size:14.9},{id:"core_utils_counts_py_import_os",label:"os",title:"os\nType: Module\nFile: ./core/utils/counts.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"core_utils_counts_py_count_files_in_folder",label:"count_files_in_folder()",title:"count_files_in_folder()\nType: Function\nFile: ./core/utils/counts.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"core_utils_counts_py_count_pdf_pages",label:"count_pdf_pages()",title:"count_pdf_pages()\nType: Function\nFile: ./core/utils/counts.py\nDegree: 1",color:"#76B7B2",size:12.0}];
-    var edgesData = [{from:"core_utils_counts_py",to:"core_utils_counts_py_import_os",label:"imports",dashes:false,title:"imports: core_utils_counts_py → core_utils_counts_py_import_os\nConfidence: Extracted"},{from:"core_utils_counts_py",to:"core_utils_counts_py_count_files_in_folder",label:"defines",dashes:false,title:"defines: core_utils_counts_py → core_utils_counts_py_count_files_in_folder\nConfidence: Extracted"},{from:"core_utils_counts_py",to:"core_utils_counts_py_count_pdf_pages",label:"defines",dashes:false,title:"defines: core_utils_counts_py → core_utils_counts_py_count_pdf_pages\nConfidence: Extracted"}];
+    var nodesData = [{id:"scripts_operational_log_file_paths_py",label:"log_file_paths",title:"log_file_paths\nType: File\nFile: ./scripts/operational/log_file_paths.py\nDegree: 4",color:"#76B7B2",size:16.0},{id:"scripts_operational_log_file_paths_py_import_os",label:"os",title:"os\nType: Module\nFile: ./scripts/operational/log_file_paths.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"scripts_operational_log_file_paths_py_import_csv",label:"csv",title:"csv\nType: Module\nFile: ./scripts/operational/log_file_paths.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"scripts_operational_log_file_paths_py_import_argparse",label:"argparse",title:"argparse\nType: Module\nFile: ./scripts/operational/log_file_paths.py\nDegree: 1",color:"#76B7B2",size:12.0},{id:"scripts_operational_log_file_paths_py_log_file_paths_to_csv",label:"log_file_paths_to_csv()",title:"log_file_paths_to_csv()\nType: Function\nFile: ./scripts/operational/log_file_paths.py\nDegree: 1",color:"#76B7B2",size:12.0}];
+    var edgesData = [{from:"scripts_operational_log_file_paths_py",to:"scripts_operational_log_file_paths_py_import_os",label:"imports",dashes:false,title:"imports: scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_import_os\nConfidence: Extracted"},{from:"scripts_operational_log_file_paths_py",to:"scripts_operational_log_file_paths_py_import_csv",label:"imports",dashes:false,title:"imports: scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_import_csv\nConfidence: Extracted"},{from:"scripts_operational_log_file_paths_py",to:"scripts_operational_log_file_paths_py_import_argparse",label:"imports",dashes:false,title:"imports: scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_import_argparse\nConfidence: Extracted"},{from:"scripts_operational_log_file_paths_py",to:"scripts_operational_log_file_paths_py_log_file_paths_to_csv",label:"defines",dashes:false,title:"defines: scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_log_file_paths_to_csv\nConfidence: Extracted"}];
     var container = document.getElementById('graph-container');
     var nodes = new vis.DataSet(nodesData);
     var edges = new vis.DataSet(edgesData);

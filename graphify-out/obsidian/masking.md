@@ -2,7 +2,7 @@
 id: core_ocr_masking_py
 type: File
 source: ./core/ocr/masking.py
-community: 5
+community: 4
 community_label: yolo_results_to_detections()
 ---
 
@@ -16,6 +16,8 @@ community_label: yolo_results_to_detections()
 - [[numpy]] (imports)
 - [[collections_Counter]] (imports)
 - [[core_ocr_paddle_create_paddle_ocr]] (imports)
+- [[core_ocr_ocr_adapter_adapt_paddle_result]] (imports)
+- [[core_ocr_ocr_adapter_get_texts_and_boxes]] (imports)
 - [[verhoeff_validate__]] (defines)
 - [[is_valid_aadhaar_number__]] (defines)
 - [[compute_digit_mask_region__]] (defines)

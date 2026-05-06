@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>get_all_files_recursive() — Community 31</title>
+<title>_write_pending() — Community 31</title>
 <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,7 +25,7 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
 <body>
 <div id="sidebar">
     <div>
-        <h2>get_all_files_recursive()</h2>
+        <h2>_write_pending()</h2>
         <p style="font-size:12px;color:#666;">5 nodes · Community 31</p>
     </div>
     <input id="search" type="text" placeholder="Search nodes…" />
@@ -35,14 +35,14 @@ body { background: #0f0f1a; color: #e0e0e0; font-family: 'Segoe UI', system-ui, 
     </div>
     <div>
         <h3>Navigation</h3>
-        <a href="index.html" class="nav-link" style="font-weight:bold;">← Overview</a>
+        <a href="index.html" class="nav-link" style="font-weight:bold;">← Overview</a><a href="community_1.html" class="nav-link"><span class="legend-dot" style="background:#F28E2B"></span>_validate_s3_buckets() (8 links)</a><a href="community_29.html" class="nav-link"><span class="legend-dot" style="background:#BAB0AC"></span>run_batch_s3() (3 links)</a>
     </div>
 </div>
 <div id="graph-container"></div>
 <script>
 (function() {
-    var nodesData = [{id:"scripts_operational_count_total_application_py",label:"count_total_application",title:"count_total_application\nType: File\nFile: ./scripts/operational/count_total_application.py\nDegree: 4",color:"#F28E2B",size:16.0},{id:"scripts_operational_count_total_application_py_import_os",label:"os",title:"os\nType: Module\nFile: ./scripts/operational/count_total_application.py\nDegree: 1",color:"#F28E2B",size:12.0},{id:"scripts_operational_count_total_application_py_import_sys",label:"sys",title:"sys\nType: Module\nFile: ./scripts/operational/count_total_application.py\nDegree: 1",color:"#F28E2B",size:12.0},{id:"scripts_operational_count_total_application_py_get_all_files_recursive",label:"get_all_files_recursive()",title:"get_all_files_recursive()\nType: Function\nFile: ./scripts/operational/count_total_application.py\nDegree: 1",color:"#F28E2B",size:12.0},{id:"scripts_operational_count_total_application_py_count_unique_applications",label:"count_unique_applications()",title:"count_unique_applications()\nType: Function\nFile: ./scripts/operational/count_total_application.py\nDegree: 1",color:"#F28E2B",size:12.0}];
-    var edgesData = [{from:"scripts_operational_count_total_application_py",to:"scripts_operational_count_total_application_py_import_os",label:"imports",dashes:false,title:"imports: scripts_operational_count_total_application_py → scripts_operational_count_total_application_py_import_os\nConfidence: Extracted"},{from:"scripts_operational_count_total_application_py",to:"scripts_operational_count_total_application_py_import_sys",label:"imports",dashes:false,title:"imports: scripts_operational_count_total_application_py → scripts_operational_count_total_application_py_import_sys\nConfidence: Extracted"},{from:"scripts_operational_count_total_application_py",to:"scripts_operational_count_total_application_py_get_all_files_recursive",label:"defines",dashes:false,title:"defines: scripts_operational_count_total_application_py → scripts_operational_count_total_application_py_get_all_files_recursive\nConfidence: Extracted"},{from:"scripts_operational_count_total_application_py",to:"scripts_operational_count_total_application_py_count_unique_applications",label:"defines",dashes:false,title:"defines: scripts_operational_count_total_application_py → scripts_operational_count_total_application_py_count_unique_applications\nConfidence: Extracted"}];
+    var nodesData = [{id:"services_batch_processor_batch_py_get_skip_paths",label:"_get_skip_paths()",title:"_get_skip_paths()\nType: Function\nFile: ./services/batch-processor/batch.py\nDegree: 3",color:"#F28E2B",size:14.9},{id:"services_batch_processor_batch_py_write_pending",label:"_write_pending()",title:"_write_pending()\nType: Function\nFile: ./services/batch-processor/batch.py\nDegree: 2",color:"#F28E2B",size:13.7},{id:"services_batch_processor_batch_py_update_to_processing",label:"_update_to_processing()",title:"_update_to_processing()\nType: Function\nFile: ./services/batch-processor/batch.py\nDegree: 2",color:"#F28E2B",size:13.7},{id:"services_batch_processor_batch_py_update_to_error",label:"_update_to_error()",title:"_update_to_error()\nType: Function\nFile: ./services/batch-processor/batch.py\nDegree: 3",color:"#F28E2B",size:14.9},{id:"services_batch_processor_batch_py_run_batch",label:"run_batch()",title:"run_batch()\nType: Function\nFile: ./services/batch-processor/batch.py\nDegree: 9",color:"#F28E2B",size:20.0}];
+    var edgesData = [{from:"services_batch_processor_batch_py_run_batch",to:"services_batch_processor_batch_py_update_to_error",label:"calls",dashes:true,title:"calls: services_batch_processor_batch_py_run_batch → services_batch_processor_batch_py_update_to_error\nConfidence: Inferred"},{from:"services_batch_processor_batch_py_run_batch",to:"services_batch_processor_batch_py_write_pending",label:"calls",dashes:true,title:"calls: services_batch_processor_batch_py_run_batch → services_batch_processor_batch_py_write_pending\nConfidence: Inferred"},{from:"services_batch_processor_batch_py_run_batch",to:"services_batch_processor_batch_py_update_to_processing",label:"calls",dashes:true,title:"calls: services_batch_processor_batch_py_run_batch → services_batch_processor_batch_py_update_to_processing\nConfidence: Inferred"},{from:"services_batch_processor_batch_py_run_batch",to:"services_batch_processor_batch_py_get_skip_paths",label:"calls",dashes:true,title:"calls: services_batch_processor_batch_py_run_batch → services_batch_processor_batch_py_get_skip_paths\nConfidence: Inferred"}];
     var container = document.getElementById('graph-container');
     var nodes = new vis.DataSet(nodesData);
     var edges = new vis.DataSet(edgesData);

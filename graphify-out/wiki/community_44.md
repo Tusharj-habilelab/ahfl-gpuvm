@@ -1,8 +1,8 @@
-# Community 44: merge_chat_sessions
+# Community 44: D4_PATCHES_FOR_GPU
 
 **Members:** 1
 
 ## Nodes
 
-- **merge_chat_sessions** (`scripts_merge_chat_sessions_py`, File, degree: 0)
+- **D4_PATCHES_FOR_GPU** (`d4_patches_for_gpu_py`, File, degree: 0)
 

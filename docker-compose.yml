@@ -42,10 +42,17 @@ services:
       - MASKING_ENGINE_PORT=8001
       - PADDLE_MODEL_DIR=/app/models/paddleocr
       - GPU_ENABLED=true
+      # Detection thresholds — tunable without rebuild
+      - ORIENTATION_STRONG_THRESHOLD=0.75
+      - ORIENTATION_TARGET_THRESHOLD=0.7
+      - PVC_PERSON_CONFIDENCE_THRESHOLD=0.5
+      # Dilation: false=off (default), true=dilated greyscale for faded cards
+      - YOLO_MAIN_DILATE_ENABLED=false
     volumes:
       - /ahfl-models:/app/models
       - masked_output:/app/output/masked
       - /ahfl-models/.paddlex:/root/.paddlex
+      - ./logs:/logs
     restart: unless-stopped
     deploy:
       resources:
@@ -71,9 +78,16 @@ services:
       - RAW_BUCKET=${RAW_BUCKET:-ahfl-ams-raw-data-bucket-333813598364-ap-south-1-an}
       - MASKED_BUCKET=${MASKED_BUCKET:-ahfl-uat-ams-masked-data-bucket-333813598364-ap-south-1-an}
       - PADDLE_MODEL_DIR=/app/models/paddleocr
+      # Detection thresholds — tunable without rebuild
+      - ORIENTATION_STRONG_THRESHOLD=0.75
+      - ORIENTATION_TARGET_THRESHOLD=0.7
+      - PVC_PERSON_CONFIDENCE_THRESHOLD=0.5
+      # Dilation: false=off (default), true=dilated greyscale for faded cards
+      - YOLO_MAIN_DILATE_ENABLED=false
     volumes:
       - /ahfl-models:/app/models:ro
       - /ahfl-models/.paddlex:/root/.paddlex
+      - ./logs:/logs
     profiles:
       - batch
     restart: "no"

@@ -1,4 +1,4 @@
-# Community 22: get_all_files_recursive() (22)
+# Community 22: get_all_files_recursive()
 
 **Members:** 7
 

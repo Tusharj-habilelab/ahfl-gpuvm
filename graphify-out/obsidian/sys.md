@@ -1,11 +1,11 @@
 ---
-id: services_batch_processor_batch_py_import_sys
+id: gpu_master_sync_d4_complete_py_import_sys
 type: Module
-source: ./services/batch-processor/batch.py
-community: 1
-community_label: _validate_s3_buckets()
+source: ./GPU_MASTER_SYNC_D4_COMPLETE.py
+community: 28
+community_label: write_file()
 ---
 
 ## Connections
 
-- [[batch]] (imports)
+- [[GPU_MASTER_SYNC_D4_COMPLETE]] (imports)

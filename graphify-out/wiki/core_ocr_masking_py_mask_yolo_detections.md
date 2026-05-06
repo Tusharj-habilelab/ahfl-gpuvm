@@ -4,7 +4,7 @@
 - **Type:** Function
 - **File:** `./core/ocr/masking.py`
 - **Location:** L427
-- **Community:** 5 (yolo_results_to_detections())
+- **Community:** 4 (yolo_results_to_detections())
 
 ## Relationships
 

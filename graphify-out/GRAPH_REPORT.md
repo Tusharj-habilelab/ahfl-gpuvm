@@ -6,41 +6,41 @@
 
 | Metric | Value |
 |--------|-------|
-| Nodes | 507 |
-| Edges | 530 |
-| Communities | 45 |
+| Nodes | 549 |
+| Edges | 585 |
+| Communities | 47 |
 | Hyperedges | 0 |
 
 ### Confidence Breakdown
 
 | Level | Count | Percentage |
 |-------|-------|------------|
-| EXTRACTED | 466 | 87.9% |
-| INFERRED | 64 | 12.1% |
+| EXTRACTED | 506 | 86.5% |
+| INFERRED | 79 | 13.5% |
 | AMBIGUOUS | 0 | 0.0% |
 
 ## 🌟 God Nodes (Most Connected)
 
 | Node | Degree | Community |
 |------|--------|-----------|
+| batch | 65 | 1 |
 | __init__ | 57 | 0 |
-| batch | 56 | 1 |
-| engine | 34 | 2 |
-| pipeline | 28 | 3 |
-| masking | 26 | 5 |
-| api-gateway::main | 20 | 4 |
-| aadhaar_gate | 18 | 6 |
-| classifiers | 17 | 7 |
-| angle_detector | 17 | 8 |
-| log_writer | 15 | 10 |
+| pipeline | 40 | 2 |
+| engine | 36 | 3 |
+| masking | 28 | 4 |
+| api-gateway::main | 20 | 5 |
+| classifiers | 20 | 6 |
+| aadhaar_gate | 18 | 8 |
+| angle_detector | 18 | 7 |
+| __init__ | 15 | 10 |
 
 ## 🔮 Surprising Connections
 
 - **core_ocr_masking_py_find_aadhaar_patterns** → **core_ocr_masking_py_is_valid_aadhaar_number** (calls)
-- **services_batch_processor_batch_py_run_batch** → **services_batch_processor_batch_py_update_to_completed** (calls)
-- **services_batch_processor_batch_py_run_batch** → **services_batch_processor_batch_py_process_image** (calls)
+- **services_batch_processor_batch_py_run_batch** → **services_batch_processor_batch_py_is_password_protected_pdf** (calls)
 - **services_batch_processor_batch_py_run_batch** → **services_batch_processor_batch_py_process_pdf** (calls)
-- **services_batch_processor_batch_py_run_batch_s3** → **services_batch_processor_batch_py_is_password_protected_pdf** (calls)
+- **services_batch_processor_batch_py_run_batch** → **services_batch_processor_batch_py_process_image** (calls)
+- **services_batch_processor_batch_py_run_batch** → **services_batch_processor_batch_py_update_to_completed** (calls)
 
 ## 🏘️ Communities
 
@@ -68,7 +68,7 @@
 - .config.PADDLE_MODEL_DIR
 - _…and 38 more_
 
-### Community 1 — _validate_s3_buckets() (45 nodes, cohesion: 0.05)
+### Community 1 — _validate_s3_buckets() (56 nodes, cohesion: 0.04)
 
 - batch
 - _extract_path()
@@ -79,20 +79,44 @@
 - boto3.dynamodb.conditions.Key
 - botocore.config.Config
 - botocore.exceptions.ClientError
+- core.config.BATCH_PATH_SKIP_KEYWORDS
 - core.config.COMMIT_BATCH_SIZE
 - core.config.GPU_ENABLED
+- core.config.GPU_MEMORY_FRACTION
+- core.config.GPU_WARMUP_ENABLED
+- core.config.MAX_PDF_PAGES
+- core.config.MAX_S3_FILE_SIZE
+- core.config.PDF_CHUNK_SIZE
+- core.config.STALE_PROCESSING_HOURS
 - core.config.validate_required_env_vars
 - core.count_files_in_folder
-- core.get_dynamo_table
-- core.get_yolo_best
-- core.get_yolo_main
-- core.pipeline.process_image
-- cv2
-- datetime.timezone
-- decimal.Decimal
-- _…and 25 more_
+- _…and 36 more_
 
-### Community 2 — startup_event() (35 nodes, cohesion: 0.06)
+### Community 2 — _verify_skip_pan() (41 nodes, cohesion: 0.07)
+
+- pipeline
+- _correct_doc_orientation()
+- _derive_yolo_report_from_dets()
+- _empty_yolo_report()
+- _get_ocr()
+- core.aadhaar_gate.run_full_gate_scoring
+- core.classifiers.is_aadhaar_card_confirmed
+- core.classifiers.is_pan_card
+- core.classifiers.mask_pvc_aadhaar
+- core.config.ROUTER_CONFIDENCE_THRESHOLD
+- core.config.ROUTER_ENABLED
+- core.config.SKIP_KEYWORDS
+- core.ocr.masking.find_aadhaar_patterns
+- core.ocr.masking.mask_ocr_detections
+- core.ocr.masking.mask_yolo_detections
+- core.ocr.ocr_adapter.adapt_paddle_result
+- core.ocr.ocr_adapter.get_texts_and_boxes
+- core.ocr.paddle.create_paddle_ocr
+- core.ocr.paddle.get_doc_orientation_model
+- core.ocr.paddle.resize_image_for_ocr
+- _…and 21 more_
+
+### Community 3 — startup_event() (37 nodes, cohesion: 0.06)
 
 - engine
 - get_output_file()
@@ -100,7 +124,9 @@
 - health_detailed()
 - asyncio
 - core.config.GPU_ENABLED
+- core.config.GPU_MEMORY_FRACTION
 - core.config.MAX_FILE_SIZE
+- core.config.PDF_CHUNK_SIZE
 - core.config.validate_required_env_vars
 - core.get_yolo_best
 - core.get_yolo_main
@@ -112,35 +138,33 @@
 - fastapi.responses.FileResponse
 - fastapi.responses.JSONResponse
 - fastapi.UploadFile
-- gc
-- logging
-- _…and 15 more_
+- _…and 17 more_
 
-### Community 3 — _run_ocr_on_region() (29 nodes, cohesion: 0.08)
+### Community 4 — yolo_results_to_detections() (22 nodes, cohesion: 0.13)
 
-- pipeline
-- _correct_doc_orientation()
-- _get_ocr()
-- core.aadhaar_gate.run_full_gate_scoring
-- core.classifiers.is_aadhaar_card_confirmed
-- core.classifiers.is_pan_card
-- core.classifiers.mask_pvc_aadhaar
-- core.config.SKIP_KEYWORDS
-- core.ocr.masking.find_aadhaar_patterns
-- core.ocr.masking.mask_ocr_detections
-- core.ocr.masking.mask_yolo_detections
+- masking
+- calculate_iou()
+- check_image_text()
+- compute_digit_mask_region()
+- collections.Counter
 - core.ocr.ocr_adapter.adapt_paddle_result
 - core.ocr.ocr_adapter.get_texts_and_boxes
 - core.ocr.paddle.create_paddle_ocr
-- core.ocr.paddle.get_doc_orientation_model
-- core.ocr.paddle.resize_image_for_ocr
-- core.ocr.paddle.scale_adapted_ocr_results
-- core.utils.angle_detector.find_best_orientation
 - cv2
-- gc
-- _…and 9 more_
+- logging
+- math
+- numpy
+- re
+- time
+- is_valid_aadhaar_number()
+- mask_ocr_detections()
+- mask_yolo_detections()
+- merge_detections()
+- _ocr_verify_and_mask_number()
+- uid_table_masking_coordinates()
+- _…and 2 more_
 
-### Community 4 — _validate_api_key() (21 nodes, cohesion: 0.10)
+### Community 5 — _validate_api_key() (21 nodes, cohesion: 0.10)
 
 - main
 - create_upload_file()
@@ -164,30 +188,53 @@
 - serve_masked_file()
 - _…and 1 more_
 
-### Community 5 — yolo_results_to_detections() (20 nodes, cohesion: 0.14)
+### Community 6 — normalize_aadhaar_keyword() (21 nodes, cohesion: 0.11)
 
-- masking
-- calculate_iou()
-- check_image_text()
-- compute_digit_mask_region()
-- collections.Counter
-- core.ocr.paddle.create_paddle_ocr
+- classifiers
+- detect_aadhaar_side()
+- _get_classifier()
+- _get_person_model()
+- core.config.PVC_MAX_ROTATIONS
+- core.config.PVC_PERSON_CONFIDENCE_THRESHOLD
+- cv2
+- dotenv.load_dotenv
+- logging
+- numpy
+- os
+- re
+- threading
+- torch
+- typing.List
+- typing.Tuple
+- ultralytics.YOLO
+- is_aadhaar_card_confirmed()
+- is_pan_card()
+- mask_pvc_aadhaar()
+- _…and 1 more_
+
+### Community 7 — rotate_image_affine() (19 nodes, cohesion: 0.13)
+
+- angle_detector
+- _check_composite_early_exit()
+- find_best_orientation()
+- _get_doc_orientation_hint()
+- core.config.ORIENTATION_ANGLES
+- core.config.ORIENTATION_ENABLED
+- core.config.ORIENTATION_STRONG_THRESHOLD
+- core.config.ORIENTATION_TARGET_THRESHOLD
+- core.ocr.paddle.get_doc_orientation_model
 - cv2
 - logging
-- math
 - numpy
-- re
-- time
-- is_valid_aadhaar_number()
-- mask_ocr_detections()
-- mask_yolo_detections()
-- merge_detections()
-- _ocr_verify_and_mask_number()
-- uid_table_masking_coordinates()
-- verhoeff_validate()
-- yolo_results_to_detections()
+- typing.Any
+- typing.Callable
+- typing.Dict
+- typing.Tuple
+- _rotate_by_angle()
+- rotate_image()
+- rotate_image_affine()
 
-### Community 6 — run_full_gate_scoring() (19 nodes, cohesion: 0.12)
+### Community 8 — run_full_gate_scoring() (19 nodes, cohesion: 0.12)
 
 - aadhaar_gate
 - core.classifiers.detect_aadhaar_side
@@ -209,49 +256,26 @@
 - _process_single_aadhaar_crop()
 - run_full_gate_scoring()
 
-### Community 7 — mask_pvc_aadhaar() (18 nodes, cohesion: 0.12)
+### Community 9 — scale_adapted_ocr_results() (16 nodes, cohesion: 0.13)
 
-- classifiers
-- detect_aadhaar_side()
-- _get_classifier()
-- _get_person_model()
+- paddle
+- create_paddle_ocr()
+- _env_int()
+- get_doc_orientation_model()
+- core.config.PADDLE_OCR_MAX_SIDE
+- core.config.ROUTER_OCR_LITE_MAX_SIDE
+- core.config.ROUTER_OCR_LITE_MAX_TOKENS
 - cv2
-- dotenv.load_dotenv
-- logging
-- numpy
 - os
-- re
+- paddleocr.DocImgOrientationClassification
+- paddleocr.PaddleOCR
 - threading
-- torch
-- typing.List
-- typing.Tuple
-- ultralytics.YOLO
-- is_aadhaar_card_confirmed()
-- is_pan_card()
-- mask_pvc_aadhaar()
+- typing.Optional
+- resize_image_for_ocr()
+- run_ocr_lite_for_routing()
+- scale_adapted_ocr_results()
 
-### Community 8 — rotate_image_affine() (18 nodes, cohesion: 0.14)
-
-- angle_detector
-- find_best_orientation()
-- _get_doc_orientation_hint()
-- core.config.ORIENTATION_ANGLES
-- core.config.ORIENTATION_EARLY_EXIT_CONF
-- core.config.ORIENTATION_ENABLED
-- core.ocr.paddle.get_doc_orientation_model
-- cv2
-- logging
-- numpy
-- typing.Any
-- typing.Callable
-- typing.Dict
-- typing.List
-- typing.Tuple
-- _rotate_by_angle()
-- rotate_image()
-- rotate_image_affine()
-
-### Community 9 — .paddle.scale_adapted_ocr_results (16 nodes, cohesion: 0.13)
+### Community 10 — .paddle.scale_adapted_ocr_results (16 nodes, cohesion: 0.13)
 
 - __init__
 - .masking.compute_digit_mask_region
@@ -270,7 +294,7 @@
 - .paddle.resize_image_for_ocr
 - .paddle.scale_adapted_ocr_results
 
-### Community 10 — write_mask_log() (16 nodes, cohesion: 0.14)
+### Community 11 — write_mask_log() (16 nodes, cohesion: 0.14)
 
 - log_writer
 - bulk_write_logs()
@@ -289,7 +313,7 @@
 - _to_decimal()
 - write_mask_log()
 
-### Community 11 — validate_file_size() (15 nodes, cohesion: 0.13)
+### Community 12 — validate_file_size() (15 nodes, cohesion: 0.13)
 
 - file_utils
 - ensure_output_dir()
@@ -307,7 +331,7 @@
 - should_skip_file()
 - validate_file_size()
 
-### Community 12 — reset_models() (14 nodes, cohesion: 0.14)
+### Community 13 — reset_models() (14 nodes, cohesion: 0.14)
 
 - yolo_runner
 - get_yolo_best()
@@ -323,21 +347,6 @@
 - typing.Tuple
 - ultralytics.YOLO
 - reset_models()
-
-### Community 13 — scale_adapted_ocr_results() (12 nodes, cohesion: 0.18)
-
-- paddle
-- create_paddle_ocr()
-- _env_int()
-- get_doc_orientation_model()
-- cv2
-- os
-- paddleocr.DocImgOrientationClassification
-- paddleocr.PaddleOCR
-- threading
-- typing.Optional
-- resize_image_for_ocr()
-- scale_adapted_ocr_results()
 
 ### Community 14 — .file_utils.validate_file_size (12 nodes, cohesion: 0.17)
 
@@ -416,15 +425,15 @@
 - os
 - sys
 
-### Community 20 — levenshtein_score() (7 nodes, cohesion: 0.29)
+### Community 20 — split_folder_by_applications() (7 nodes, cohesion: 0.29)
 
-- cosine_similarity()
-- extract_number_coordinates()
-- extract_target_coordinates()
-- find_aadhaar_patterns()
-- is_four_digit_number()
-- is_twelve_digit_number()
-- levenshtein_score()
+- creates_batches
+- argparse
+- collections.defaultdict
+- math
+- os
+- shutil
+- split_folder_by_applications()
 
 ### Community 21 — format_report() (7 nodes, cohesion: 0.29)
 
@@ -436,7 +445,7 @@
 - os
 - ultralytics.YOLO
 
-### Community 22 — get_all_files_recursive() (22) (7 nodes, cohesion: 0.33)
+### Community 22 — get_all_files_recursive() (7 nodes, cohesion: 0.33)
 
 - count_total_applications
 - clean_string()
@@ -446,35 +455,26 @@
 - pandas
 - sys
 
-### Community 23 — split_folder_by_applications() (7 nodes, cohesion: 0.29)
+### Community 23 — levenshtein_score() (7 nodes, cohesion: 0.29)
 
-- creates_batches
-- argparse
-- collections.defaultdict
-- math
-- os
-- shutil
-- split_folder_by_applications()
+- cosine_similarity()
+- extract_number_coordinates()
+- extract_target_coordinates()
+- find_aadhaar_patterns()
+- is_four_digit_number()
+- is_twelve_digit_number()
+- levenshtein_score()
 
-### Community 24 — get_failed_paths() (6 nodes, cohesion: 0.33)
+### Community 24 — _normalize_bbox() (6 nodes, cohesion: 0.53)
 
-- file_paths
-- get_completed_paths()
-- get_failed_paths()
-- boto3.dynamodb.conditions.Attr
-- core.get_dynamo_table
-- os
+- ocr_adapter
+- adapt_paddle_result()
+- _append_v3_result()
+- get_texts_and_boxes()
+- logging
+- _normalize_bbox()
 
-### Community 25 — run_batch_s3() (6 nodes, cohesion: 0.40)
-
-- _cleanup_stale_processing_records()
-- _dynamo_retry()
-- _list_s3_keys()
-- _process_image()
-- _process_pdf()
-- run_batch_s3()
-
-### Community 26 — validate_required_env_vars() (6 nodes, cohesion: 0.33)
+### Community 25 — validate_required_env_vars() (6 nodes, cohesion: 0.33)
 
 - config
 - dotenv.load_dotenv
@@ -483,46 +483,56 @@
 - setup_logging()
 - validate_required_env_vars()
 
-### Community 27 — _write_pending() (6 nodes, cohesion: 0.33)
-
-- _get_skip_paths()
-- _is_password_protected_pdf()
-- run_batch()
-- _update_to_error()
-- _update_to_processing()
-- _write_pending()
-
-### Community 28 — get_dynamo_table() (5 nodes, cohesion: 0.40)
+### Community 26 — get_dynamo_table() (6 nodes, cohesion: 0.33)
 
 - database
+- build_default_record()
 - get_dynamo_table()
 - boto3
 - dotenv.load_dotenv
 - os
 
-### Community 29 — log_file_paths_to_csv() (5 nodes, cohesion: 0.40)
+### Community 27 — get_failed_paths() (6 nodes, cohesion: 0.33)
 
-- log_file_paths
-- argparse
-- csv
+- file_paths
+- get_completed_paths()
+- get_failed_paths()
+- boto3.dynamodb.conditions.Attr
+- core.get_dynamo_table
 - os
-- log_file_paths_to_csv()
 
-### Community 30 — _normalize_bbox() (5 nodes, cohesion: 0.70)
+### Community 28 — write_file() (6 nodes, cohesion: 0.33)
 
-- ocr_adapter
-- adapt_paddle_result()
-- _append_v3_result()
-- get_texts_and_boxes()
-- _normalize_bbox()
+- GPU_MASTER_SYNC_D4_COMPLETE
+- append_after()
+- os
+- sys
+- patch()
+- write_file()
 
-### Community 31 — get_all_files_recursive() (5 nodes, cohesion: 0.40)
+### Community 29 — run_batch_s3() (5 nodes, cohesion: 0.40)
+
+- _cleanup_stale_processing_records()
+- _dynamo_retry()
+- _is_password_protected_pdf()
+- _list_s3_keys()
+- run_batch_s3()
+
+### Community 30 — get_all_files_recursive() (30) (5 nodes, cohesion: 0.40)
 
 - count_total_application
 - count_unique_applications()
 - get_all_files_recursive()
 - os
 - sys
+
+### Community 31 — _write_pending() (5 nodes, cohesion: 0.40)
+
+- _get_skip_paths()
+- run_batch()
+- _update_to_error()
+- _update_to_processing()
+- _write_pending()
 
 ### Community 32 — YOLORunner (5 nodes, cohesion: 0.60)
 
@@ -532,19 +542,20 @@
 - .__init__()
 - .run_inference()
 
-### Community 33 — count_pdf_pages() (4 nodes, cohesion: 0.50)
+### Community 33 — log_file_paths_to_csv() (5 nodes, cohesion: 0.40)
 
-- counts
-- count_files_in_folder()
-- count_pdf_pages()
+- log_file_paths
+- argparse
+- csv
 - os
+- log_file_paths_to_csv()
 
-### Community 34 — shutil (4 nodes, cohesion: 0.50)
+### Community 34 — .yolo_runner.YOLORunner (4 nodes, cohesion: 0.50)
 
-- copy_files
-- os
-- pandas
-- shutil
+- __init__
+- .yolo_runner.get_yolo_best
+- .yolo_runner.get_yolo_main
+- .yolo_runner.YOLORunner
 
 ### Community 35 — shutil (35) (4 nodes, cohesion: 0.50)
 
@@ -553,20 +564,21 @@
 - pandas
 - shutil
 
-### Community 36 — .yolo_runner.YOLORunner (4 nodes, cohesion: 0.50)
+### Community 36 — count_pdf_pages() (4 nodes, cohesion: 0.50)
 
-- __init__
-- .yolo_runner.get_yolo_best
-- .yolo_runner.get_yolo_main
-- .yolo_runner.YOLORunner
+- counts
+- count_files_in_folder()
+- count_pdf_pages()
+- os
 
-### Community 37 — pandas (37) (3 nodes, cohesion: 0.67)
+### Community 37 — shutil (4 nodes, cohesion: 0.50)
 
-- merge_metadata
+- copy_files
 - os
 - pandas
+- shutil
 
-### Community 38 — pandas (38) (3 nodes, cohesion: 0.67)
+### Community 38 — pandas (3 nodes, cohesion: 0.67)
 
 - merge_csvs
 - os
@@ -580,54 +592,65 @@
 
 ### Community 40 — pandas (40) (3 nodes, cohesion: 0.67)
 
-- main
+- merge_metadata
 - os
 - pandas
 
-### Community 41 — pandas (3 nodes, cohesion: 0.67)
+### Community 41 — pandas (41) (3 nodes, cohesion: 0.67)
 
 - count_processed_files
 - os
 - pandas
 
-### Community 42 — pandas (42) (2 nodes, cohesion: 1.00)
+### Community 42 — pandas (42) (3 nodes, cohesion: 0.67)
+
+- main
+- os
+- pandas
+
+### Community 43 — pandas (43) (2 nodes, cohesion: 1.00)
 
 - mapping
 - pandas
 
-### Community 43 — dms_push (1 nodes, cohesion: 1.00)
+### Community 44 — D4_PATCHES_FOR_GPU (1 nodes, cohesion: 1.00)
 
-- dms_push
+- D4_PATCHES_FOR_GPU
 
-### Community 44 — merge_chat_sessions (1 nodes, cohesion: 1.00)
+### Community 45 — merge_chat_sessions (1 nodes, cohesion: 1.00)
 
 - merge_chat_sessions
+
+### Community 46 — dms_push (1 nodes, cohesion: 1.00)
+
+- dms_push
 
 ## 🕳️ Knowledge Gaps
 
-**Isolated nodes** (2):
+**Isolated nodes** (3):
+- D4_PATCHES_FOR_GPU
 - merge_chat_sessions
 - dms_push
 
-**Thin communities** (< 3 nodes): 3 communities
+**Thin communities** (< 3 nodes): 4 communities
 
 ## 💰 Token Cost
 
 | File | Tokens |
 |------|--------|
-| input | 0 |
 | output | 0 |
+| input | 0 |
 | **Total** | **0** |
 
 ## ❓ Suggested Questions
 
+1. How does 'services_batch_processor_batch_py_run_batch' relate to 3 different communities (run_batch_s3(), _validate_s3_buckets(), _write_pending())?
 1. How does 'services_batch_processor_batch_py_get_skip_paths' relate to 3 different communities (_write_pending(), run_batch_s3(), _validate_s3_buckets())?
-1. How does 'services_batch_processor_batch_py' relate to 3 different communities (_write_pending(), _validate_s3_buckets(), run_batch_s3())?
-1. How does 'services_batch_processor_batch_py_process_image' relate to 3 different communities (_write_pending(), _validate_s3_buckets(), run_batch_s3())?
-1. How does 'services_batch_processor_batch_py_run_batch_s3' relate to 3 different communities (run_batch_s3(), _write_pending(), _validate_s3_buckets())?
-1. How does 'services_batch_processor_batch_py_update_to_error' relate to 3 different communities (run_batch_s3(), _validate_s3_buckets(), _write_pending())?
-1. How does 'services_batch_processor_batch_py_process_pdf' relate to 3 different communities (_write_pending(), run_batch_s3(), _validate_s3_buckets())?
-1. How does 'services_batch_processor_batch_py_run_batch' relate to 3 different communities (run_batch_s3(), _write_pending(), _validate_s3_buckets())?
+1. How does 'services_batch_processor_batch_py_run_batch_s3' relate to 3 different communities (_validate_s3_buckets(), run_batch_s3(), _write_pending())?
+1. How does 'services_batch_processor_batch_py' relate to 3 different communities (run_batch_s3(), _validate_s3_buckets(), _write_pending())?
+1. How does 'services_batch_processor_batch_py_process_image' relate to 3 different communities (_write_pending(), run_batch_s3(), _validate_s3_buckets())?
+1. How does 'services_batch_processor_batch_py_is_password_protected_pdf' relate to 3 different communities (run_batch_s3(), _write_pending(), _validate_s3_buckets())?
+1. How does 'services_batch_processor_batch_py_process_pdf' relate to 3 different communities (_write_pending(), _validate_s3_buckets(), run_batch_s3())?
 
 ---
 _Generated by graphify-rs_

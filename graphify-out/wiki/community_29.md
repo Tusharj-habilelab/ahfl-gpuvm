@@ -1,19 +1,19 @@
-# Community 29: log_file_paths_to_csv()
+# Community 29: run_batch_s3()
 
 **Members:** 5
 
 ## Nodes
 
-- **log_file_paths** (`scripts_operational_log_file_paths_py`, File, degree: 4)
-- **argparse** (`scripts_operational_log_file_paths_py_import_argparse`, Module, degree: 1)
-- **csv** (`scripts_operational_log_file_paths_py_import_csv`, Module, degree: 1)
-- **os** (`scripts_operational_log_file_paths_py_import_os`, Module, degree: 1)
-- **log_file_paths_to_csv()** (`scripts_operational_log_file_paths_py_log_file_paths_to_csv`, Function, degree: 1)
+- **_cleanup_stale_processing_records()** (`services_batch_processor_batch_py_cleanup_stale_processing_records`, Function, degree: 2)
+- **_dynamo_retry()** (`services_batch_processor_batch_py_dynamo_retry`, Function, degree: 2)
+- **_is_password_protected_pdf()** (`services_batch_processor_batch_py_is_password_protected_pdf`, Function, degree: 3)
+- **_list_s3_keys()** (`services_batch_processor_batch_py_list_s3_keys`, Function, degree: 2)
+- **run_batch_s3()** (`services_batch_processor_batch_py_run_batch_s3`, Function, degree: 9)
 
 ## Relationships
 
-- scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_import_os (imports)
-- scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_import_csv (imports)
-- scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_import_argparse (imports)
-- scripts_operational_log_file_paths_py → scripts_operational_log_file_paths_py_log_file_paths_to_csv (defines)
+- services_batch_processor_batch_py_run_batch_s3 → services_batch_processor_batch_py_cleanup_stale_processing_records (calls)
+- services_batch_processor_batch_py_run_batch_s3 → services_batch_processor_batch_py_is_password_protected_pdf (calls)
+- services_batch_processor_batch_py_run_batch_s3 → services_batch_processor_batch_py_dynamo_retry (calls)
+- services_batch_processor_batch_py_run_batch_s3 → services_batch_processor_batch_py_list_s3_keys (calls)
 

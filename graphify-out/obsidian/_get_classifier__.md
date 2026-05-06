@@ -2,8 +2,8 @@
 id: core_classifiers_py_get_classifier
 type: Function
 source: ./core/classifiers.py
-community: 7
-community_label: mask_pvc_aadhaar()
+community: 6
+community_label: normalize_aadhaar_keyword()
 ---
 
 ## Connections

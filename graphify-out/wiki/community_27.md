@@ -1,21 +1,21 @@
-# Community 27: _write_pending()
+# Community 27: get_failed_paths()
 
 **Members:** 6
 
 ## Nodes
 
-- **_get_skip_paths()** (`services_batch_processor_batch_py_get_skip_paths`, Function, degree: 3)
-- **_is_password_protected_pdf()** (`services_batch_processor_batch_py_is_password_protected_pdf`, Function, degree: 3)
-- **run_batch()** (`services_batch_processor_batch_py_run_batch`, Function, degree: 9)
-- **_update_to_error()** (`services_batch_processor_batch_py_update_to_error`, Function, degree: 3)
-- **_update_to_processing()** (`services_batch_processor_batch_py_update_to_processing`, Function, degree: 2)
-- **_write_pending()** (`services_batch_processor_batch_py_write_pending`, Function, degree: 2)
+- **file_paths** (`services_batch_processor_utils_file_paths_py`, File, degree: 5)
+- **get_completed_paths()** (`services_batch_processor_utils_file_paths_py_get_completed_paths`, Function, degree: 1)
+- **get_failed_paths()** (`services_batch_processor_utils_file_paths_py_get_failed_paths`, Function, degree: 1)
+- **boto3.dynamodb.conditions.Attr** (`services_batch_processor_utils_file_paths_py_import_boto3_dynamodb_conditions_attr`, Module, degree: 1)
+- **core.get_dynamo_table** (`services_batch_processor_utils_file_paths_py_import_core_get_dynamo_table`, Module, degree: 1)
+- **os** (`services_batch_processor_utils_file_paths_py_import_os`, Module, degree: 1)
 
 ## Relationships
 
-- services_batch_processor_batch_py_run_batch → services_batch_processor_batch_py_update_to_processing (calls)
-- services_batch_processor_batch_py_run_batch → services_batch_processor_batch_py_is_password_protected_pdf (calls)
-- services_batch_processor_batch_py_run_batch → services_batch_processor_batch_py_update_to_error (calls)
-- services_batch_processor_batch_py_run_batch → services_batch_processor_batch_py_write_pending (calls)
-- services_batch_processor_batch_py_run_batch → services_batch_processor_batch_py_get_skip_paths (calls)
+- services_batch_processor_utils_file_paths_py → services_batch_processor_utils_file_paths_py_import_os (imports)
+- services_batch_processor_utils_file_paths_py → services_batch_processor_utils_file_paths_py_import_boto3_dynamodb_conditions_attr (imports)
+- services_batch_processor_utils_file_paths_py → services_batch_processor_utils_file_paths_py_import_core_get_dynamo_table (imports)
+- services_batch_processor_utils_file_paths_py → services_batch_processor_utils_file_paths_py_get_completed_paths (defines)
+- services_batch_processor_utils_file_paths_py → services_batch_processor_utils_file_paths_py_get_failed_paths (defines)
 

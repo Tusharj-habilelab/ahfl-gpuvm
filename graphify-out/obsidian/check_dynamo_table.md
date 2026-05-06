@@ -2,7 +2,7 @@
 id: scripts_check_dynamo_table_py
 type: File
 source: ./scripts/check_dynamo_table.py
-community: 1
+community: 2
 community_label: check_table()
 ---
 

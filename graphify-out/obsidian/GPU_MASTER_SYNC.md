@@ -2,7 +2,7 @@
 id: gpu_master_sync_py
 type: File
 source: ./GPU_MASTER_SYNC.py
-community: 2
+community: 4
 community_label: write_file()
 ---
 

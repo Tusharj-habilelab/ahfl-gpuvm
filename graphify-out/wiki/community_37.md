@@ -1,15 +1,17 @@
-# Community 37: pandas (37)
+# Community 37: shutil
 
-**Members:** 3
+**Members:** 4
 
 ## Nodes
 
-- **merge_metadata** (`scripts_reporting_merge_metadata_py`, File, degree: 2)
-- **os** (`scripts_reporting_merge_metadata_py_import_os`, Module, degree: 1)
-- **pandas** (`scripts_reporting_merge_metadata_py_import_pandas`, Module, degree: 1)
+- **copy_files** (`scripts_operational_copy_files_py`, File, degree: 3)
+- **os** (`scripts_operational_copy_files_py_import_os`, Module, degree: 1)
+- **pandas** (`scripts_operational_copy_files_py_import_pandas`, Module, degree: 1)
+- **shutil** (`scripts_operational_copy_files_py_import_shutil`, Module, degree: 1)
 
 ## Relationships
 
-- scripts_reporting_merge_metadata_py → scripts_reporting_merge_metadata_py_import_pandas (imports)
-- scripts_reporting_merge_metadata_py → scripts_reporting_merge_metadata_py_import_os (imports)
+- scripts_operational_copy_files_py → scripts_operational_copy_files_py_import_shutil (imports)
+- scripts_operational_copy_files_py → scripts_operational_copy_files_py_import_pandas (imports)
+- scripts_operational_copy_files_py → scripts_operational_copy_files_py_import_os (imports)
 
