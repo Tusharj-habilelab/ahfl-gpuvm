@@ -3,7 +3,7 @@
 - **ID:** `core_utils_angle_detector_py`
 - **Type:** File
 - **File:** `./core/utils/angle_detector.py`
-- **Community:** 8 (rotate_image_affine())
+- **Community:** 7 (rotate_image_affine())
 
 ## Relationships
 

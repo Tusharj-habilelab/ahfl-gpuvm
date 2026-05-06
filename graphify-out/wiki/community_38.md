@@ -1,17 +1,15 @@
-# Community 38: shutil
+# Community 38: pandas
 
-**Members:** 4
+**Members:** 3
 
 ## Nodes
 
-- **copy_files** (`scripts_operational_copy_files_py`, File, degree: 3)
-- **os** (`scripts_operational_copy_files_py_import_os`, Module, degree: 1)
-- **pandas** (`scripts_operational_copy_files_py_import_pandas`, Module, degree: 1)
-- **shutil** (`scripts_operational_copy_files_py_import_shutil`, Module, degree: 1)
+- **merge_csvs** (`scripts_reporting_merge_csvs_py`, File, degree: 2)
+- **os** (`scripts_reporting_merge_csvs_py_import_os`, Module, degree: 1)
+- **pandas** (`scripts_reporting_merge_csvs_py_import_pandas`, Module, degree: 1)
 
 ## Relationships
 
-- scripts_operational_copy_files_py → scripts_operational_copy_files_py_import_shutil (imports)
-- scripts_operational_copy_files_py → scripts_operational_copy_files_py_import_pandas (imports)
-- scripts_operational_copy_files_py → scripts_operational_copy_files_py_import_os (imports)
+- scripts_reporting_merge_csvs_py → scripts_reporting_merge_csvs_py_import_pandas (imports)
+- scripts_reporting_merge_csvs_py → scripts_reporting_merge_csvs_py_import_os (imports)
 

@@ -3,7 +3,7 @@
 - **ID:** `core_aadhaar_gate_py`
 - **Type:** File
 - **File:** `./core/aadhaar_gate.py`
-- **Community:** 7 (run_full_gate_scoring())
+- **Community:** 8 (run_full_gate_scoring())
 
 ## Relationships
 

@@ -8,7 +8,7 @@
       "label": "config",
       "source_file": "./core/config.py",
       "node_type": "file",
-      "community": 27
+      "community": 25
     },
     {
       "id": "core_config_py_import_os",
@@ -16,7 +16,7 @@
       "source_file": "./core/config.py",
       "source_location": "L8",
       "node_type": "module",
-      "community": 27
+      "community": 25
     },
     {
       "id": "core_config_py_import_logging",
@@ -24,7 +24,7 @@
       "source_file": "./core/config.py",
       "source_location": "L9",
       "node_type": "module",
-      "community": 27
+      "community": 25
     },
     {
       "id": "core_config_py_import_dotenv_load_dotenv",
@@ -32,7 +32,7 @@
       "source_file": "./core/config.py",
       "source_location": "L11",
       "node_type": "module",
-      "community": 27
+      "community": 25
     },
     {
       "id": "core_config_py_validate_required_env_vars",
@@ -40,7 +40,7 @@
       "source_file": "./core/config.py",
       "source_location": "L134",
       "node_type": "function",
-      "community": 27
+      "community": 25
     },
     {
       "id": "core_config_py_setup_logging",
@@ -48,14 +48,14 @@
       "source_file": "./core/config.py",
       "source_location": "L145",
       "node_type": "function",
-      "community": 27
+      "community": 25
     },
     {
       "id": "core_ocr_paddle_py",
       "label": "paddle",
       "source_file": "./core/ocr/paddle.py",
       "node_type": "file",
-      "community": 11
+      "community": 9
     },
     {
       "id": "core_ocr_paddle_py_import_os",
@@ -63,7 +63,7 @@
       "source_file": "./core/ocr/paddle.py",
       "source_location": "L8",
       "node_type": "module",
-      "community": 11
+      "community": 9
     },
     {
       "id": "core_ocr_paddle_py_import_threading",
@@ -71,7 +71,7 @@
       "source_file": "./core/ocr/paddle.py",
       "source_location": "L9",
       "node_type": "module",
-      "community": 11
+      "community": 9
     },
     {
       "id": "core_ocr_paddle_py_import_cv2",
@@ -79,7 +79,7 @@
       "source_file": "./core/ocr/paddle.py",
       "source_location": "L11",
       "node_type": "module",
-      "community": 11
+      "community": 9
     },
     {
       "id": "core_ocr_paddle_py_import_typing_optional",
@@ -87,7 +87,7 @@
       "source_file": "./core/ocr/paddle.py",
       "source_location": "L12",
       "node_type": "module",
-      "community": 11
+      "community": 9
     },
     {
       "id": "core_ocr_paddle_py_import_paddleocr_paddleocr",
@@ -95,7 +95,7 @@
       "source_file": "./core/ocr/paddle.py",
       "source_location": "L13",
       "node_type": "module",
-      "community": 11
+      "community": 9
     },
     {
       "id": "core_ocr_paddle_py_import_paddleocr_docimgorientationclassification",
@@ -103,7 +103,7 @@
       "source_file": "./core/ocr/paddle.py",
       "source_location": "L13",
       "node_type": "module",
-      "community": 11
+      "community": 9
     },
     {
       "id": "core_ocr_paddle_py_import_core_config_paddle_ocr_max_side",
@@ -111,7 +111,7 @@
       "source_file": "./core/ocr/paddle.py",
       "source_location": "L14",
       "node_type": "module",
-      "community": 11
+      "community": 9
     },
     {
       "id": "core_ocr_paddle_py_import_core_config_router_ocr_lite_max_side",
@@ -119,7 +119,7 @@
       "source_file": "./core/ocr/paddle.py",
       "source_location": "L14",
       "node_type": "module",
-      "community": 11
+      "community": 9
     },
     {
       "id": "core_ocr_paddle_py_import_core_config_router_ocr_lite_max_tokens",
@@ -127,7 +127,7 @@
       "source_file": "./core/ocr/paddle.py",
       "source_location": "L14",
       "node_type": "module",
-      "community": 11
+      "community": 9
     },
     {
       "id": "core_ocr_paddle_py_env_int",
@@ -135,7 +135,7 @@
       "source_file": "./core/ocr/paddle.py",
       "source_location": "L17",
       "node_type": "function",
-      "community": 11
+      "community": 9
     },
     {
       "id": "core_ocr_paddle_py_create_paddle_ocr",
@@ -143,7 +143,7 @@
       "source_file": "./core/ocr/paddle.py",
       "source_location": "L27",
       "node_type": "function",
-      "community": 11
+      "community": 9
     },
     {
       "id": "core_ocr_paddle_py_get_doc_orientation_model",
@@ -151,31 +151,31 @@
       "source_file": "./core/ocr/paddle.py",
       "source_location": "L43",
       "node_type": "function",
-      "community": 11
+      "community": 9
     },
     {
       "id": "core_ocr_paddle_py_resize_image_for_ocr",
       "label": "resize_image_for_ocr()",
       "source_file": "./core/ocr/paddle.py",
-      "source_location": "L63",
+      "source_location": "L61",
       "node_type": "function",
-      "community": 11
+      "community": 9
     },
     {
       "id": "core_ocr_paddle_py_scale_adapted_ocr_results",
       "label": "scale_adapted_ocr_results()",
       "source_file": "./core/ocr/paddle.py",
-      "source_location": "L85",
+      "source_location": "L83",
       "node_type": "function",
-      "community": 11
+      "community": 9
     },
     {
       "id": "core_ocr_paddle_py_run_ocr_lite_for_routing",
       "label": "run_ocr_lite_for_routing()",
       "source_file": "./core/ocr/paddle.py",
-      "source_location": "L100",
+      "source_location": "L98",
       "node_type": "function",
-      "community": 11
+      "community": 9
     },
     {
       "id": "core_ocr_init_py",
@@ -309,7 +309,7 @@
       "label": "masking",
       "source_file": "./core/ocr/masking.py",
       "node_type": "file",
-      "community": 6
+      "community": 4
     },
     {
       "id": "core_ocr_masking_py_import_re",
@@ -317,7 +317,7 @@
       "source_file": "./core/ocr/masking.py",
       "source_location": "L18",
       "node_type": "module",
-      "community": 6
+      "community": 4
     },
     {
       "id": "core_ocr_masking_py_import_math",
@@ -325,7 +325,7 @@
       "source_file": "./core/ocr/masking.py",
       "source_location": "L19",
       "node_type": "module",
-      "community": 6
+      "community": 4
     },
     {
       "id": "core_ocr_masking_py_import_time",
@@ -333,7 +333,7 @@
       "source_file": "./core/ocr/masking.py",
       "source_location": "L20",
       "node_type": "module",
-      "community": 6
+      "community": 4
     },
     {
       "id": "core_ocr_masking_py_import_logging",
@@ -341,7 +341,7 @@
       "source_file": "./core/ocr/masking.py",
       "source_location": "L21",
       "node_type": "module",
-      "community": 6
+      "community": 4
     },
     {
       "id": "core_ocr_masking_py_import_cv2",
@@ -349,7 +349,7 @@
       "source_file": "./core/ocr/masking.py",
       "source_location": "L22",
       "node_type": "module",
-      "community": 6
+      "community": 4
     },
     {
       "id": "core_ocr_masking_py_import_numpy",
@@ -357,7 +357,7 @@
       "source_file": "./core/ocr/masking.py",
       "source_location": "L23",
       "node_type": "module",
-      "community": 6
+      "community": 4
     },
     {
       "id": "core_ocr_masking_py_import_collections_counter",
@@ -365,7 +365,7 @@
       "source_file": "./core/ocr/masking.py",
       "source_location": "L24",
       "node_type": "module",
-      "community": 6
+      "community": 4
     },
     {
       "id": "core_ocr_masking_py_import_core_ocr_paddle_create_paddle_ocr",
@@ -373,127 +373,143 @@
       "source_file": "./core/ocr/masking.py",
       "source_location": "L25",
       "node_type": "module",
-      "community": 6
+      "community": 4
+    },
+    {
+      "id": "core_ocr_masking_py_import_core_ocr_ocr_adapter_adapt_paddle_result",
+      "label": "core.ocr.ocr_adapter.adapt_paddle_result",
+      "source_file": "./core/ocr/masking.py",
+      "source_location": "L26",
+      "node_type": "module",
+      "community": 4
+    },
+    {
+      "id": "core_ocr_masking_py_import_core_ocr_ocr_adapter_get_texts_and_boxes",
+      "label": "core.ocr.ocr_adapter.get_texts_and_boxes",
+      "source_file": "./core/ocr/masking.py",
+      "source_location": "L26",
+      "node_type": "module",
+      "community": 4
     },
     {
       "id": "core_ocr_masking_py_verhoeff_validate",
       "label": "verhoeff_validate()",
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L65",
+      "source_location": "L66",
       "node_type": "function",
-      "community": 6
+      "community": 4
     },
     {
       "id": "core_ocr_masking_py_is_valid_aadhaar_number",
       "label": "is_valid_aadhaar_number()",
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L82",
+      "source_location": "L83",
       "node_type": "function",
-      "community": 6
+      "community": 4
     },
     {
       "id": "core_ocr_masking_py_compute_digit_mask_region",
       "label": "compute_digit_mask_region()",
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L107",
+      "source_location": "L108",
       "node_type": "function",
-      "community": 6
+      "community": 4
     },
     {
       "id": "core_ocr_masking_py_cosine_similarity",
       "label": "cosine_similarity()",
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L147",
+      "source_location": "L148",
       "node_type": "function",
-      "community": 24
+      "community": 23
     },
     {
       "id": "core_ocr_masking_py_levenshtein_score",
       "label": "levenshtein_score()",
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L164",
+      "source_location": "L165",
       "node_type": "function",
-      "community": 24
+      "community": 23
     },
     {
       "id": "core_ocr_masking_py_is_four_digit_number",
       "label": "is_four_digit_number()",
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L188",
+      "source_location": "L189",
       "node_type": "function",
-      "community": 24
+      "community": 23
     },
     {
       "id": "core_ocr_masking_py_is_twelve_digit_number",
       "label": "is_twelve_digit_number()",
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L196",
+      "source_location": "L197",
       "node_type": "function",
-      "community": 24
+      "community": 23
     },
     {
       "id": "core_ocr_masking_py_extract_number_coordinates",
       "label": "extract_number_coordinates()",
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L204",
+      "source_location": "L205",
       "node_type": "function",
-      "community": 24
+      "community": 23
     },
     {
       "id": "core_ocr_masking_py_extract_target_coordinates",
       "label": "extract_target_coordinates()",
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L218",
+      "source_location": "L219",
       "node_type": "function",
-      "community": 24
+      "community": 23
     },
     {
       "id": "core_ocr_masking_py_uid_table_masking_coordinates",
       "label": "uid_table_masking_coordinates()",
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L239",
+      "source_location": "L240",
       "node_type": "function",
-      "community": 6
+      "community": 4
     },
     {
       "id": "core_ocr_masking_py_calculate_iou",
       "label": "calculate_iou()",
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L279",
+      "source_location": "L280",
       "node_type": "function",
-      "community": 6
+      "community": 4
     },
     {
       "id": "core_ocr_masking_py_merge_detections",
       "label": "merge_detections()",
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L297",
+      "source_location": "L298",
       "node_type": "function",
-      "community": 6
+      "community": 4
     },
     {
       "id": "core_ocr_masking_py_yolo_results_to_detections",
       "label": "yolo_results_to_detections()",
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L316",
+      "source_location": "L317",
       "node_type": "function",
-      "community": 6
+      "community": 4
     },
     {
       "id": "core_ocr_masking_py_check_image_text",
       "label": "check_image_text()",
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L332",
+      "source_location": "L333",
       "node_type": "function",
-      "community": 6
+      "community": 4
     },
     {
       "id": "core_ocr_masking_py_ocr_verify_and_mask_number",
       "label": "_ocr_verify_and_mask_number()",
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L364",
+      "source_location": "L367",
       "node_type": "function",
-      "community": 6
+      "community": 4
     },
     {
       "id": "core_ocr_masking_py_mask_yolo_detections",
@@ -501,7 +517,7 @@
       "source_file": "./core/ocr/masking.py",
       "source_location": "L427",
       "node_type": "function",
-      "community": 6
+      "community": 4
     },
     {
       "id": "core_ocr_masking_py_find_aadhaar_patterns",
@@ -509,7 +525,7 @@
       "source_file": "./core/ocr/masking.py",
       "source_location": "L500",
       "node_type": "function",
-      "community": 24
+      "community": 23
     },
     {
       "id": "core_ocr_masking_py_mask_ocr_detections",
@@ -517,46 +533,54 @@
       "source_file": "./core/ocr/masking.py",
       "source_location": "L715",
       "node_type": "function",
-      "community": 6
+      "community": 4
     },
     {
       "id": "core_ocr_ocr_adapter_py",
       "label": "ocr_adapter",
       "source_file": "./core/ocr/ocr_adapter.py",
       "node_type": "file",
-      "community": 29
+      "community": 24
+    },
+    {
+      "id": "core_ocr_ocr_adapter_py_import_logging",
+      "label": "logging",
+      "source_file": "./core/ocr/ocr_adapter.py",
+      "source_location": "L13",
+      "node_type": "module",
+      "community": 24
     },
     {
       "id": "core_ocr_ocr_adapter_py_normalize_bbox",
       "label": "_normalize_bbox()",
       "source_file": "./core/ocr/ocr_adapter.py",
-      "source_location": "L13",
+      "source_location": "L18",
       "node_type": "function",
-      "community": 29
+      "community": 24
     },
     {
       "id": "core_ocr_ocr_adapter_py_append_v3_result",
       "label": "_append_v3_result()",
       "source_file": "./core/ocr/ocr_adapter.py",
-      "source_location": "L30",
+      "source_location": "L35",
       "node_type": "function",
-      "community": 29
+      "community": 24
     },
     {
       "id": "core_ocr_ocr_adapter_py_adapt_paddle_result",
       "label": "adapt_paddle_result()",
       "source_file": "./core/ocr/ocr_adapter.py",
-      "source_location": "L53",
+      "source_location": "L58",
       "node_type": "function",
-      "community": 29
+      "community": 24
     },
     {
       "id": "core_ocr_ocr_adapter_py_get_texts_and_boxes",
       "label": "get_texts_and_boxes()",
       "source_file": "./core/ocr/ocr_adapter.py",
-      "source_location": "L107",
+      "source_location": "L112",
       "node_type": "function",
-      "community": 29
+      "community": 24
     },
     {
       "id": "core_init_py",
@@ -1026,7 +1050,7 @@
       "label": "count_processed_files",
       "source_file": "./core/utils/count_processed_files.py",
       "node_type": "file",
-      "community": 39
+      "community": 41
     },
     {
       "id": "core_utils_count_processed_files_py_import_pandas",
@@ -1034,7 +1058,7 @@
       "source_file": "./core/utils/count_processed_files.py",
       "source_location": "L1",
       "node_type": "module",
-      "community": 39
+      "community": 41
     },
     {
       "id": "core_utils_count_processed_files_py_import_os",
@@ -1042,7 +1066,7 @@
       "source_file": "./core/utils/count_processed_files.py",
       "source_location": "L2",
       "node_type": "module",
-      "community": 39
+      "community": 41
     },
     {
       "id": "core_utils_init_py",
@@ -1263,7 +1287,7 @@
       "label": "angle_detector",
       "source_file": "./core/utils/angle_detector.py",
       "node_type": "file",
-      "community": 8
+      "community": 7
     },
     {
       "id": "core_utils_angle_detector_py_import_logging",
@@ -1271,7 +1295,7 @@
       "source_file": "./core/utils/angle_detector.py",
       "source_location": "L5",
       "node_type": "module",
-      "community": 8
+      "community": 7
     },
     {
       "id": "core_utils_angle_detector_py_import_typing_any",
@@ -1279,7 +1303,7 @@
       "source_file": "./core/utils/angle_detector.py",
       "source_location": "L6",
       "node_type": "module",
-      "community": 8
+      "community": 7
     },
     {
       "id": "core_utils_angle_detector_py_import_typing_callable",
@@ -1287,7 +1311,7 @@
       "source_file": "./core/utils/angle_detector.py",
       "source_location": "L6",
       "node_type": "module",
-      "community": 8
+      "community": 7
     },
     {
       "id": "core_utils_angle_detector_py_import_typing_dict",
@@ -1295,7 +1319,7 @@
       "source_file": "./core/utils/angle_detector.py",
       "source_location": "L6",
       "node_type": "module",
-      "community": 8
+      "community": 7
     },
     {
       "id": "core_utils_angle_detector_py_import_typing_tuple",
@@ -1303,7 +1327,7 @@
       "source_file": "./core/utils/angle_detector.py",
       "source_location": "L6",
       "node_type": "module",
-      "community": 8
+      "community": 7
     },
     {
       "id": "core_utils_angle_detector_py_import_cv2",
@@ -1311,7 +1335,7 @@
       "source_file": "./core/utils/angle_detector.py",
       "source_location": "L8",
       "node_type": "module",
-      "community": 8
+      "community": 7
     },
     {
       "id": "core_utils_angle_detector_py_import_numpy",
@@ -1319,7 +1343,7 @@
       "source_file": "./core/utils/angle_detector.py",
       "source_location": "L9",
       "node_type": "module",
-      "community": 8
+      "community": 7
     },
     {
       "id": "core_utils_angle_detector_py_import_core_config_orientation_angles",
@@ -1327,7 +1351,7 @@
       "source_file": "./core/utils/angle_detector.py",
       "source_location": "L11",
       "node_type": "module",
-      "community": 8
+      "community": 7
     },
     {
       "id": "core_utils_angle_detector_py_import_core_config_orientation_enabled",
@@ -1335,7 +1359,7 @@
       "source_file": "./core/utils/angle_detector.py",
       "source_location": "L11",
       "node_type": "module",
-      "community": 8
+      "community": 7
     },
     {
       "id": "core_utils_angle_detector_py_import_core_config_orientation_strong_threshold",
@@ -1343,7 +1367,7 @@
       "source_file": "./core/utils/angle_detector.py",
       "source_location": "L11",
       "node_type": "module",
-      "community": 8
+      "community": 7
     },
     {
       "id": "core_utils_angle_detector_py_import_core_config_orientation_target_threshold",
@@ -1351,7 +1375,7 @@
       "source_file": "./core/utils/angle_detector.py",
       "source_location": "L11",
       "node_type": "module",
-      "community": 8
+      "community": 7
     },
     {
       "id": "core_utils_angle_detector_py_import_core_ocr_paddle_get_doc_orientation_model",
@@ -1359,7 +1383,7 @@
       "source_file": "./core/utils/angle_detector.py",
       "source_location": "L17",
       "node_type": "module",
-      "community": 8
+      "community": 7
     },
     {
       "id": "core_utils_angle_detector_py_get_doc_orientation_hint",
@@ -1367,7 +1391,7 @@
       "source_file": "./core/utils/angle_detector.py",
       "source_location": "L22",
       "node_type": "function",
-      "community": 8
+      "community": 7
     },
     {
       "id": "core_utils_angle_detector_py_rotate_image",
@@ -1375,7 +1399,7 @@
       "source_file": "./core/utils/angle_detector.py",
       "source_location": "L34",
       "node_type": "function",
-      "community": 8
+      "community": 7
     },
     {
       "id": "core_utils_angle_detector_py_rotate_image_affine",
@@ -1383,7 +1407,7 @@
       "source_file": "./core/utils/angle_detector.py",
       "source_location": "L47",
       "node_type": "function",
-      "community": 8
+      "community": 7
     },
     {
       "id": "core_utils_angle_detector_py_rotate_by_angle",
@@ -1391,7 +1415,7 @@
       "source_file": "./core/utils/angle_detector.py",
       "source_location": "L72",
       "node_type": "function",
-      "community": 8
+      "community": 7
     },
     {
       "id": "core_utils_angle_detector_py_check_composite_early_exit",
@@ -1399,7 +1423,7 @@
       "source_file": "./core/utils/angle_detector.py",
       "source_location": "L78",
       "node_type": "function",
-      "community": 8
+      "community": 7
     },
     {
       "id": "core_utils_angle_detector_py_find_best_orientation",
@@ -1407,14 +1431,14 @@
       "source_file": "./core/utils/angle_detector.py",
       "source_location": "L92",
       "node_type": "function",
-      "community": 8
+      "community": 7
     },
     {
       "id": "core_utils_counts_py",
       "label": "counts",
       "source_file": "./core/utils/counts.py",
       "node_type": "file",
-      "community": 35
+      "community": 36
     },
     {
       "id": "core_utils_counts_py_import_os",
@@ -1422,7 +1446,7 @@
       "source_file": "./core/utils/counts.py",
       "source_location": "L7",
       "node_type": "module",
-      "community": 35
+      "community": 36
     },
     {
       "id": "core_utils_counts_py_count_files_in_folder",
@@ -1430,7 +1454,7 @@
       "source_file": "./core/utils/counts.py",
       "source_location": "L10",
       "node_type": "function",
-      "community": 35
+      "community": 36
     },
     {
       "id": "core_utils_counts_py_count_pdf_pages",
@@ -1438,14 +1462,14 @@
       "source_file": "./core/utils/counts.py",
       "source_location": "L28",
       "node_type": "function",
-      "community": 35
+      "community": 36
     },
     {
       "id": "core_models_init_py",
       "label": "__init__",
       "source_file": "./core/models/__init__.py",
       "node_type": "file",
-      "community": 36
+      "community": 34
     },
     {
       "id": "core_models_init_py_import_yolo_runner_yolorunner",
@@ -1453,7 +1477,7 @@
       "source_file": "./core/models/__init__.py",
       "source_location": "L2",
       "node_type": "module",
-      "community": 36
+      "community": 34
     },
     {
       "id": "core_models_init_py_import_yolo_runner_get_yolo_main",
@@ -1461,7 +1485,7 @@
       "source_file": "./core/models/__init__.py",
       "source_location": "L2",
       "node_type": "module",
-      "community": 36
+      "community": 34
     },
     {
       "id": "core_models_init_py_import_yolo_runner_get_yolo_best",
@@ -1469,7 +1493,7 @@
       "source_file": "./core/models/__init__.py",
       "source_location": "L2",
       "node_type": "module",
-      "community": 36
+      "community": 34
     },
     {
       "id": "core_models_yolo_runner_py",
@@ -1564,7 +1588,7 @@
       "source_file": "./core/models/yolo_runner.py",
       "source_location": "L36",
       "node_type": "class",
-      "community": 30
+      "community": 32
     },
     {
       "id": "core_models_yolo_runner_py_yolorunner_init",
@@ -1572,7 +1596,7 @@
       "source_file": "./core/models/yolo_runner.py",
       "source_location": "L42",
       "node_type": "method",
-      "community": 30
+      "community": 32
     },
     {
       "id": "core_models_yolo_runner_py_yolorunner_get_main",
@@ -1580,7 +1604,7 @@
       "source_file": "./core/models/yolo_runner.py",
       "source_location": "L52",
       "node_type": "method",
-      "community": 30
+      "community": 32
     },
     {
       "id": "core_models_yolo_runner_py_yolorunner_get_best",
@@ -1588,7 +1612,7 @@
       "source_file": "./core/models/yolo_runner.py",
       "source_location": "L64",
       "node_type": "method",
-      "community": 30
+      "community": 32
     },
     {
       "id": "core_models_yolo_runner_py_yolorunner_run_inference",
@@ -1596,7 +1620,7 @@
       "source_file": "./core/models/yolo_runner.py",
       "source_location": "L76",
       "node_type": "method",
-      "community": 30
+      "community": 32
     },
     {
       "id": "core_models_yolo_runner_py_get_yolo_main",
@@ -1627,7 +1651,7 @@
       "label": "aadhaar_gate",
       "source_file": "./core/aadhaar_gate.py",
       "node_type": "file",
-      "community": 7
+      "community": 8
     },
     {
       "id": "core_aadhaar_gate_py_import_cv2",
@@ -1635,7 +1659,7 @@
       "source_file": "./core/aadhaar_gate.py",
       "source_location": "L24",
       "node_type": "module",
-      "community": 7
+      "community": 8
     },
     {
       "id": "core_aadhaar_gate_py_import_logging",
@@ -1643,7 +1667,7 @@
       "source_file": "./core/aadhaar_gate.py",
       "source_location": "L25",
       "node_type": "module",
-      "community": 7
+      "community": 8
     },
     {
       "id": "core_aadhaar_gate_py_import_typing_any",
@@ -1651,7 +1675,7 @@
       "source_file": "./core/aadhaar_gate.py",
       "source_location": "L26",
       "node_type": "module",
-      "community": 7
+      "community": 8
     },
     {
       "id": "core_aadhaar_gate_py_import_typing_dict",
@@ -1659,7 +1683,7 @@
       "source_file": "./core/aadhaar_gate.py",
       "source_location": "L26",
       "node_type": "module",
-      "community": 7
+      "community": 8
     },
     {
       "id": "core_aadhaar_gate_py_import_typing_list",
@@ -1667,7 +1691,7 @@
       "source_file": "./core/aadhaar_gate.py",
       "source_location": "L26",
       "node_type": "module",
-      "community": 7
+      "community": 8
     },
     {
       "id": "core_aadhaar_gate_py_import_typing_tuple",
@@ -1675,7 +1699,7 @@
       "source_file": "./core/aadhaar_gate.py",
       "source_location": "L26",
       "node_type": "module",
-      "community": 7
+      "community": 8
     },
     {
       "id": "core_aadhaar_gate_py_import_numpy",
@@ -1683,7 +1707,7 @@
       "source_file": "./core/aadhaar_gate.py",
       "source_location": "L28",
       "node_type": "module",
-      "community": 7
+      "community": 8
     },
     {
       "id": "core_aadhaar_gate_py_import_core_models_yolo_runner_get_yolo_main",
@@ -1691,7 +1715,7 @@
       "source_file": "./core/aadhaar_gate.py",
       "source_location": "L30",
       "node_type": "module",
-      "community": 7
+      "community": 8
     },
     {
       "id": "core_aadhaar_gate_py_import_core_models_yolo_runner_get_yolo_best",
@@ -1699,7 +1723,7 @@
       "source_file": "./core/aadhaar_gate.py",
       "source_location": "L30",
       "node_type": "module",
-      "community": 7
+      "community": 8
     },
     {
       "id": "core_aadhaar_gate_py_import_core_classifiers_detect_aadhaar_side",
@@ -1707,7 +1731,7 @@
       "source_file": "./core/aadhaar_gate.py",
       "source_location": "L31",
       "node_type": "module",
-      "community": 7
+      "community": 8
     },
     {
       "id": "core_aadhaar_gate_py_import_core_ocr_masking_yolo_results_to_detections",
@@ -1715,7 +1739,7 @@
       "source_file": "./core/aadhaar_gate.py",
       "source_location": "L32",
       "node_type": "module",
-      "community": 7
+      "community": 8
     },
     {
       "id": "core_aadhaar_gate_py_import_core_ocr_masking_merge_detections",
@@ -1723,7 +1747,7 @@
       "source_file": "./core/aadhaar_gate.py",
       "source_location": "L32",
       "node_type": "module",
-      "community": 7
+      "community": 8
     },
     {
       "id": "core_aadhaar_gate_py_import_core_spatial_find_aadhaar_card_boxes",
@@ -1731,7 +1755,7 @@
       "source_file": "./core/aadhaar_gate.py",
       "source_location": "L33",
       "node_type": "module",
-      "community": 7
+      "community": 8
     },
     {
       "id": "core_aadhaar_gate_py_import_core_spatial_filter_dets_inside_box",
@@ -1739,7 +1763,7 @@
       "source_file": "./core/aadhaar_gate.py",
       "source_location": "L33",
       "node_type": "module",
-      "community": 7
+      "community": 8
     },
     {
       "id": "core_aadhaar_gate_py_import_core_spatial_map_crop_dets_to_full",
@@ -1747,7 +1771,7 @@
       "source_file": "./core/aadhaar_gate.py",
       "source_location": "L33",
       "node_type": "module",
-      "community": 7
+      "community": 8
     },
     {
       "id": "core_aadhaar_gate_py_preprocess_greyscale",
@@ -1755,7 +1779,7 @@
       "source_file": "./core/aadhaar_gate.py",
       "source_location": "L42",
       "node_type": "function",
-      "community": 7
+      "community": 8
     },
     {
       "id": "core_aadhaar_gate_py_process_single_aadhaar_crop",
@@ -1763,7 +1787,7 @@
       "source_file": "./core/aadhaar_gate.py",
       "source_location": "L55",
       "node_type": "function",
-      "community": 7
+      "community": 8
     },
     {
       "id": "core_aadhaar_gate_py_run_full_gate_scoring",
@@ -1771,14 +1795,14 @@
       "source_file": "./core/aadhaar_gate.py",
       "source_location": "L97",
       "node_type": "function",
-      "community": 7
+      "community": 8
     },
     {
       "id": "core_spatial_py",
       "label": "spatial",
       "source_file": "./core/spatial.py",
       "node_type": "file",
-      "community": 19
+      "community": 18
     },
     {
       "id": "core_spatial_py_import_typing_list",
@@ -1786,7 +1810,7 @@
       "source_file": "./core/spatial.py",
       "source_location": "L13",
       "node_type": "module",
-      "community": 19
+      "community": 18
     },
     {
       "id": "core_spatial_py_compute_intersection_area",
@@ -1794,7 +1818,7 @@
       "source_file": "./core/spatial.py",
       "source_location": "L16",
       "node_type": "function",
-      "community": 19
+      "community": 18
     },
     {
       "id": "core_spatial_py_is_inside_aadhaar_by_area",
@@ -1802,7 +1826,7 @@
       "source_file": "./core/spatial.py",
       "source_location": "L40",
       "node_type": "function",
-      "community": 19
+      "community": 18
     },
     {
       "id": "core_spatial_py_find_aadhaar_card_boxes",
@@ -1810,7 +1834,7 @@
       "source_file": "./core/spatial.py",
       "source_location": "L71",
       "node_type": "function",
-      "community": 19
+      "community": 18
     },
     {
       "id": "core_spatial_py_find_qr_boxes",
@@ -1818,7 +1842,7 @@
       "source_file": "./core/spatial.py",
       "source_location": "L89",
       "node_type": "function",
-      "community": 19
+      "community": 18
     },
     {
       "id": "core_spatial_py_filter_dets_inside_box",
@@ -1826,7 +1850,7 @@
       "source_file": "./core/spatial.py",
       "source_location": "L109",
       "node_type": "function",
-      "community": 19
+      "community": 18
     },
     {
       "id": "core_spatial_py_map_dets_to_crop",
@@ -1834,7 +1858,7 @@
       "source_file": "./core/spatial.py",
       "source_location": "L139",
       "node_type": "function",
-      "community": 19
+      "community": 18
     },
     {
       "id": "core_spatial_py_map_crop_dets_to_full",
@@ -1842,14 +1866,14 @@
       "source_file": "./core/spatial.py",
       "source_location": "L170",
       "node_type": "function",
-      "community": 19
+      "community": 18
     },
     {
       "id": "core_classifiers_py",
       "label": "classifiers",
       "source_file": "./core/classifiers.py",
       "node_type": "file",
-      "community": 5
+      "community": 6
     },
     {
       "id": "core_classifiers_py_import_os",
@@ -1857,7 +1881,7 @@
       "source_file": "./core/classifiers.py",
       "source_location": "L11",
       "node_type": "module",
-      "community": 5
+      "community": 6
     },
     {
       "id": "core_classifiers_py_import_re",
@@ -1865,7 +1889,7 @@
       "source_file": "./core/classifiers.py",
       "source_location": "L12",
       "node_type": "module",
-      "community": 5
+      "community": 6
     },
     {
       "id": "core_classifiers_py_import_logging",
@@ -1873,7 +1897,7 @@
       "source_file": "./core/classifiers.py",
       "source_location": "L13",
       "node_type": "module",
-      "community": 5
+      "community": 6
     },
     {
       "id": "core_classifiers_py_import_threading",
@@ -1881,7 +1905,7 @@
       "source_file": "./core/classifiers.py",
       "source_location": "L14",
       "node_type": "module",
-      "community": 5
+      "community": 6
     },
     {
       "id": "core_classifiers_py_import_cv2",
@@ -1889,7 +1913,7 @@
       "source_file": "./core/classifiers.py",
       "source_location": "L15",
       "node_type": "module",
-      "community": 5
+      "community": 6
     },
     {
       "id": "core_classifiers_py_import_numpy",
@@ -1897,7 +1921,7 @@
       "source_file": "./core/classifiers.py",
       "source_location": "L16",
       "node_type": "module",
-      "community": 5
+      "community": 6
     },
     {
       "id": "core_classifiers_py_import_torch",
@@ -1905,7 +1929,7 @@
       "source_file": "./core/classifiers.py",
       "source_location": "L17",
       "node_type": "module",
-      "community": 5
+      "community": 6
     },
     {
       "id": "core_classifiers_py_import_typing_list",
@@ -1913,7 +1937,7 @@
       "source_file": "./core/classifiers.py",
       "source_location": "L18",
       "node_type": "module",
-      "community": 5
+      "community": 6
     },
     {
       "id": "core_classifiers_py_import_typing_tuple",
@@ -1921,7 +1945,7 @@
       "source_file": "./core/classifiers.py",
       "source_location": "L18",
       "node_type": "module",
-      "community": 5
+      "community": 6
     },
     {
       "id": "core_classifiers_py_import_ultralytics_yolo",
@@ -1929,7 +1953,7 @@
       "source_file": "./core/classifiers.py",
       "source_location": "L19",
       "node_type": "module",
-      "community": 5
+      "community": 6
     },
     {
       "id": "core_classifiers_py_import_dotenv_load_dotenv",
@@ -1937,7 +1961,7 @@
       "source_file": "./core/classifiers.py",
       "source_location": "L20",
       "node_type": "module",
-      "community": 5
+      "community": 6
     },
     {
       "id": "core_classifiers_py_import_core_config_pvc_max_rotations",
@@ -1945,7 +1969,7 @@
       "source_file": "./core/classifiers.py",
       "source_location": "L21",
       "node_type": "module",
-      "community": 5
+      "community": 6
     },
     {
       "id": "core_classifiers_py_import_core_config_pvc_person_confidence_threshold",
@@ -1953,7 +1977,7 @@
       "source_file": "./core/classifiers.py",
       "source_location": "L21",
       "node_type": "module",
-      "community": 5
+      "community": 6
     },
     {
       "id": "core_classifiers_py_get_classifier",
@@ -1961,7 +1985,7 @@
       "source_file": "./core/classifiers.py",
       "source_location": "L37",
       "node_type": "function",
-      "community": 5
+      "community": 6
     },
     {
       "id": "core_classifiers_py_get_person_model",
@@ -1969,7 +1993,7 @@
       "source_file": "./core/classifiers.py",
       "source_location": "L48",
       "node_type": "function",
-      "community": 5
+      "community": 6
     },
     {
       "id": "core_classifiers_py_detect_aadhaar_side",
@@ -1977,7 +2001,7 @@
       "source_file": "./core/classifiers.py",
       "source_location": "L59",
       "node_type": "function",
-      "community": 5
+      "community": 6
     },
     {
       "id": "core_classifiers_py_is_pan_card",
@@ -1985,7 +2009,7 @@
       "source_file": "./core/classifiers.py",
       "source_location": "L120",
       "node_type": "function",
-      "community": 5
+      "community": 6
     },
     {
       "id": "core_classifiers_py_normalize_aadhaar_keyword",
@@ -1993,7 +2017,7 @@
       "source_file": "./core/classifiers.py",
       "source_location": "L159",
       "node_type": "function",
-      "community": 5
+      "community": 6
     },
     {
       "id": "core_classifiers_py_is_aadhaar_card_confirmed",
@@ -2001,7 +2025,7 @@
       "source_file": "./core/classifiers.py",
       "source_location": "L185",
       "node_type": "function",
-      "community": 5
+      "community": 6
     },
     {
       "id": "core_classifiers_py_mask_pvc_aadhaar",
@@ -2009,14 +2033,14 @@
       "source_file": "./core/classifiers.py",
       "source_location": "L213",
       "node_type": "function",
-      "community": 5
+      "community": 6
     },
     {
       "id": "core_pipeline_py",
       "label": "pipeline",
       "source_file": "./core/pipeline.py",
       "node_type": "file",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_gc",
@@ -2024,7 +2048,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L10",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_logging",
@@ -2032,7 +2056,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L11",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_threading",
@@ -2040,7 +2064,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L12",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_time",
@@ -2048,7 +2072,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L13",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_typing_any",
@@ -2056,7 +2080,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L14",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_typing_dict",
@@ -2064,7 +2088,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L14",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_typing_optional",
@@ -2072,7 +2096,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L14",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_typing_tuple",
@@ -2080,7 +2104,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L14",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_cv2",
@@ -2088,7 +2112,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L16",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_numpy",
@@ -2096,7 +2120,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L17",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_core_aadhaar_gate_run_full_gate_scoring",
@@ -2104,7 +2128,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L19",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_core_classifiers_is_aadhaar_card_confirmed",
@@ -2112,7 +2136,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L20",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_core_classifiers_is_pan_card",
@@ -2120,7 +2144,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L20",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_core_classifiers_mask_pvc_aadhaar",
@@ -2128,7 +2152,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L20",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_core_config_router_confidence_threshold",
@@ -2136,7 +2160,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L21",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_core_config_router_enabled",
@@ -2144,7 +2168,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L21",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_core_config_skip_keywords",
@@ -2152,7 +2176,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L21",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_core_ocr_masking_find_aadhaar_patterns",
@@ -2160,7 +2184,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L26",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_core_ocr_masking_mask_ocr_detections",
@@ -2168,7 +2192,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L26",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_core_ocr_masking_mask_yolo_detections",
@@ -2176,7 +2200,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L26",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_core_ocr_ocr_adapter_adapt_paddle_result",
@@ -2184,7 +2208,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L27",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_core_ocr_ocr_adapter_get_texts_and_boxes",
@@ -2192,7 +2216,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L27",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_core_ocr_paddle_create_paddle_ocr",
@@ -2200,7 +2224,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L28",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_core_ocr_paddle_get_doc_orientation_model",
@@ -2208,7 +2232,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L28",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_core_ocr_paddle_resize_image_for_ocr",
@@ -2216,7 +2240,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L28",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_core_ocr_paddle_run_ocr_lite_for_routing",
@@ -2224,7 +2248,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L28",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_core_ocr_paddle_scale_adapted_ocr_results",
@@ -2232,7 +2256,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L28",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_core_router_classify_document_lane",
@@ -2240,7 +2264,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L35",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_import_core_utils_angle_detector_find_best_orientation",
@@ -2248,7 +2272,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L36",
       "node_type": "module",
-      "community": 3
+      "community": 2
     },
     {
       "id": "core_pipeline_py_get_ocr",
@@ -2256,7 +2280,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L44",
       "node_type": "function",
-      "community": 15
+      "community": 2
     },
     {
       "id": "core_pipeline_py_correct_doc_orientation",
@@ -2264,7 +2288,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L53",
       "node_type": "function",
-      "community": 15
+      "community": 2
     },
     {
       "id": "core_pipeline_py_run_ocr_on_region",
@@ -2272,7 +2296,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L71",
       "node_type": "function",
-      "community": 15
+      "community": 2
     },
     {
       "id": "core_pipeline_py_verify_skip_pan",
@@ -2280,7 +2304,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L106",
       "node_type": "function",
-      "community": 15
+      "community": 2
     },
     {
       "id": "core_pipeline_py_report_mask_counts",
@@ -2288,7 +2312,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L144",
       "node_type": "function",
-      "community": 15
+      "community": 2
     },
     {
       "id": "core_pipeline_py_empty_yolo_report",
@@ -2296,7 +2320,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L156",
       "node_type": "function",
-      "community": 15
+      "community": 2
     },
     {
       "id": "core_pipeline_py_derive_yolo_report_from_dets",
@@ -2304,7 +2328,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L167",
       "node_type": "function",
-      "community": 15
+      "community": 2
     },
     {
       "id": "core_pipeline_py_run_ocr_for_card_path",
@@ -2312,7 +2336,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L182",
       "node_type": "function",
-      "community": 15
+      "community": 2
     },
     {
       "id": "core_pipeline_py_process_form_lane",
@@ -2320,7 +2344,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L204",
       "node_type": "function",
-      "community": 15
+      "community": 2
     },
     {
       "id": "core_pipeline_py_process_card_like_lane",
@@ -2328,7 +2352,7 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L278",
       "node_type": "function",
-      "community": 15
+      "community": 2
     },
     {
       "id": "core_pipeline_py_process_image",
@@ -2336,14 +2360,14 @@
       "source_file": "./core/pipeline.py",
       "source_location": "L372",
       "node_type": "function",
-      "community": 15
+      "community": 2
     },
     {
       "id": "core_db_database_py",
       "label": "database",
       "source_file": "./core/db/database.py",
       "node_type": "file",
-      "community": 28
+      "community": 26
     },
     {
       "id": "core_db_database_py_import_os",
@@ -2351,7 +2375,7 @@
       "source_file": "./core/db/database.py",
       "source_location": "L14",
       "node_type": "module",
-      "community": 28
+      "community": 26
     },
     {
       "id": "core_db_database_py_import_boto3",
@@ -2359,7 +2383,7 @@
       "source_file": "./core/db/database.py",
       "source_location": "L15",
       "node_type": "module",
-      "community": 28
+      "community": 26
     },
     {
       "id": "core_db_database_py_import_dotenv_load_dotenv",
@@ -2367,7 +2391,7 @@
       "source_file": "./core/db/database.py",
       "source_location": "L16",
       "node_type": "module",
-      "community": 28
+      "community": 26
     },
     {
       "id": "core_db_database_py_build_default_record",
@@ -2375,7 +2399,7 @@
       "source_file": "./core/db/database.py",
       "source_location": "L35",
       "node_type": "function",
-      "community": 28
+      "community": 26
     },
     {
       "id": "core_db_database_py_get_dynamo_table",
@@ -2383,14 +2407,14 @@
       "source_file": "./core/db/database.py",
       "source_location": "L70",
       "node_type": "function",
-      "community": 28
+      "community": 26
     },
     {
       "id": "core_db_init_py",
       "label": "__init__",
       "source_file": "./core/db/__init__.py",
       "node_type": "file",
-      "community": 40
+      "community": 39
     },
     {
       "id": "core_db_init_py_import_database_get_dynamo_table",
@@ -2398,7 +2422,7 @@
       "source_file": "./core/db/__init__.py",
       "source_location": "L2",
       "node_type": "module",
-      "community": 40
+      "community": 39
     },
     {
       "id": "core_db_init_py_import_log_writer_write_mask_log",
@@ -2406,14 +2430,14 @@
       "source_file": "./core/db/__init__.py",
       "source_location": "L3",
       "node_type": "module",
-      "community": 40
+      "community": 39
     },
     {
       "id": "core_db_log_writer_py",
       "label": "log_writer",
       "source_file": "./core/db/log_writer.py",
       "node_type": "file",
-      "community": 9
+      "community": 11
     },
     {
       "id": "core_db_log_writer_py_import_logging",
@@ -2421,7 +2445,7 @@
       "source_file": "./core/db/log_writer.py",
       "source_location": "L14",
       "node_type": "module",
-      "community": 9
+      "community": 11
     },
     {
       "id": "core_db_log_writer_py_import_uuid",
@@ -2429,7 +2453,7 @@
       "source_file": "./core/db/log_writer.py",
       "source_location": "L15",
       "node_type": "module",
-      "community": 9
+      "community": 11
     },
     {
       "id": "core_db_log_writer_py_import_math",
@@ -2437,7 +2461,7 @@
       "source_file": "./core/db/log_writer.py",
       "source_location": "L16",
       "node_type": "module",
-      "community": 9
+      "community": 11
     },
     {
       "id": "core_db_log_writer_py_import_decimal_decimal",
@@ -2445,7 +2469,7 @@
       "source_file": "./core/db/log_writer.py",
       "source_location": "L17",
       "node_type": "module",
-      "community": 9
+      "community": 11
     },
     {
       "id": "core_db_log_writer_py_import_datetime_timezone",
@@ -2453,7 +2477,7 @@
       "source_file": "./core/db/log_writer.py",
       "source_location": "L18",
       "node_type": "module",
-      "community": 9
+      "community": 11
     },
     {
       "id": "core_db_log_writer_py_import_typing_list",
@@ -2461,7 +2485,7 @@
       "source_file": "./core/db/log_writer.py",
       "source_location": "L19",
       "node_type": "module",
-      "community": 9
+      "community": 11
     },
     {
       "id": "core_db_log_writer_py_import_typing_dict",
@@ -2469,7 +2493,7 @@
       "source_file": "./core/db/log_writer.py",
       "source_location": "L19",
       "node_type": "module",
-      "community": 9
+      "community": 11
     },
     {
       "id": "core_db_log_writer_py_import_typing_set",
@@ -2477,7 +2501,7 @@
       "source_file": "./core/db/log_writer.py",
       "source_location": "L19",
       "node_type": "module",
-      "community": 9
+      "community": 11
     },
     {
       "id": "core_db_log_writer_py_import_boto3_dynamodb_conditions_attr",
@@ -2485,7 +2509,7 @@
       "source_file": "./core/db/log_writer.py",
       "source_location": "L21",
       "node_type": "module",
-      "community": 9
+      "community": 11
     },
     {
       "id": "core_db_log_writer_py_import_database_get_dynamo_table",
@@ -2493,7 +2517,7 @@
       "source_file": "./core/db/log_writer.py",
       "source_location": "L23",
       "node_type": "module",
-      "community": 9
+      "community": 11
     },
     {
       "id": "core_db_log_writer_py_to_decimal",
@@ -2501,7 +2525,7 @@
       "source_file": "./core/db/log_writer.py",
       "source_location": "L28",
       "node_type": "function",
-      "community": 9
+      "community": 11
     },
     {
       "id": "core_db_log_writer_py_write_mask_log",
@@ -2509,7 +2533,7 @@
       "source_file": "./core/db/log_writer.py",
       "source_location": "L37",
       "node_type": "function",
-      "community": 9
+      "community": 11
     },
     {
       "id": "core_db_log_writer_py_bulk_write_logs",
@@ -2517,7 +2541,7 @@
       "source_file": "./core/db/log_writer.py",
       "source_location": "L75",
       "node_type": "function",
-      "community": 9
+      "community": 11
     },
     {
       "id": "core_db_log_writer_py_get_processed_paths",
@@ -2525,7 +2549,7 @@
       "source_file": "./core/db/log_writer.py",
       "source_location": "L109",
       "node_type": "function",
-      "community": 9
+      "community": 11
     },
     {
       "id": "core_db_log_writer_py_ensure_log_table",
@@ -2533,21 +2557,21 @@
       "source_file": "./core/db/log_writer.py",
       "source_location": "L146",
       "node_type": "function",
-      "community": 9
+      "community": 11
     },
     {
       "id": "d4_patches_for_gpu_py",
       "label": "D4_PATCHES_FOR_GPU",
       "source_file": "./D4_PATCHES_FOR_GPU.py",
       "node_type": "file",
-      "community": 47
+      "community": 44
     },
     {
       "id": "scripts_reporting_merge_metadata_py",
       "label": "merge_metadata",
       "source_file": "./scripts/reporting/merge_metadata.py",
       "node_type": "file",
-      "community": 42
+      "community": 40
     },
     {
       "id": "scripts_reporting_merge_metadata_py_import_pandas",
@@ -2555,7 +2579,7 @@
       "source_file": "./scripts/reporting/merge_metadata.py",
       "source_location": "L3",
       "node_type": "module",
-      "community": 42
+      "community": 40
     },
     {
       "id": "scripts_reporting_merge_metadata_py_import_os",
@@ -2563,14 +2587,14 @@
       "source_file": "./scripts/reporting/merge_metadata.py",
       "source_location": "L4",
       "node_type": "module",
-      "community": 42
+      "community": 40
     },
     {
       "id": "scripts_reporting_export_logs_py",
       "label": "export_logs",
       "source_file": "./scripts/reporting/export_logs.py",
       "node_type": "file",
-      "community": 17
+      "community": 16
     },
     {
       "id": "scripts_reporting_export_logs_py_import_sys",
@@ -2578,7 +2602,7 @@
       "source_file": "./scripts/reporting/export_logs.py",
       "source_location": "L8",
       "node_type": "module",
-      "community": 17
+      "community": 16
     },
     {
       "id": "scripts_reporting_export_logs_py_import_pathlib_path",
@@ -2586,7 +2610,7 @@
       "source_file": "./scripts/reporting/export_logs.py",
       "source_location": "L9",
       "node_type": "module",
-      "community": 17
+      "community": 16
     },
     {
       "id": "scripts_reporting_export_logs_py_import_csv",
@@ -2594,7 +2618,7 @@
       "source_file": "./scripts/reporting/export_logs.py",
       "source_location": "L13",
       "node_type": "module",
-      "community": 17
+      "community": 16
     },
     {
       "id": "scripts_reporting_export_logs_py_import_argparse",
@@ -2602,7 +2626,7 @@
       "source_file": "./scripts/reporting/export_logs.py",
       "source_location": "L14",
       "node_type": "module",
-      "community": 17
+      "community": 16
     },
     {
       "id": "scripts_reporting_export_logs_py_import_dotenv_load_dotenv",
@@ -2610,7 +2634,7 @@
       "source_file": "./scripts/reporting/export_logs.py",
       "source_location": "L15",
       "node_type": "module",
-      "community": 17
+      "community": 16
     },
     {
       "id": "scripts_reporting_export_logs_py_import_boto3_dynamodb_conditions_attr",
@@ -2618,7 +2642,7 @@
       "source_file": "./scripts/reporting/export_logs.py",
       "source_location": "L16",
       "node_type": "module",
-      "community": 17
+      "community": 16
     },
     {
       "id": "scripts_reporting_export_logs_py_import_core_get_dynamo_table",
@@ -2626,7 +2650,7 @@
       "source_file": "./scripts/reporting/export_logs.py",
       "source_location": "L18",
       "node_type": "module",
-      "community": 17
+      "community": 16
     },
     {
       "id": "scripts_reporting_export_logs_py_import_core_table_name",
@@ -2634,7 +2658,7 @@
       "source_file": "./scripts/reporting/export_logs.py",
       "source_location": "L18",
       "node_type": "module",
-      "community": 17
+      "community": 16
     },
     {
       "id": "scripts_reporting_export_logs_py_export_to_csv",
@@ -2642,14 +2666,14 @@
       "source_file": "./scripts/reporting/export_logs.py",
       "source_location": "L23",
       "node_type": "function",
-      "community": 17
+      "community": 16
     },
     {
       "id": "scripts_reporting_merge_csvs_py",
       "label": "merge_csvs",
       "source_file": "./scripts/reporting/merge_csvs.py",
       "node_type": "file",
-      "community": 41
+      "community": 38
     },
     {
       "id": "scripts_reporting_merge_csvs_py_import_pandas",
@@ -2657,7 +2681,7 @@
       "source_file": "./scripts/reporting/merge_csvs.py",
       "source_location": "L1",
       "node_type": "module",
-      "community": 41
+      "community": 38
     },
     {
       "id": "scripts_reporting_merge_csvs_py_import_os",
@@ -2665,14 +2689,14 @@
       "source_file": "./scripts/reporting/merge_csvs.py",
       "source_location": "L2",
       "node_type": "module",
-      "community": 41
+      "community": 38
     },
     {
       "id": "scripts_reporting_main_py",
       "label": "main",
       "source_file": "./scripts/reporting/main.py",
       "node_type": "file",
-      "community": 43
+      "community": 42
     },
     {
       "id": "scripts_reporting_main_py_import_pandas",
@@ -2680,7 +2704,7 @@
       "source_file": "./scripts/reporting/main.py",
       "source_location": "L1",
       "node_type": "module",
-      "community": 43
+      "community": 42
     },
     {
       "id": "scripts_reporting_main_py_import_os",
@@ -2688,14 +2712,14 @@
       "source_file": "./scripts/reporting/main.py",
       "source_location": "L2",
       "node_type": "module",
-      "community": 43
+      "community": 42
     },
     {
       "id": "scripts_reporting_mapping_py",
       "label": "mapping",
       "source_file": "./scripts/reporting/mapping.py",
       "node_type": "file",
-      "community": 44
+      "community": 43
     },
     {
       "id": "scripts_reporting_mapping_py_import_pandas",
@@ -2703,14 +2727,14 @@
       "source_file": "./scripts/reporting/mapping.py",
       "source_location": "L1",
       "node_type": "module",
-      "community": 44
+      "community": 43
     },
     {
       "id": "scripts_reporting_copy_files_py",
       "label": "copy_files",
       "source_file": "./scripts/reporting/copy_files.py",
       "node_type": "file",
-      "community": 37
+      "community": 35
     },
     {
       "id": "scripts_reporting_copy_files_py_import_shutil",
@@ -2718,7 +2742,7 @@
       "source_file": "./scripts/reporting/copy_files.py",
       "source_location": "L1",
       "node_type": "module",
-      "community": 37
+      "community": 35
     },
     {
       "id": "scripts_reporting_copy_files_py_import_pandas",
@@ -2726,7 +2750,7 @@
       "source_file": "./scripts/reporting/copy_files.py",
       "source_location": "L2",
       "node_type": "module",
-      "community": 37
+      "community": 35
     },
     {
       "id": "scripts_reporting_copy_files_py_import_os",
@@ -2734,14 +2758,14 @@
       "source_file": "./scripts/reporting/copy_files.py",
       "source_location": "L3",
       "node_type": "module",
-      "community": 37
+      "community": 35
     },
     {
       "id": "scripts_inspect_yolo_models_py",
       "label": "inspect_yolo_models",
       "source_file": "./scripts/inspect_yolo_models.py",
       "node_type": "file",
-      "community": 22
+      "community": 21
     },
     {
       "id": "scripts_inspect_yolo_models_py_import_ultralytics_yolo",
@@ -2749,7 +2773,7 @@
       "source_file": "./scripts/inspect_yolo_models.py",
       "source_location": "L1",
       "node_type": "module",
-      "community": 22
+      "community": 21
     },
     {
       "id": "scripts_inspect_yolo_models_py_import_numpy",
@@ -2757,7 +2781,7 @@
       "source_file": "./scripts/inspect_yolo_models.py",
       "source_location": "L2",
       "node_type": "module",
-      "community": 22
+      "community": 21
     },
     {
       "id": "scripts_inspect_yolo_models_py_import_os",
@@ -2765,7 +2789,7 @@
       "source_file": "./scripts/inspect_yolo_models.py",
       "source_location": "L3",
       "node_type": "module",
-      "community": 22
+      "community": 21
     },
     {
       "id": "scripts_inspect_yolo_models_py_import_datetime",
@@ -2773,7 +2797,7 @@
       "source_file": "./scripts/inspect_yolo_models.py",
       "source_location": "L4",
       "node_type": "module",
-      "community": 22
+      "community": 21
     },
     {
       "id": "scripts_inspect_yolo_models_py_collect_metadata",
@@ -2781,7 +2805,7 @@
       "source_file": "./scripts/inspect_yolo_models.py",
       "source_location": "L26",
       "node_type": "function",
-      "community": 22
+      "community": 21
     },
     {
       "id": "scripts_inspect_yolo_models_py_format_report",
@@ -2789,14 +2813,14 @@
       "source_file": "./scripts/inspect_yolo_models.py",
       "source_location": "L80",
       "node_type": "function",
-      "community": 22
+      "community": 21
     },
     {
       "id": "scripts_setup_and_first_inference_py",
       "label": "setup_and_first_inference",
       "source_file": "./scripts/setup_and_first_inference.py",
       "node_type": "file",
-      "community": 16
+      "community": 15
     },
     {
       "id": "scripts_setup_and_first_inference_py_import_os",
@@ -2804,7 +2828,7 @@
       "source_file": "./scripts/setup_and_first_inference.py",
       "source_location": "L20",
       "node_type": "module",
-      "community": 16
+      "community": 15
     },
     {
       "id": "scripts_setup_and_first_inference_py_import_sys",
@@ -2812,7 +2836,7 @@
       "source_file": "./scripts/setup_and_first_inference.py",
       "source_location": "L21",
       "node_type": "module",
-      "community": 16
+      "community": 15
     },
     {
       "id": "scripts_setup_and_first_inference_py_import_gc",
@@ -2820,7 +2844,7 @@
       "source_file": "./scripts/setup_and_first_inference.py",
       "source_location": "L22",
       "node_type": "module",
-      "community": 16
+      "community": 15
     },
     {
       "id": "scripts_setup_and_first_inference_py_import_argparse",
@@ -2828,7 +2852,7 @@
       "source_file": "./scripts/setup_and_first_inference.py",
       "source_location": "L23",
       "node_type": "module",
-      "community": 16
+      "community": 15
     },
     {
       "id": "scripts_setup_and_first_inference_py_import_logging",
@@ -2836,7 +2860,7 @@
       "source_file": "./scripts/setup_and_first_inference.py",
       "source_location": "L24",
       "node_type": "module",
-      "community": 16
+      "community": 15
     },
     {
       "id": "scripts_setup_and_first_inference_py_import_pathlib_path",
@@ -2844,7 +2868,7 @@
       "source_file": "./scripts/setup_and_first_inference.py",
       "source_location": "L25",
       "node_type": "module",
-      "community": 16
+      "community": 15
     },
     {
       "id": "scripts_setup_and_first_inference_py_check_yolo_models",
@@ -2852,7 +2876,7 @@
       "source_file": "./scripts/setup_and_first_inference.py",
       "source_location": "L64",
       "node_type": "function",
-      "community": 16
+      "community": 15
     },
     {
       "id": "scripts_setup_and_first_inference_py_init_paddle_ocr",
@@ -2860,7 +2884,7 @@
       "source_file": "./scripts/setup_and_first_inference.py",
       "source_location": "L82",
       "node_type": "function",
-      "community": 16
+      "community": 15
     },
     {
       "id": "scripts_setup_and_first_inference_py_run_inference",
@@ -2868,7 +2892,7 @@
       "source_file": "./scripts/setup_and_first_inference.py",
       "source_location": "L100",
       "node_type": "function",
-      "community": 16
+      "community": 15
     },
     {
       "id": "scripts_setup_and_first_inference_py_main",
@@ -2876,7 +2900,7 @@
       "source_file": "./scripts/setup_and_first_inference.py",
       "source_location": "L184",
       "node_type": "function",
-      "community": 16
+      "community": 15
     },
     {
       "id": "scripts_merge_chat_sessions_py",
@@ -2890,7 +2914,7 @@
       "label": "create_dynamo_table",
       "source_file": "./scripts/create_dynamo_table.py",
       "node_type": "file",
-      "community": 20
+      "community": 19
     },
     {
       "id": "scripts_create_dynamo_table_py_import_argparse",
@@ -2898,7 +2922,7 @@
       "source_file": "./scripts/create_dynamo_table.py",
       "source_location": "L17",
       "node_type": "module",
-      "community": 20
+      "community": 19
     },
     {
       "id": "scripts_create_dynamo_table_py_import_os",
@@ -2906,7 +2930,7 @@
       "source_file": "./scripts/create_dynamo_table.py",
       "source_location": "L18",
       "node_type": "module",
-      "community": 20
+      "community": 19
     },
     {
       "id": "scripts_create_dynamo_table_py_import_sys",
@@ -2914,7 +2938,7 @@
       "source_file": "./scripts/create_dynamo_table.py",
       "source_location": "L19",
       "node_type": "module",
-      "community": 20
+      "community": 19
     },
     {
       "id": "scripts_create_dynamo_table_py_import_boto3",
@@ -2922,7 +2946,7 @@
       "source_file": "./scripts/create_dynamo_table.py",
       "source_location": "L20",
       "node_type": "module",
-      "community": 20
+      "community": 19
     },
     {
       "id": "scripts_create_dynamo_table_py_import_botocore_exceptions_clienterror",
@@ -2930,7 +2954,7 @@
       "source_file": "./scripts/create_dynamo_table.py",
       "source_location": "L21",
       "node_type": "module",
-      "community": 20
+      "community": 19
     },
     {
       "id": "scripts_create_dynamo_table_py_import_dotenv_load_dotenv",
@@ -2938,7 +2962,7 @@
       "source_file": "./scripts/create_dynamo_table.py",
       "source_location": "L22",
       "node_type": "module",
-      "community": 20
+      "community": 19
     },
     {
       "id": "scripts_create_dynamo_table_py_create_table",
@@ -2946,14 +2970,14 @@
       "source_file": "./scripts/create_dynamo_table.py",
       "source_location": "L30",
       "node_type": "function",
-      "community": 20
+      "community": 19
     },
     {
       "id": "scripts_operational_count_total_application_py",
       "label": "count_total_application",
       "source_file": "./scripts/operational/count_total_application.py",
       "node_type": "file",
-      "community": 34
+      "community": 30
     },
     {
       "id": "scripts_operational_count_total_application_py_import_os",
@@ -2961,7 +2985,7 @@
       "source_file": "./scripts/operational/count_total_application.py",
       "source_location": "L1",
       "node_type": "module",
-      "community": 34
+      "community": 30
     },
     {
       "id": "scripts_operational_count_total_application_py_import_sys",
@@ -2969,7 +2993,7 @@
       "source_file": "./scripts/operational/count_total_application.py",
       "source_location": "L2",
       "node_type": "module",
-      "community": 34
+      "community": 30
     },
     {
       "id": "scripts_operational_count_total_application_py_get_all_files_recursive",
@@ -2977,7 +3001,7 @@
       "source_file": "./scripts/operational/count_total_application.py",
       "source_location": "L4",
       "node_type": "function",
-      "community": 34
+      "community": 30
     },
     {
       "id": "scripts_operational_count_total_application_py_count_unique_applications",
@@ -2985,14 +3009,14 @@
       "source_file": "./scripts/operational/count_total_application.py",
       "source_location": "L12",
       "node_type": "function",
-      "community": 34
+      "community": 30
     },
     {
       "id": "scripts_operational_count_total_applications_py",
       "label": "count_total_applications",
       "source_file": "./scripts/operational/count_total_applications.py",
       "node_type": "file",
-      "community": 23
+      "community": 22
     },
     {
       "id": "scripts_operational_count_total_applications_py_import_os",
@@ -3000,7 +3024,7 @@
       "source_file": "./scripts/operational/count_total_applications.py",
       "source_location": "L1",
       "node_type": "module",
-      "community": 23
+      "community": 22
     },
     {
       "id": "scripts_operational_count_total_applications_py_import_sys",
@@ -3008,7 +3032,7 @@
       "source_file": "./scripts/operational/count_total_applications.py",
       "source_location": "L2",
       "node_type": "module",
-      "community": 23
+      "community": 22
     },
     {
       "id": "scripts_operational_count_total_applications_py_import_pandas",
@@ -3016,7 +3040,7 @@
       "source_file": "./scripts/operational/count_total_applications.py",
       "source_location": "L3",
       "node_type": "module",
-      "community": 23
+      "community": 22
     },
     {
       "id": "scripts_operational_count_total_applications_py_get_all_files_recursive",
@@ -3024,7 +3048,7 @@
       "source_file": "./scripts/operational/count_total_applications.py",
       "source_location": "L5",
       "node_type": "function",
-      "community": 23
+      "community": 22
     },
     {
       "id": "scripts_operational_count_total_applications_py_clean_string",
@@ -3032,7 +3056,7 @@
       "source_file": "./scripts/operational/count_total_applications.py",
       "source_location": "L13",
       "node_type": "function",
-      "community": 23
+      "community": 22
     },
     {
       "id": "scripts_operational_count_total_applications_py_extract_application_info",
@@ -3040,14 +3064,14 @@
       "source_file": "./scripts/operational/count_total_applications.py",
       "source_location": "L16",
       "node_type": "function",
-      "community": 23
+      "community": 22
     },
     {
       "id": "scripts_operational_log_file_paths_py",
       "label": "log_file_paths",
       "source_file": "./scripts/operational/log_file_paths.py",
       "node_type": "file",
-      "community": 32
+      "community": 33
     },
     {
       "id": "scripts_operational_log_file_paths_py_import_os",
@@ -3055,7 +3079,7 @@
       "source_file": "./scripts/operational/log_file_paths.py",
       "source_location": "L1",
       "node_type": "module",
-      "community": 32
+      "community": 33
     },
     {
       "id": "scripts_operational_log_file_paths_py_import_csv",
@@ -3063,7 +3087,7 @@
       "source_file": "./scripts/operational/log_file_paths.py",
       "source_location": "L2",
       "node_type": "module",
-      "community": 32
+      "community": 33
     },
     {
       "id": "scripts_operational_log_file_paths_py_import_argparse",
@@ -3071,7 +3095,7 @@
       "source_file": "./scripts/operational/log_file_paths.py",
       "source_location": "L3",
       "node_type": "module",
-      "community": 32
+      "community": 33
     },
     {
       "id": "scripts_operational_log_file_paths_py_log_file_paths_to_csv",
@@ -3079,14 +3103,14 @@
       "source_file": "./scripts/operational/log_file_paths.py",
       "source_location": "L5",
       "node_type": "function",
-      "community": 32
+      "community": 33
     },
     {
       "id": "scripts_operational_creates_batches_py",
       "label": "creates_batches",
       "source_file": "./scripts/operational/creates_batches.py",
       "node_type": "file",
-      "community": 21
+      "community": 20
     },
     {
       "id": "scripts_operational_creates_batches_py_import_os",
@@ -3094,7 +3118,7 @@
       "source_file": "./scripts/operational/creates_batches.py",
       "source_location": "L1",
       "node_type": "module",
-      "community": 21
+      "community": 20
     },
     {
       "id": "scripts_operational_creates_batches_py_import_shutil",
@@ -3102,7 +3126,7 @@
       "source_file": "./scripts/operational/creates_batches.py",
       "source_location": "L2",
       "node_type": "module",
-      "community": 21
+      "community": 20
     },
     {
       "id": "scripts_operational_creates_batches_py_import_math",
@@ -3110,7 +3134,7 @@
       "source_file": "./scripts/operational/creates_batches.py",
       "source_location": "L3",
       "node_type": "module",
-      "community": 21
+      "community": 20
     },
     {
       "id": "scripts_operational_creates_batches_py_import_argparse",
@@ -3118,7 +3142,7 @@
       "source_file": "./scripts/operational/creates_batches.py",
       "source_location": "L4",
       "node_type": "module",
-      "community": 21
+      "community": 20
     },
     {
       "id": "scripts_operational_creates_batches_py_import_collections_defaultdict",
@@ -3126,7 +3150,7 @@
       "source_file": "./scripts/operational/creates_batches.py",
       "source_location": "L5",
       "node_type": "module",
-      "community": 21
+      "community": 20
     },
     {
       "id": "scripts_operational_creates_batches_py_split_folder_by_applications",
@@ -3134,7 +3158,7 @@
       "source_file": "./scripts/operational/creates_batches.py",
       "source_location": "L7",
       "node_type": "function",
-      "community": 21
+      "community": 20
     },
     {
       "id": "scripts_operational_dms_push_py",
@@ -3148,7 +3172,7 @@
       "label": "logs",
       "source_file": "./scripts/operational/logs.py",
       "node_type": "file",
-      "community": 18
+      "community": 17
     },
     {
       "id": "scripts_operational_logs_py_import_sys",
@@ -3156,7 +3180,7 @@
       "source_file": "./scripts/operational/logs.py",
       "source_location": "L12",
       "node_type": "module",
-      "community": 18
+      "community": 17
     },
     {
       "id": "scripts_operational_logs_py_import_pathlib_path",
@@ -3164,7 +3188,7 @@
       "source_file": "./scripts/operational/logs.py",
       "source_location": "L13",
       "node_type": "module",
-      "community": 18
+      "community": 17
     },
     {
       "id": "scripts_operational_logs_py_import_argparse",
@@ -3172,7 +3196,7 @@
       "source_file": "./scripts/operational/logs.py",
       "source_location": "L17",
       "node_type": "module",
-      "community": 18
+      "community": 17
     },
     {
       "id": "scripts_operational_logs_py_import_csv",
@@ -3180,7 +3204,7 @@
       "source_file": "./scripts/operational/logs.py",
       "source_location": "L18",
       "node_type": "module",
-      "community": 18
+      "community": 17
     },
     {
       "id": "scripts_operational_logs_py_import_dotenv_load_dotenv",
@@ -3188,7 +3212,7 @@
       "source_file": "./scripts/operational/logs.py",
       "source_location": "L19",
       "node_type": "module",
-      "community": 18
+      "community": 17
     },
     {
       "id": "scripts_operational_logs_py_import_boto3_dynamodb_conditions_attr",
@@ -3196,7 +3220,7 @@
       "source_file": "./scripts/operational/logs.py",
       "source_location": "L20",
       "node_type": "module",
-      "community": 18
+      "community": 17
     },
     {
       "id": "scripts_operational_logs_py_import_core_get_dynamo_table",
@@ -3204,7 +3228,7 @@
       "source_file": "./scripts/operational/logs.py",
       "source_location": "L22",
       "node_type": "module",
-      "community": 18
+      "community": 17
     },
     {
       "id": "scripts_operational_logs_py_analyze_records",
@@ -3212,14 +3236,14 @@
       "source_file": "./scripts/operational/logs.py",
       "source_location": "L27",
       "node_type": "function",
-      "community": 18
+      "community": 17
     },
     {
       "id": "scripts_operational_copy_files_py",
       "label": "copy_files",
       "source_file": "./scripts/operational/copy_files.py",
       "node_type": "file",
-      "community": 38
+      "community": 37
     },
     {
       "id": "scripts_operational_copy_files_py_import_shutil",
@@ -3227,7 +3251,7 @@
       "source_file": "./scripts/operational/copy_files.py",
       "source_location": "L1",
       "node_type": "module",
-      "community": 38
+      "community": 37
     },
     {
       "id": "scripts_operational_copy_files_py_import_pandas",
@@ -3235,7 +3259,7 @@
       "source_file": "./scripts/operational/copy_files.py",
       "source_location": "L2",
       "node_type": "module",
-      "community": 38
+      "community": 37
     },
     {
       "id": "scripts_operational_copy_files_py_import_os",
@@ -3243,14 +3267,14 @@
       "source_file": "./scripts/operational/copy_files.py",
       "source_location": "L3",
       "node_type": "module",
-      "community": 38
+      "community": 37
     },
     {
       "id": "services_api_gateway_main_py",
       "label": "main",
       "source_file": "./services/api-gateway/main.py",
       "node_type": "file",
-      "community": 4
+      "community": 5
     },
     {
       "id": "services_api_gateway_main_py_import_os",
@@ -3258,7 +3282,7 @@
       "source_file": "./services/api-gateway/main.py",
       "source_location": "L16",
       "node_type": "module",
-      "community": 4
+      "community": 5
     },
     {
       "id": "services_api_gateway_main_py_import_hmac",
@@ -3266,7 +3290,7 @@
       "source_file": "./services/api-gateway/main.py",
       "source_location": "L17",
       "node_type": "module",
-      "community": 4
+      "community": 5
     },
     {
       "id": "services_api_gateway_main_py_import_mimetypes",
@@ -3274,7 +3298,7 @@
       "source_file": "./services/api-gateway/main.py",
       "source_location": "L18",
       "node_type": "module",
-      "community": 4
+      "community": 5
     },
     {
       "id": "services_api_gateway_main_py_import_pathlib_path",
@@ -3282,7 +3306,7 @@
       "source_file": "./services/api-gateway/main.py",
       "source_location": "L19",
       "node_type": "module",
-      "community": 4
+      "community": 5
     },
     {
       "id": "services_api_gateway_main_py_import_httpx",
@@ -3290,7 +3314,7 @@
       "source_file": "./services/api-gateway/main.py",
       "source_location": "L21",
       "node_type": "module",
-      "community": 4
+      "community": 5
     },
     {
       "id": "services_api_gateway_main_py_import_fastapi_fastapi",
@@ -3298,7 +3322,7 @@
       "source_file": "./services/api-gateway/main.py",
       "source_location": "L22",
       "node_type": "module",
-      "community": 4
+      "community": 5
     },
     {
       "id": "services_api_gateway_main_py_import_fastapi_uploadfile",
@@ -3306,7 +3330,7 @@
       "source_file": "./services/api-gateway/main.py",
       "source_location": "L22",
       "node_type": "module",
-      "community": 4
+      "community": 5
     },
     {
       "id": "services_api_gateway_main_py_import_fastapi_file",
@@ -3314,7 +3338,7 @@
       "source_file": "./services/api-gateway/main.py",
       "source_location": "L22",
       "node_type": "module",
-      "community": 4
+      "community": 5
     },
     {
       "id": "services_api_gateway_main_py_import_fastapi_header",
@@ -3322,7 +3346,7 @@
       "source_file": "./services/api-gateway/main.py",
       "source_location": "L22",
       "node_type": "module",
-      "community": 4
+      "community": 5
     },
     {
       "id": "services_api_gateway_main_py_import_fastapi_httpexception",
@@ -3330,7 +3354,7 @@
       "source_file": "./services/api-gateway/main.py",
       "source_location": "L22",
       "node_type": "module",
-      "community": 4
+      "community": 5
     },
     {
       "id": "services_api_gateway_main_py_import_fastapi_middleware_cors_corsmiddleware",
@@ -3338,7 +3362,7 @@
       "source_file": "./services/api-gateway/main.py",
       "source_location": "L23",
       "node_type": "module",
-      "community": 4
+      "community": 5
     },
     {
       "id": "services_api_gateway_main_py_import_fastapi_responses_fileresponse",
@@ -3346,7 +3370,7 @@
       "source_file": "./services/api-gateway/main.py",
       "source_location": "L24",
       "node_type": "module",
-      "community": 4
+      "community": 5
     },
     {
       "id": "services_api_gateway_main_py_import_fastapi_responses_jsonresponse",
@@ -3354,7 +3378,7 @@
       "source_file": "./services/api-gateway/main.py",
       "source_location": "L24",
       "node_type": "module",
-      "community": 4
+      "community": 5
     },
     {
       "id": "services_api_gateway_main_py_import_dotenv_load_dotenv",
@@ -3362,7 +3386,7 @@
       "source_file": "./services/api-gateway/main.py",
       "source_location": "L25",
       "node_type": "module",
-      "community": 4
+      "community": 5
     },
     {
       "id": "services_api_gateway_main_py_load_api_keys",
@@ -3370,7 +3394,7 @@
       "source_file": "./services/api-gateway/main.py",
       "source_location": "L63",
       "node_type": "function",
-      "community": 4
+      "community": 5
     },
     {
       "id": "services_api_gateway_main_py_validate_api_key",
@@ -3378,7 +3402,7 @@
       "source_file": "./services/api-gateway/main.py",
       "source_location": "L72",
       "node_type": "function",
-      "community": 4
+      "community": 5
     },
     {
       "id": "services_api_gateway_main_py_health",
@@ -3386,7 +3410,7 @@
       "source_file": "./services/api-gateway/main.py",
       "source_location": "L86",
       "node_type": "function",
-      "community": 4
+      "community": 5
     },
     {
       "id": "services_api_gateway_main_py_create_upload_file",
@@ -3394,7 +3418,7 @@
       "source_file": "./services/api-gateway/main.py",
       "source_location": "L91",
       "node_type": "function",
-      "community": 4
+      "community": 5
     },
     {
       "id": "services_api_gateway_main_py_serve_masked_file",
@@ -3402,7 +3426,7 @@
       "source_file": "./services/api-gateway/main.py",
       "source_location": "L150",
       "node_type": "function",
-      "community": 4
+      "community": 5
     },
     {
       "id": "services_api_gateway_main_py_import_uvicorn",
@@ -3410,7 +3434,7 @@
       "source_file": "./services/api-gateway/main.py",
       "source_location": "L164",
       "node_type": "module",
-      "community": 4
+      "community": 5
     },
     {
       "id": "services_batch_processor_batch_py",
@@ -3817,7 +3841,7 @@
       "source_file": "./services/batch-processor/batch.py",
       "source_location": "L189",
       "node_type": "function",
-      "community": 33
+      "community": 31
     },
     {
       "id": "services_batch_processor_batch_py_write_pending",
@@ -3825,7 +3849,7 @@
       "source_file": "./services/batch-processor/batch.py",
       "source_location": "L231",
       "node_type": "function",
-      "community": 33
+      "community": 31
     },
     {
       "id": "services_batch_processor_batch_py_update_to_processing",
@@ -3833,7 +3857,7 @@
       "source_file": "./services/batch-processor/batch.py",
       "source_location": "L238",
       "node_type": "function",
-      "community": 33
+      "community": 31
     },
     {
       "id": "services_batch_processor_batch_py_sanitize_report_for_dynamo",
@@ -3879,7 +3903,7 @@
       "id": "services_batch_processor_batch_py_process_pdf",
       "label": "_process_pdf()",
       "source_file": "./services/batch-processor/batch.py",
-      "source_location": "L506",
+      "source_location": "L508",
       "node_type": "function",
       "community": 1
     },
@@ -3887,39 +3911,39 @@
       "id": "services_batch_processor_batch_py_is_password_protected_pdf",
       "label": "_is_password_protected_pdf()",
       "source_file": "./services/batch-processor/batch.py",
-      "source_location": "L596",
+      "source_location": "L599",
       "node_type": "function",
-      "community": 33
+      "community": 29
     },
     {
       "id": "services_batch_processor_batch_py_run_batch",
       "label": "run_batch()",
       "source_file": "./services/batch-processor/batch.py",
-      "source_location": "L610",
+      "source_location": "L613",
       "node_type": "function",
-      "community": 33
+      "community": 31
     },
     {
       "id": "services_batch_processor_batch_py_dynamo_retry",
       "label": "_dynamo_retry()",
       "source_file": "./services/batch-processor/batch.py",
-      "source_location": "L726",
+      "source_location": "L729",
       "node_type": "function",
-      "community": 31
+      "community": 29
     },
     {
       "id": "services_batch_processor_batch_py_cleanup_stale_processing_records",
       "label": "_cleanup_stale_processing_records()",
       "source_file": "./services/batch-processor/batch.py",
-      "source_location": "L745",
+      "source_location": "L748",
       "node_type": "function",
-      "community": 31
+      "community": 29
     },
     {
       "id": "services_batch_processor_batch_py_validate_s3_buckets",
       "label": "_validate_s3_buckets()",
       "source_file": "./services/batch-processor/batch.py",
-      "source_location": "L790",
+      "source_location": "L793",
       "node_type": "function",
       "community": 1
     },
@@ -3927,24 +3951,24 @@
       "id": "services_batch_processor_batch_py_list_s3_keys",
       "label": "_list_s3_keys()",
       "source_file": "./services/batch-processor/batch.py",
-      "source_location": "L807",
+      "source_location": "L810",
       "node_type": "function",
-      "community": 31
+      "community": 29
     },
     {
       "id": "services_batch_processor_batch_py_run_batch_s3",
       "label": "run_batch_s3()",
       "source_file": "./services/batch-processor/batch.py",
-      "source_location": "L820",
+      "source_location": "L823",
       "node_type": "function",
-      "community": 31
+      "community": 29
     },
     {
       "id": "services_batch_processor_utils_file_paths_py",
       "label": "file_paths",
       "source_file": "./services/batch-processor/utils/file_paths.py",
       "node_type": "file",
-      "community": 26
+      "community": 27
     },
     {
       "id": "services_batch_processor_utils_file_paths_py_import_os",
@@ -3952,7 +3976,7 @@
       "source_file": "./services/batch-processor/utils/file_paths.py",
       "source_location": "L8",
       "node_type": "module",
-      "community": 26
+      "community": 27
     },
     {
       "id": "services_batch_processor_utils_file_paths_py_import_boto3_dynamodb_conditions_attr",
@@ -3960,7 +3984,7 @@
       "source_file": "./services/batch-processor/utils/file_paths.py",
       "source_location": "L9",
       "node_type": "module",
-      "community": 26
+      "community": 27
     },
     {
       "id": "services_batch_processor_utils_file_paths_py_import_core_get_dynamo_table",
@@ -3968,7 +3992,7 @@
       "source_file": "./services/batch-processor/utils/file_paths.py",
       "source_location": "L10",
       "node_type": "module",
-      "community": 26
+      "community": 27
     },
     {
       "id": "services_batch_processor_utils_file_paths_py_get_completed_paths",
@@ -3976,7 +4000,7 @@
       "source_file": "./services/batch-processor/utils/file_paths.py",
       "source_location": "L16",
       "node_type": "function",
-      "community": 26
+      "community": 27
     },
     {
       "id": "services_batch_processor_utils_file_paths_py_get_failed_paths",
@@ -3984,14 +4008,14 @@
       "source_file": "./services/batch-processor/utils/file_paths.py",
       "source_location": "L35",
       "node_type": "function",
-      "community": 26
+      "community": 27
     },
     {
       "id": "services_masking_engine_engine_py",
       "label": "engine",
       "source_file": "./services/masking-engine/engine.py",
       "node_type": "file",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_asyncio",
@@ -3999,7 +4023,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L22",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_os",
@@ -4007,7 +4031,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L23",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_uuid",
@@ -4015,7 +4039,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L24",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_shutil",
@@ -4023,7 +4047,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L25",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_tempfile",
@@ -4031,7 +4055,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L26",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_gc",
@@ -4039,7 +4063,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L27",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_logging",
@@ -4047,7 +4071,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L28",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_signal",
@@ -4055,7 +4079,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L29",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_pathlib_path",
@@ -4063,7 +4087,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L30",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_typing_dict",
@@ -4071,7 +4095,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L31",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_typing_any",
@@ -4079,7 +4103,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L31",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_fastapi_fastapi",
@@ -4087,7 +4111,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L33",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_fastapi_uploadfile",
@@ -4095,7 +4119,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L33",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_fastapi_file",
@@ -4103,7 +4127,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L33",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_fastapi_httpexception",
@@ -4111,7 +4135,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L33",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_fastapi_responses_fileresponse",
@@ -4119,7 +4143,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L34",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_fastapi_responses_jsonresponse",
@@ -4127,7 +4151,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L34",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_fastapi_middleware_cors_corsmiddleware",
@@ -4135,7 +4159,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L35",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_dotenv_load_dotenv",
@@ -4143,7 +4167,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L36",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_ultralytics_yolo",
@@ -4151,7 +4175,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L37",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_torch",
@@ -4159,7 +4183,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L38",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_core_get_yolo_main",
@@ -4167,7 +4191,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L40",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_core_get_yolo_best",
@@ -4175,7 +4199,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L40",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_core_config_gpu_memory_fraction",
@@ -4183,7 +4207,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L41",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_core_config_max_file_size",
@@ -4191,7 +4215,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L41",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_core_config_pdf_chunk_size",
@@ -4199,7 +4223,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L41",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_core_config_validate_required_env_vars",
@@ -4207,7 +4231,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L41",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_core_config_gpu_enabled",
@@ -4215,7 +4239,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L61",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_startup_event",
@@ -4223,7 +4247,7 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L115",
       "node_type": "function",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_mask_single_image",
@@ -4231,62 +4255,62 @@
       "source_file": "./services/masking-engine/engine.py",
       "source_location": "L173",
       "node_type": "function",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_mask_pdf",
       "label": "_mask_pdf()",
       "source_file": "./services/masking-engine/engine.py",
-      "source_location": "L203",
+      "source_location": "L205",
       "node_type": "function",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_health",
       "label": "health()",
       "source_file": "./services/masking-engine/engine.py",
-      "source_location": "L280",
+      "source_location": "L282",
       "node_type": "function",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_health_detailed",
       "label": "health_detailed()",
       "source_file": "./services/masking-engine/engine.py",
-      "source_location": "L292",
+      "source_location": "L294",
       "node_type": "function",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_mask_file",
       "label": "mask_file()",
       "source_file": "./services/masking-engine/engine.py",
-      "source_location": "L335",
+      "source_location": "L337",
       "node_type": "function",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_get_output_file",
       "label": "get_output_file()",
       "source_file": "./services/masking-engine/engine.py",
-      "source_location": "L394",
+      "source_location": "L396",
       "node_type": "function",
-      "community": 2
+      "community": 3
     },
     {
       "id": "services_masking_engine_engine_py_import_uvicorn",
       "label": "uvicorn",
       "source_file": "./services/masking-engine/engine.py",
-      "source_location": "L405",
+      "source_location": "L407",
       "node_type": "module",
-      "community": 2
+      "community": 3
     },
     {
       "id": "gpu_master_sync_d4_complete_py",
       "label": "GPU_MASTER_SYNC_D4_COMPLETE",
       "source_file": "./GPU_MASTER_SYNC_D4_COMPLETE.py",
       "node_type": "file",
-      "community": 25
+      "community": 28
     },
     {
       "id": "gpu_master_sync_d4_complete_py_import_os",
@@ -4294,7 +4318,7 @@
       "source_file": "./GPU_MASTER_SYNC_D4_COMPLETE.py",
       "source_location": "L10",
       "node_type": "module",
-      "community": 25
+      "community": 28
     },
     {
       "id": "gpu_master_sync_d4_complete_py_import_sys",
@@ -4302,7 +4326,7 @@
       "source_file": "./GPU_MASTER_SYNC_D4_COMPLETE.py",
       "source_location": "L10",
       "node_type": "module",
-      "community": 25
+      "community": 28
     },
     {
       "id": "gpu_master_sync_d4_complete_py_patch",
@@ -4310,7 +4334,7 @@
       "source_file": "./GPU_MASTER_SYNC_D4_COMPLETE.py",
       "source_location": "L16",
       "node_type": "function",
-      "community": 25
+      "community": 28
     },
     {
       "id": "gpu_master_sync_d4_complete_py_append_after",
@@ -4318,7 +4342,7 @@
       "source_file": "./GPU_MASTER_SYNC_D4_COMPLETE.py",
       "source_location": "L34",
       "node_type": "function",
-      "community": 25
+      "community": 28
     },
     {
       "id": "gpu_master_sync_d4_complete_py_write_file",
@@ -4326,7 +4350,7 @@
       "source_file": "./GPU_MASTER_SYNC_D4_COMPLETE.py",
       "source_location": "L54",
       "node_type": "function",
-      "community": 25
+      "community": 28
     }
   ],
   "links": [
@@ -4507,7 +4531,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./core/ocr/paddle.py",
-      "source_location": "L63",
+      "source_location": "L61",
       "weight": 1.0
     },
     {
@@ -4517,7 +4541,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./core/ocr/paddle.py",
-      "source_location": "L85",
+      "source_location": "L83",
       "weight": 1.0
     },
     {
@@ -4527,7 +4551,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./core/ocr/paddle.py",
-      "source_location": "L100",
+      "source_location": "L98",
       "weight": 1.0
     },
     {
@@ -4771,12 +4795,32 @@
     },
     {
       "source": "core_ocr_masking_py",
+      "target": "core_ocr_masking_py_import_core_ocr_ocr_adapter_adapt_paddle_result",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "./core/ocr/masking.py",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "core_ocr_masking_py",
+      "target": "core_ocr_masking_py_import_core_ocr_ocr_adapter_get_texts_and_boxes",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "./core/ocr/masking.py",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "core_ocr_masking_py",
       "target": "core_ocr_masking_py_verhoeff_validate",
       "relation": "defines",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L65",
+      "source_location": "L66",
       "weight": 1.0
     },
     {
@@ -4786,7 +4830,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L82",
+      "source_location": "L83",
       "weight": 1.0
     },
     {
@@ -4796,7 +4840,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L107",
+      "source_location": "L108",
       "weight": 1.0
     },
     {
@@ -4806,7 +4850,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L147",
+      "source_location": "L148",
       "weight": 1.0
     },
     {
@@ -4816,7 +4860,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L164",
+      "source_location": "L165",
       "weight": 1.0
     },
     {
@@ -4826,7 +4870,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L188",
+      "source_location": "L189",
       "weight": 1.0
     },
     {
@@ -4836,7 +4880,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L196",
+      "source_location": "L197",
       "weight": 1.0
     },
     {
@@ -4846,7 +4890,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L204",
+      "source_location": "L205",
       "weight": 1.0
     },
     {
@@ -4856,7 +4900,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L218",
+      "source_location": "L219",
       "weight": 1.0
     },
     {
@@ -4866,7 +4910,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L239",
+      "source_location": "L240",
       "weight": 1.0
     },
     {
@@ -4876,7 +4920,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L279",
+      "source_location": "L280",
       "weight": 1.0
     },
     {
@@ -4886,7 +4930,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L297",
+      "source_location": "L298",
       "weight": 1.0
     },
     {
@@ -4896,7 +4940,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L316",
+      "source_location": "L317",
       "weight": 1.0
     },
     {
@@ -4906,7 +4950,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L332",
+      "source_location": "L333",
       "weight": 1.0
     },
     {
@@ -4916,7 +4960,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./core/ocr/masking.py",
-      "source_location": "L364",
+      "source_location": "L367",
       "weight": 1.0
     },
     {
@@ -4969,15 +5013,6 @@
     },
     {
       "source": "core_ocr_masking_py_ocr_verify_and_mask_number",
-      "target": "core_ocr_masking_py_compute_digit_mask_region",
-      "relation": "calls",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "./core/ocr/masking.py",
-      "weight": 1.0
-    },
-    {
-      "source": "core_ocr_masking_py_ocr_verify_and_mask_number",
       "target": "core_ocr_masking_py_is_valid_aadhaar_number",
       "relation": "calls",
       "confidence": "INFERRED",
@@ -4986,8 +5021,8 @@
       "weight": 1.0
     },
     {
-      "source": "core_ocr_masking_py_mask_yolo_detections",
-      "target": "core_ocr_masking_py_ocr_verify_and_mask_number",
+      "source": "core_ocr_masking_py_ocr_verify_and_mask_number",
+      "target": "core_ocr_masking_py_compute_digit_mask_region",
       "relation": "calls",
       "confidence": "INFERRED",
       "confidence_score": 0.7,
@@ -4997,6 +5032,15 @@
     {
       "source": "core_ocr_masking_py_mask_yolo_detections",
       "target": "core_ocr_masking_py_check_image_text",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "./core/ocr/masking.py",
+      "weight": 1.0
+    },
+    {
+      "source": "core_ocr_masking_py_mask_yolo_detections",
+      "target": "core_ocr_masking_py_ocr_verify_and_mask_number",
       "relation": "calls",
       "confidence": "INFERRED",
       "confidence_score": 0.7,
@@ -5032,25 +5076,7 @@
     },
     {
       "source": "core_ocr_masking_py_find_aadhaar_patterns",
-      "target": "core_ocr_masking_py_extract_target_coordinates",
-      "relation": "calls",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "./core/ocr/masking.py",
-      "weight": 1.0
-    },
-    {
-      "source": "core_ocr_masking_py_find_aadhaar_patterns",
       "target": "core_ocr_masking_py_cosine_similarity",
-      "relation": "calls",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "./core/ocr/masking.py",
-      "weight": 1.0
-    },
-    {
-      "source": "core_ocr_masking_py_find_aadhaar_patterns",
-      "target": "core_ocr_masking_py_is_valid_aadhaar_number",
       "relation": "calls",
       "confidence": "INFERRED",
       "confidence_score": 0.7,
@@ -5068,7 +5094,25 @@
     },
     {
       "source": "core_ocr_masking_py_find_aadhaar_patterns",
+      "target": "core_ocr_masking_py_is_valid_aadhaar_number",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "./core/ocr/masking.py",
+      "weight": 1.0
+    },
+    {
+      "source": "core_ocr_masking_py_find_aadhaar_patterns",
       "target": "core_ocr_masking_py_extract_number_coordinates",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "./core/ocr/masking.py",
+      "weight": 1.0
+    },
+    {
+      "source": "core_ocr_masking_py_find_aadhaar_patterns",
+      "target": "core_ocr_masking_py_extract_target_coordinates",
       "relation": "calls",
       "confidence": "INFERRED",
       "confidence_score": 0.7,
@@ -5086,12 +5130,22 @@
     },
     {
       "source": "core_ocr_ocr_adapter_py",
+      "target": "core_ocr_ocr_adapter_py_import_logging",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "./core/ocr/ocr_adapter.py",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "core_ocr_ocr_adapter_py",
       "target": "core_ocr_ocr_adapter_py_normalize_bbox",
       "relation": "defines",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./core/ocr/ocr_adapter.py",
-      "source_location": "L13",
+      "source_location": "L18",
       "weight": 1.0
     },
     {
@@ -5101,7 +5155,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./core/ocr/ocr_adapter.py",
-      "source_location": "L30",
+      "source_location": "L35",
       "weight": 1.0
     },
     {
@@ -5111,7 +5165,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./core/ocr/ocr_adapter.py",
-      "source_location": "L53",
+      "source_location": "L58",
       "weight": 1.0
     },
     {
@@ -5121,7 +5175,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./core/ocr/ocr_adapter.py",
-      "source_location": "L107",
+      "source_location": "L112",
       "weight": 1.0
     },
     {
@@ -6656,7 +6710,7 @@
     },
     {
       "source": "core_aadhaar_gate_py_run_full_gate_scoring",
-      "target": "core_aadhaar_gate_py_preprocess_greyscale",
+      "target": "core_aadhaar_gate_py_process_single_aadhaar_crop",
       "relation": "calls",
       "confidence": "INFERRED",
       "confidence_score": 0.7,
@@ -6665,7 +6719,7 @@
     },
     {
       "source": "core_aadhaar_gate_py_run_full_gate_scoring",
-      "target": "core_aadhaar_gate_py_process_single_aadhaar_crop",
+      "target": "core_aadhaar_gate_py_preprocess_greyscale",
       "relation": "calls",
       "confidence": "INFERRED",
       "confidence_score": 0.7,
@@ -7408,15 +7462,6 @@
     },
     {
       "source": "core_pipeline_py_run_ocr_for_card_path",
-      "target": "core_pipeline_py_run_ocr_on_region",
-      "relation": "calls",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "./core/pipeline.py",
-      "weight": 1.0
-    },
-    {
-      "source": "core_pipeline_py_run_ocr_for_card_path",
       "target": "core_pipeline_py_correct_doc_orientation",
       "relation": "calls",
       "confidence": "INFERRED",
@@ -7425,17 +7470,8 @@
       "weight": 1.0
     },
     {
-      "source": "core_pipeline_py_process_form_lane",
+      "source": "core_pipeline_py_run_ocr_for_card_path",
       "target": "core_pipeline_py_run_ocr_on_region",
-      "relation": "calls",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "./core/pipeline.py",
-      "weight": 1.0
-    },
-    {
-      "source": "core_pipeline_py_process_form_lane",
-      "target": "core_pipeline_py_report_mask_counts",
       "relation": "calls",
       "confidence": "INFERRED",
       "confidence_score": 0.7,
@@ -7462,7 +7498,7 @@
     },
     {
       "source": "core_pipeline_py_process_form_lane",
-      "target": "core_pipeline_py_empty_yolo_report",
+      "target": "core_pipeline_py_report_mask_counts",
       "relation": "calls",
       "confidence": "INFERRED",
       "confidence_score": 0.7,
@@ -7470,8 +7506,17 @@
       "weight": 1.0
     },
     {
-      "source": "core_pipeline_py_process_card_like_lane",
-      "target": "core_pipeline_py_report_mask_counts",
+      "source": "core_pipeline_py_process_form_lane",
+      "target": "core_pipeline_py_run_ocr_on_region",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "./core/pipeline.py",
+      "weight": 1.0
+    },
+    {
+      "source": "core_pipeline_py_process_form_lane",
+      "target": "core_pipeline_py_empty_yolo_report",
       "relation": "calls",
       "confidence": "INFERRED",
       "confidence_score": 0.7,
@@ -7498,7 +7543,7 @@
     },
     {
       "source": "core_pipeline_py_process_card_like_lane",
-      "target": "core_pipeline_py_run_ocr_for_card_path",
+      "target": "core_pipeline_py_report_mask_counts",
       "relation": "calls",
       "confidence": "INFERRED",
       "confidence_score": 0.7,
@@ -7506,8 +7551,8 @@
       "weight": 1.0
     },
     {
-      "source": "core_pipeline_py_process_image",
-      "target": "core_pipeline_py_get_ocr",
+      "source": "core_pipeline_py_process_card_like_lane",
+      "target": "core_pipeline_py_run_ocr_for_card_path",
       "relation": "calls",
       "confidence": "INFERRED",
       "confidence_score": 0.7,
@@ -7525,6 +7570,15 @@
     },
     {
       "source": "core_pipeline_py_process_image",
+      "target": "core_pipeline_py_report_mask_counts",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "./core/pipeline.py",
+      "weight": 1.0
+    },
+    {
+      "source": "core_pipeline_py_process_image",
       "target": "core_pipeline_py_process_form_lane",
       "relation": "calls",
       "confidence": "INFERRED",
@@ -7534,7 +7588,7 @@
     },
     {
       "source": "core_pipeline_py_process_image",
-      "target": "core_pipeline_py_report_mask_counts",
+      "target": "core_pipeline_py_get_ocr",
       "relation": "calls",
       "confidence": "INFERRED",
       "confidence_score": 0.7,
@@ -9349,7 +9403,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./services/batch-processor/batch.py",
-      "source_location": "L506",
+      "source_location": "L508",
       "weight": 1.0
     },
     {
@@ -9359,7 +9413,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./services/batch-processor/batch.py",
-      "source_location": "L596",
+      "source_location": "L599",
       "weight": 1.0
     },
     {
@@ -9369,7 +9423,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./services/batch-processor/batch.py",
-      "source_location": "L610",
+      "source_location": "L613",
       "weight": 1.0
     },
     {
@@ -9379,7 +9433,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./services/batch-processor/batch.py",
-      "source_location": "L726",
+      "source_location": "L729",
       "weight": 1.0
     },
     {
@@ -9389,7 +9443,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./services/batch-processor/batch.py",
-      "source_location": "L745",
+      "source_location": "L748",
       "weight": 1.0
     },
     {
@@ -9399,7 +9453,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./services/batch-processor/batch.py",
-      "source_location": "L790",
+      "source_location": "L793",
       "weight": 1.0
     },
     {
@@ -9409,7 +9463,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./services/batch-processor/batch.py",
-      "source_location": "L807",
+      "source_location": "L810",
       "weight": 1.0
     },
     {
@@ -9419,7 +9473,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./services/batch-processor/batch.py",
-      "source_location": "L820",
+      "source_location": "L823",
       "weight": 1.0
     },
     {
@@ -9469,16 +9523,7 @@
     },
     {
       "source": "services_batch_processor_batch_py_run_batch",
-      "target": "services_batch_processor_batch_py_update_to_completed",
-      "relation": "calls",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "./services/batch-processor/batch.py",
-      "weight": 1.0
-    },
-    {
-      "source": "services_batch_processor_batch_py_run_batch",
-      "target": "services_batch_processor_batch_py_get_skip_paths",
+      "target": "services_batch_processor_batch_py_update_to_error",
       "relation": "calls",
       "confidence": "INFERRED",
       "confidence_score": 0.7,
@@ -9496,7 +9541,16 @@
     },
     {
       "source": "services_batch_processor_batch_py_run_batch",
-      "target": "services_batch_processor_batch_py_update_to_processing",
+      "target": "services_batch_processor_batch_py_process_image",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "./services/batch-processor/batch.py",
+      "weight": 1.0
+    },
+    {
+      "source": "services_batch_processor_batch_py_run_batch",
+      "target": "services_batch_processor_batch_py_update_to_completed",
       "relation": "calls",
       "confidence": "INFERRED",
       "confidence_score": 0.7,
@@ -9514,7 +9568,7 @@
     },
     {
       "source": "services_batch_processor_batch_py_run_batch",
-      "target": "services_batch_processor_batch_py_update_to_error",
+      "target": "services_batch_processor_batch_py_update_to_processing",
       "relation": "calls",
       "confidence": "INFERRED",
       "confidence_score": 0.7,
@@ -9523,52 +9577,7 @@
     },
     {
       "source": "services_batch_processor_batch_py_run_batch",
-      "target": "services_batch_processor_batch_py_process_image",
-      "relation": "calls",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "./services/batch-processor/batch.py",
-      "weight": 1.0
-    },
-    {
-      "source": "services_batch_processor_batch_py_run_batch_s3",
-      "target": "services_batch_processor_batch_py_is_password_protected_pdf",
-      "relation": "calls",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "./services/batch-processor/batch.py",
-      "weight": 1.0
-    },
-    {
-      "source": "services_batch_processor_batch_py_run_batch_s3",
       "target": "services_batch_processor_batch_py_get_skip_paths",
-      "relation": "calls",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "./services/batch-processor/batch.py",
-      "weight": 1.0
-    },
-    {
-      "source": "services_batch_processor_batch_py_run_batch_s3",
-      "target": "services_batch_processor_batch_py_process_pdf",
-      "relation": "calls",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "./services/batch-processor/batch.py",
-      "weight": 1.0
-    },
-    {
-      "source": "services_batch_processor_batch_py_run_batch_s3",
-      "target": "services_batch_processor_batch_py_update_to_error",
-      "relation": "calls",
-      "confidence": "INFERRED",
-      "confidence_score": 0.7,
-      "source_file": "./services/batch-processor/batch.py",
-      "weight": 1.0
-    },
-    {
-      "source": "services_batch_processor_batch_py_run_batch_s3",
-      "target": "services_batch_processor_batch_py_process_image",
       "relation": "calls",
       "confidence": "INFERRED",
       "confidence_score": 0.7,
@@ -9586,7 +9595,16 @@
     },
     {
       "source": "services_batch_processor_batch_py_run_batch_s3",
-      "target": "services_batch_processor_batch_py_list_s3_keys",
+      "target": "services_batch_processor_batch_py_is_password_protected_pdf",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "./services/batch-processor/batch.py",
+      "weight": 1.0
+    },
+    {
+      "source": "services_batch_processor_batch_py_run_batch_s3",
+      "target": "services_batch_processor_batch_py_update_to_error",
       "relation": "calls",
       "confidence": "INFERRED",
       "confidence_score": 0.7,
@@ -9596,6 +9614,42 @@
     {
       "source": "services_batch_processor_batch_py_run_batch_s3",
       "target": "services_batch_processor_batch_py_dynamo_retry",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "./services/batch-processor/batch.py",
+      "weight": 1.0
+    },
+    {
+      "source": "services_batch_processor_batch_py_run_batch_s3",
+      "target": "services_batch_processor_batch_py_process_pdf",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "./services/batch-processor/batch.py",
+      "weight": 1.0
+    },
+    {
+      "source": "services_batch_processor_batch_py_run_batch_s3",
+      "target": "services_batch_processor_batch_py_process_image",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "./services/batch-processor/batch.py",
+      "weight": 1.0
+    },
+    {
+      "source": "services_batch_processor_batch_py_run_batch_s3",
+      "target": "services_batch_processor_batch_py_list_s3_keys",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "./services/batch-processor/batch.py",
+      "weight": 1.0
+    },
+    {
+      "source": "services_batch_processor_batch_py_run_batch_s3",
+      "target": "services_batch_processor_batch_py_get_skip_paths",
       "relation": "calls",
       "confidence": "INFERRED",
       "confidence_score": 0.7,
@@ -9959,7 +10013,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./services/masking-engine/engine.py",
-      "source_location": "L203",
+      "source_location": "L205",
       "weight": 1.0
     },
     {
@@ -9969,7 +10023,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./services/masking-engine/engine.py",
-      "source_location": "L280",
+      "source_location": "L282",
       "weight": 1.0
     },
     {
@@ -9979,7 +10033,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./services/masking-engine/engine.py",
-      "source_location": "L292",
+      "source_location": "L294",
       "weight": 1.0
     },
     {
@@ -9989,7 +10043,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./services/masking-engine/engine.py",
-      "source_location": "L335",
+      "source_location": "L337",
       "weight": 1.0
     },
     {
@@ -9999,7 +10053,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./services/masking-engine/engine.py",
-      "source_location": "L394",
+      "source_location": "L396",
       "weight": 1.0
     },
     {
@@ -10009,7 +10063,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "./services/masking-engine/engine.py",
-      "source_location": "L405",
+      "source_location": "L407",
       "weight": 1.0
     },
     {

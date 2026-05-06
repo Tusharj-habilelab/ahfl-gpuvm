@@ -2,7 +2,7 @@
 id: core_pipeline_py_correct_doc_orientation
 type: Function
 source: ./core/pipeline.py
-community: 15
+community: 2
 community_label: _verify_skip_pan()
 ---
 

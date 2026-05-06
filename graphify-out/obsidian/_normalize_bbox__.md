@@ -2,7 +2,7 @@
 id: core_ocr_ocr_adapter_py_normalize_bbox
 type: Function
 source: ./core/ocr/ocr_adapter.py
-community: 29
+community: 24
 community_label: _normalize_bbox()
 ---
 

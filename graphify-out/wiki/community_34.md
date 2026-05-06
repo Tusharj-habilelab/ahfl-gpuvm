@@ -1,19 +1,17 @@
-# Community 34: get_all_files_recursive() (34)
+# Community 34: .yolo_runner.YOLORunner
 
-**Members:** 5
+**Members:** 4
 
 ## Nodes
 
-- **count_total_application** (`scripts_operational_count_total_application_py`, File, degree: 4)
-- **count_unique_applications()** (`scripts_operational_count_total_application_py_count_unique_applications`, Function, degree: 1)
-- **get_all_files_recursive()** (`scripts_operational_count_total_application_py_get_all_files_recursive`, Function, degree: 1)
-- **os** (`scripts_operational_count_total_application_py_import_os`, Module, degree: 1)
-- **sys** (`scripts_operational_count_total_application_py_import_sys`, Module, degree: 1)
+- **__init__** (`core_models_init_py`, File, degree: 3)
+- **.yolo_runner.get_yolo_best** (`core_models_init_py_import_yolo_runner_get_yolo_best`, Module, degree: 1)
+- **.yolo_runner.get_yolo_main** (`core_models_init_py_import_yolo_runner_get_yolo_main`, Module, degree: 1)
+- **.yolo_runner.YOLORunner** (`core_models_init_py_import_yolo_runner_yolorunner`, Module, degree: 1)
 
 ## Relationships
 
-- scripts_operational_count_total_application_py → scripts_operational_count_total_application_py_import_os (imports)
-- scripts_operational_count_total_application_py → scripts_operational_count_total_application_py_import_sys (imports)
-- scripts_operational_count_total_application_py → scripts_operational_count_total_application_py_get_all_files_recursive (defines)
-- scripts_operational_count_total_application_py → scripts_operational_count_total_application_py_count_unique_applications (defines)
+- core_models_init_py → core_models_init_py_import_yolo_runner_yolorunner (imports)
+- core_models_init_py → core_models_init_py_import_yolo_runner_get_yolo_main (imports)
+- core_models_init_py → core_models_init_py_import_yolo_runner_get_yolo_best (imports)
 

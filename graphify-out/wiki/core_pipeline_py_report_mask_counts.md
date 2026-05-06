@@ -4,7 +4,7 @@
 - **Type:** Function
 - **File:** `./core/pipeline.py`
 - **Location:** L144
-- **Community:** 15 (_verify_skip_pan())
+- **Community:** 2 (_verify_skip_pan())
 
 ## Relationships
 

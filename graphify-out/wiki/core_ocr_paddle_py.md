@@ -3,7 +3,7 @@
 - **ID:** `core_ocr_paddle_py`
 - **Type:** File
 - **File:** `./core/ocr/paddle.py`
-- **Community:** 11 (scale_adapted_ocr_results())
+- **Community:** 9 (scale_adapted_ocr_results())
 
 ## Relationships
 

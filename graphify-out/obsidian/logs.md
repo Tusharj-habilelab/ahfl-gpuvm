@@ -2,7 +2,7 @@
 id: scripts_operational_logs_py
 type: File
 source: ./scripts/operational/logs.py
-community: 18
+community: 17
 community_label: analyze_records()
 ---
 

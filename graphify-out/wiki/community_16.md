@@ -1,35 +1,29 @@
-# Community 16: run_inference()
+# Community 16: export_to_csv()
 
-**Members:** 11
+**Members:** 10
 
 ## Nodes
 
-- **setup_and_first_inference** (`scripts_setup_and_first_inference_py`, File, degree: 10)
-- **check_yolo_models()** (`scripts_setup_and_first_inference_py_check_yolo_models`, Function, degree: 2)
-- **argparse** (`scripts_setup_and_first_inference_py_import_argparse`, Module, degree: 1)
-- **gc** (`scripts_setup_and_first_inference_py_import_gc`, Module, degree: 1)
-- **logging** (`scripts_setup_and_first_inference_py_import_logging`, Module, degree: 1)
-- **os** (`scripts_setup_and_first_inference_py_import_os`, Module, degree: 1)
-- **pathlib.Path** (`scripts_setup_and_first_inference_py_import_pathlib_path`, Module, degree: 1)
-- **sys** (`scripts_setup_and_first_inference_py_import_sys`, Module, degree: 1)
-- **init_paddle_ocr()** (`scripts_setup_and_first_inference_py_init_paddle_ocr`, Function, degree: 2)
-- **main()** (`scripts_setup_and_first_inference_py_main`, Function, degree: 5)
-- **run_inference()** (`scripts_setup_and_first_inference_py_run_inference`, Function, degree: 3)
+- **export_logs** (`scripts_reporting_export_logs_py`, File, degree: 9)
+- **export_to_csv()** (`scripts_reporting_export_logs_py_export_to_csv`, Function, degree: 1)
+- **argparse** (`scripts_reporting_export_logs_py_import_argparse`, Module, degree: 1)
+- **boto3.dynamodb.conditions.Attr** (`scripts_reporting_export_logs_py_import_boto3_dynamodb_conditions_attr`, Module, degree: 1)
+- **core.get_dynamo_table** (`scripts_reporting_export_logs_py_import_core_get_dynamo_table`, Module, degree: 1)
+- **core.TABLE_NAME** (`scripts_reporting_export_logs_py_import_core_table_name`, Module, degree: 1)
+- **csv** (`scripts_reporting_export_logs_py_import_csv`, Module, degree: 1)
+- **dotenv.load_dotenv** (`scripts_reporting_export_logs_py_import_dotenv_load_dotenv`, Module, degree: 1)
+- **pathlib.Path** (`scripts_reporting_export_logs_py_import_pathlib_path`, Module, degree: 1)
+- **sys** (`scripts_reporting_export_logs_py_import_sys`, Module, degree: 1)
 
 ## Relationships
 
-- scripts_setup_and_first_inference_py → scripts_setup_and_first_inference_py_import_os (imports)
-- scripts_setup_and_first_inference_py → scripts_setup_and_first_inference_py_import_sys (imports)
-- scripts_setup_and_first_inference_py → scripts_setup_and_first_inference_py_import_gc (imports)
-- scripts_setup_and_first_inference_py → scripts_setup_and_first_inference_py_import_argparse (imports)
-- scripts_setup_and_first_inference_py → scripts_setup_and_first_inference_py_import_logging (imports)
-- scripts_setup_and_first_inference_py → scripts_setup_and_first_inference_py_import_pathlib_path (imports)
-- scripts_setup_and_first_inference_py → scripts_setup_and_first_inference_py_check_yolo_models (defines)
-- scripts_setup_and_first_inference_py → scripts_setup_and_first_inference_py_init_paddle_ocr (defines)
-- scripts_setup_and_first_inference_py → scripts_setup_and_first_inference_py_run_inference (defines)
-- scripts_setup_and_first_inference_py → scripts_setup_and_first_inference_py_main (defines)
-- scripts_setup_and_first_inference_py_run_inference → scripts_setup_and_first_inference_py_main (calls)
-- scripts_setup_and_first_inference_py_main → scripts_setup_and_first_inference_py_check_yolo_models (calls)
-- scripts_setup_and_first_inference_py_main → scripts_setup_and_first_inference_py_init_paddle_ocr (calls)
-- scripts_setup_and_first_inference_py_main → scripts_setup_and_first_inference_py_run_inference (calls)
+- scripts_reporting_export_logs_py → scripts_reporting_export_logs_py_import_sys (imports)
+- scripts_reporting_export_logs_py → scripts_reporting_export_logs_py_import_pathlib_path (imports)
+- scripts_reporting_export_logs_py → scripts_reporting_export_logs_py_import_csv (imports)
+- scripts_reporting_export_logs_py → scripts_reporting_export_logs_py_import_argparse (imports)
+- scripts_reporting_export_logs_py → scripts_reporting_export_logs_py_import_dotenv_load_dotenv (imports)
+- scripts_reporting_export_logs_py → scripts_reporting_export_logs_py_import_boto3_dynamodb_conditions_attr (imports)
+- scripts_reporting_export_logs_py → scripts_reporting_export_logs_py_import_core_get_dynamo_table (imports)
+- scripts_reporting_export_logs_py → scripts_reporting_export_logs_py_import_core_table_name (imports)
+- scripts_reporting_export_logs_py → scripts_reporting_export_logs_py_export_to_csv (defines)
 

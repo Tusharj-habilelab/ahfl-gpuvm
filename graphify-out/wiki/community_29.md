@@ -1,22 +1,19 @@
-# Community 29: _normalize_bbox()
+# Community 29: run_batch_s3()
 
 **Members:** 5
 
 ## Nodes
 
-- **ocr_adapter** (`core_ocr_ocr_adapter_py`, File, degree: 4)
-- **adapt_paddle_result()** (`core_ocr_ocr_adapter_py_adapt_paddle_result`, Function, degree: 3)
-- **_append_v3_result()** (`core_ocr_ocr_adapter_py_append_v3_result`, Function, degree: 3)
-- **get_texts_and_boxes()** (`core_ocr_ocr_adapter_py_get_texts_and_boxes`, Function, degree: 2)
-- **_normalize_bbox()** (`core_ocr_ocr_adapter_py_normalize_bbox`, Function, degree: 2)
+- **_cleanup_stale_processing_records()** (`services_batch_processor_batch_py_cleanup_stale_processing_records`, Function, degree: 2)
+- **_dynamo_retry()** (`services_batch_processor_batch_py_dynamo_retry`, Function, degree: 2)
+- **_is_password_protected_pdf()** (`services_batch_processor_batch_py_is_password_protected_pdf`, Function, degree: 3)
+- **_list_s3_keys()** (`services_batch_processor_batch_py_list_s3_keys`, Function, degree: 2)
+- **run_batch_s3()** (`services_batch_processor_batch_py_run_batch_s3`, Function, degree: 9)
 
 ## Relationships
 
-- core_ocr_ocr_adapter_py → core_ocr_ocr_adapter_py_normalize_bbox (defines)
-- core_ocr_ocr_adapter_py → core_ocr_ocr_adapter_py_append_v3_result (defines)
-- core_ocr_ocr_adapter_py → core_ocr_ocr_adapter_py_adapt_paddle_result (defines)
-- core_ocr_ocr_adapter_py → core_ocr_ocr_adapter_py_get_texts_and_boxes (defines)
-- core_ocr_ocr_adapter_py_append_v3_result → core_ocr_ocr_adapter_py_normalize_bbox (calls)
-- core_ocr_ocr_adapter_py_adapt_paddle_result → core_ocr_ocr_adapter_py_append_v3_result (calls)
-- core_ocr_ocr_adapter_py_get_texts_and_boxes → core_ocr_ocr_adapter_py_adapt_paddle_result (calls)
+- services_batch_processor_batch_py_run_batch_s3 → services_batch_processor_batch_py_cleanup_stale_processing_records (calls)
+- services_batch_processor_batch_py_run_batch_s3 → services_batch_processor_batch_py_is_password_protected_pdf (calls)
+- services_batch_processor_batch_py_run_batch_s3 → services_batch_processor_batch_py_dynamo_retry (calls)
+- services_batch_processor_batch_py_run_batch_s3 → services_batch_processor_batch_py_list_s3_keys (calls)
 

@@ -3,8 +3,8 @@
 - **ID:** `core_ocr_masking_py_is_valid_aadhaar_number`
 - **Type:** Function
 - **File:** `./core/ocr/masking.py`
-- **Location:** L82
-- **Community:** 6 (yolo_results_to_detections())
+- **Location:** L83
+- **Community:** 4 (yolo_results_to_detections())
 
 ## Relationships
 

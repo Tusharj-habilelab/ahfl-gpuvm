@@ -56,10 +56,10 @@ def _get_person_model():
     return _person_model
 
 
-def detect_aadhaar_side(image, coordinates, labels, conf):
+def detect_aadhaar_side(image, coordinates, labels, conf, return_metadata: bool = False):
     """
     Filter detections — keep only those whose crop the classifier confirms
-    as Aadhaar front (class 0), back (class 1), or PVC (class 2).
+    as Aadhaar (class 0), front (class 1), or back (class 2).
 
     Passes numpy arrays directly to YOLO (no disk I/O).
 
@@ -72,6 +72,8 @@ def detect_aadhaar_side(image, coordinates, labels, conf):
 
     Returns:
         filtered_coords, filtered_labels, filtered_conf
+        If return_metadata=True, also returns filtered_metadata with:
+          - fb_classes: classifier classes detected in the crop
     """
     model = _get_classifier()
 
@@ -89,11 +91,13 @@ def detect_aadhaar_side(image, coordinates, labels, conf):
         crop = image[y1:y2, x1:x2]
         if crop.size == 0:
             continue
-        gray_crop = crop if is_greyscale else cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
-        crops.append(gray_crop)
+        bgr_crop = cv2.cvtColor(crop, cv2.COLOR_GRAY2BGR) if is_greyscale else crop
+        crops.append(bgr_crop)
         crop_indices.append(i)
 
     if not crops:
+        if return_metadata:
+            return [], [], [], []
         return [], [], []
 
     # Batch inference — single GPU call for all crops
@@ -102,6 +106,7 @@ def detect_aadhaar_side(image, coordinates, labels, conf):
     filtered_coords = []
     filtered_labels = []
     filtered_conf = []
+    filtered_metadata = []
 
     for result, orig_idx in zip(batch_results, crop_indices):
         detected_classes = []
@@ -113,7 +118,12 @@ def detect_aadhaar_side(image, coordinates, labels, conf):
             filtered_coords.append(coordinates[orig_idx])
             filtered_labels.append(labels[orig_idx])
             filtered_conf.append(conf[orig_idx])
+            filtered_metadata.append({
+                "fb_classes": detected_classes,
+            })
 
+    if return_metadata:
+        return filtered_coords, filtered_labels, filtered_conf, filtered_metadata
     return filtered_coords, filtered_labels, filtered_conf
 
 
@@ -249,11 +259,12 @@ def mask_pvc_aadhaar(image: np.ndarray, aadhaar_crops: List[dict]) -> Tuple[np.n
             continue
 
         aadhaar_region = image[y1:y2, x1:x2]
-        person_coordinates = []
         num_rotations = 0
         max_rotations = PVC_MAX_ROTATIONS
 
-        while num_rotations < max_rotations and len(person_coordinates) != 2:
+        person_coordinates = []
+        while num_rotations < max_rotations:
+            person_coordinates = []
             blurred = cv2.GaussianBlur(aadhaar_region, (3, 3), 0)
 
             try:
@@ -293,7 +304,7 @@ def mask_pvc_aadhaar(image: np.ndarray, aadhaar_crops: List[dict]) -> Tuple[np.n
                 cv2.rectangle(aadhaar_region, (px11, py11), (px12, py12), (0, 0, 0), -1)
                 log.debug(f"PVC masking: masked smaller person at ({px11},{py11})-({px12},{py12})")
 
-            if num_rotations == 1:
+            for _ in range(num_rotations % 4):
                 aadhaar_region = cv2.rotate(aadhaar_region, cv2.ROTATE_90_COUNTERCLOCKWISE)
 
             image[y1:y2, x1:x2] = aadhaar_region

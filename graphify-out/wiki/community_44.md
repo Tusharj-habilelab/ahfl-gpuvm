@@ -1,13 +1,8 @@
-# Community 44: pandas (44)
+# Community 44: D4_PATCHES_FOR_GPU
 
-**Members:** 2
+**Members:** 1
 
 ## Nodes
 
-- **mapping** (`scripts_reporting_mapping_py`, File, degree: 1)
-- **pandas** (`scripts_reporting_mapping_py_import_pandas`, Module, degree: 1)
-
-## Relationships
-
-- scripts_reporting_mapping_py → scripts_reporting_mapping_py_import_pandas (imports)
+- **D4_PATCHES_FOR_GPU** (`d4_patches_for_gpu_py`, File, degree: 0)
 

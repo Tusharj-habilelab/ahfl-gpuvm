@@ -4,7 +4,7 @@
 - **Type:** Function
 - **File:** `./scripts/setup_and_first_inference.py`
 - **Location:** L184
-- **Community:** 16 (run_inference())
+- **Community:** 15 (run_inference())
 
 ## Relationships
 

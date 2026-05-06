@@ -2,7 +2,7 @@
 id: core_classifiers_py_mask_pvc_aadhaar
 type: Function
 source: ./core/classifiers.py
-community: 5
+community: 6
 community_label: normalize_aadhaar_keyword()
 ---
 

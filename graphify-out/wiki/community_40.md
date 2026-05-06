@@ -1,15 +1,15 @@
-# Community 40: .log_writer.write_mask_log
+# Community 40: pandas (40)
 
 **Members:** 3
 
 ## Nodes
 
-- **__init__** (`core_db_init_py`, File, degree: 2)
-- **.database.get_dynamo_table** (`core_db_init_py_import_database_get_dynamo_table`, Module, degree: 1)
-- **.log_writer.write_mask_log** (`core_db_init_py_import_log_writer_write_mask_log`, Module, degree: 1)
+- **merge_metadata** (`scripts_reporting_merge_metadata_py`, File, degree: 2)
+- **os** (`scripts_reporting_merge_metadata_py_import_os`, Module, degree: 1)
+- **pandas** (`scripts_reporting_merge_metadata_py_import_pandas`, Module, degree: 1)
 
 ## Relationships
 
-- core_db_init_py → core_db_init_py_import_database_get_dynamo_table (imports)
-- core_db_init_py → core_db_init_py_import_log_writer_write_mask_log (imports)
+- scripts_reporting_merge_metadata_py → scripts_reporting_merge_metadata_py_import_pandas (imports)
+- scripts_reporting_merge_metadata_py → scripts_reporting_merge_metadata_py_import_os (imports)
 

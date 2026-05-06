@@ -1,24 +1,23 @@
-# Community 23: get_all_files_recursive()
+# Community 23: levenshtein_score()
 
 **Members:** 7
 
 ## Nodes
 
-- **count_total_applications** (`scripts_operational_count_total_applications_py`, File, degree: 6)
-- **clean_string()** (`scripts_operational_count_total_applications_py_clean_string`, Function, degree: 2)
-- **extract_application_info()** (`scripts_operational_count_total_applications_py_extract_application_info`, Function, degree: 2)
-- **get_all_files_recursive()** (`scripts_operational_count_total_applications_py_get_all_files_recursive`, Function, degree: 1)
-- **os** (`scripts_operational_count_total_applications_py_import_os`, Module, degree: 1)
-- **pandas** (`scripts_operational_count_total_applications_py_import_pandas`, Module, degree: 1)
-- **sys** (`scripts_operational_count_total_applications_py_import_sys`, Module, degree: 1)
+- **cosine_similarity()** (`core_ocr_masking_py_cosine_similarity`, Function, degree: 2)
+- **extract_number_coordinates()** (`core_ocr_masking_py_extract_number_coordinates`, Function, degree: 2)
+- **extract_target_coordinates()** (`core_ocr_masking_py_extract_target_coordinates`, Function, degree: 2)
+- **find_aadhaar_patterns()** (`core_ocr_masking_py_find_aadhaar_patterns`, Function, degree: 8)
+- **is_four_digit_number()** (`core_ocr_masking_py_is_four_digit_number`, Function, degree: 2)
+- **is_twelve_digit_number()** (`core_ocr_masking_py_is_twelve_digit_number`, Function, degree: 2)
+- **levenshtein_score()** (`core_ocr_masking_py_levenshtein_score`, Function, degree: 2)
 
 ## Relationships
 
-- scripts_operational_count_total_applications_py → scripts_operational_count_total_applications_py_import_os (imports)
-- scripts_operational_count_total_applications_py → scripts_operational_count_total_applications_py_import_sys (imports)
-- scripts_operational_count_total_applications_py → scripts_operational_count_total_applications_py_import_pandas (imports)
-- scripts_operational_count_total_applications_py → scripts_operational_count_total_applications_py_get_all_files_recursive (defines)
-- scripts_operational_count_total_applications_py → scripts_operational_count_total_applications_py_clean_string (defines)
-- scripts_operational_count_total_applications_py → scripts_operational_count_total_applications_py_extract_application_info (defines)
-- scripts_operational_count_total_applications_py_extract_application_info → scripts_operational_count_total_applications_py_clean_string (calls)
+- core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_is_four_digit_number (calls)
+- core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_is_twelve_digit_number (calls)
+- core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_cosine_similarity (calls)
+- core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_levenshtein_score (calls)
+- core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_extract_number_coordinates (calls)
+- core_ocr_masking_py_find_aadhaar_patterns → core_ocr_masking_py_extract_target_coordinates (calls)
 

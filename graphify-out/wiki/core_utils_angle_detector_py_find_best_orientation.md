@@ -4,7 +4,7 @@
 - **Type:** Function
 - **File:** `./core/utils/angle_detector.py`
 - **Location:** L92
-- **Community:** 8 (rotate_image_affine())
+- **Community:** 7 (rotate_image_affine())
 
 ## Relationships
 

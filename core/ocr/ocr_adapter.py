@@ -10,6 +10,11 @@ works unchanged regardless of the OCR engine version.
 """
 
 
+import logging
+
+log = logging.getLogger(__name__)
+
+
 def _normalize_bbox(bbox):
     """Convert a PaddleOCR bbox/polygon into four (x, y) float tuples."""
     if bbox is None:
