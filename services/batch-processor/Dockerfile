@@ -37,10 +37,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN pip install --upgrade --no-cache-dir pip setuptools wheel
 
-# PaddlePaddle GPU — must use official index (not PyPI); cu121 = correct ABI for CUDA 12.2 host
+# PaddlePaddle GPU — cu121 index for CUDA 12.2 host (correct ABI match)
 RUN pip install --no-cache-dir \
     paddlepaddle-gpu==3.3.0 \
-    -i https://www.paddlepaddle.org.cn/packages/stable/cu118/
+    -i https://www.paddlepaddle.org.cn/packages/stable/cu121/
 
 # PyTorch GPU
 RUN pip install --no-cache-dir \

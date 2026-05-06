@@ -2,7 +2,7 @@
 aadhaar_gate.py — Aadhaar Gate for AHFL-Masking 1.1
 
 Single-phase gate that runs ALL model inference per orientation angle:
-  main.pt (greyscale+dilated) + front_back_detect.pt (greyscale) + best.pt (RGB crop)
+  main.pt (greyscale, optionally dilated) + front_back_detect.pt (greyscale) + best.pt (RGB crop)
 
 Architecture:
   - Orientation calls run_full_gate_scoring() per angle
@@ -16,7 +16,7 @@ Models used:
   best.pt: is_number, is_number_masked, is_xx, is_qr, is_qr_masked
 
 Preprocessing:
-  main.pt: greyscale + dilation (trained on dilated greyscale)
+  main.pt: greyscale (optionally dilated if YOLO_MAIN_DILATE_ENABLED=true; default: false/undilated)
   front_back_detect.pt: greyscale only (reuses same grey object)
   best.pt: RGB colour crop (trained on RGB)
 """
@@ -27,11 +27,11 @@ from typing import Any, Dict, List, Tuple
 
 import numpy as np
 
+from core.config import YOLO_MAIN_DILATE_ENABLED
 from core.models.yolo_runner import get_yolo_main, get_yolo_best
 from core.classifiers import detect_aadhaar_side
 from core.ocr.masking import yolo_results_to_detections, merge_detections
 from core.spatial import (
-    find_aadhaar_card_boxes,
     filter_dets_inside_box,
     map_crop_dets_to_full,
 )
@@ -41,15 +41,22 @@ log = logging.getLogger(__name__)
 
 def _preprocess_greyscale(image: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     """
-    Convert BGR image to greyscale and dilated greyscale. Done ONCE per angle.
+    Convert BGR image to greyscale and optionally dilated greyscale. Done ONCE per angle.
+
+    Dilation controlled by YOLO_MAIN_DILATE_ENABLED config:
+    - False (default): return (grey, grey) — no dilation, faster processing
+    - True: return (grey, dilated) — dilated greyscale for edge enhancement on faded cards
 
     Returns:
-        (grey, dilated) — grey for front_back_detect.pt, dilated for main.pt.
+        (grey, preprocessed_for_main) — grey for front_back_detect.pt, preprocessed for main.pt.
     """
     grey = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    kernel = np.ones((2, 2), np.uint8)
-    dilated = cv2.dilate(grey, kernel, iterations=1)
-    return grey, dilated
+    if YOLO_MAIN_DILATE_ENABLED:
+        kernel = np.ones((2, 2), np.uint8)
+        preprocessed = cv2.dilate(grey, kernel, iterations=1)
+    else:
+        preprocessed = grey
+    return grey, preprocessed
 
 
 def _process_single_aadhaar_crop(
@@ -83,6 +90,7 @@ def _process_single_aadhaar_crop(
     results_best = yolo_best(crop, half=True)[0]
     dets_best_crop = yolo_results_to_detections(results_best, model_name="best")
     del results_best
+    log.debug(f"Gate crop [{x1},{y1},{x2},{y2}]: best.pt={len(dets_best_crop)} dets")
 
     dets_best_full = map_crop_dets_to_full(dets_best_crop, crop_box)
     main_inside = filter_dets_inside_box(filtered_dets, crop_box)
@@ -125,28 +133,36 @@ def run_full_gate_scoring(
             - max_aadhaar_conf: float
     """
     # Step 1: Greyscale preprocessing (done ONCE, reused by main.pt and fb)
-    grey, dilated = _preprocess_greyscale(image)
+    grey, preprocessed = _preprocess_greyscale(image)
 
-    # Step 2: Run main.pt on dilated — convert to BGR (main.pt trained on 3-channel)
+    # Step 2: Run main.pt on preprocessed greyscale — convert to BGR (main.pt expects 3-channel)
     yolo_main = get_yolo_main()
-    dilated_bgr = cv2.cvtColor(dilated, cv2.COLOR_GRAY2BGR)
-    results_main = yolo_main(dilated_bgr, half=True)[0]
+    preprocessed_bgr = cv2.cvtColor(preprocessed, cv2.COLOR_GRAY2BGR)
+    results_main = yolo_main(preprocessed_bgr, half=True)[0]
     main_dets = yolo_results_to_detections(results_main, model_name="main")
     del results_main
+    del preprocessed_bgr
 
     # Step 3: Run front_back_detect.pt filter (reuses grey — no duplicate cvtColor)
     coordinates = [d["box"] for d in main_dets]
     labels = [d["label"] for d in main_dets]
     confs = [d["conf"] for d in main_dets]
 
-    f_coords, f_labels, f_confs = detect_aadhaar_side(
-        grey, coordinates, labels, confs
+    f_coords, f_labels, f_confs, f_metadata = detect_aadhaar_side(
+        grey, coordinates, labels, confs, return_metadata=True
     )
     filtered_dets = [
-        {"box": c, "label": l, "conf": cf, "model": "main+fb"}
-        for c, l, cf in zip(f_coords, f_labels, f_confs)
+        {
+            "box": c,
+            "label": l,
+            "conf": cf,
+            "model": "main+fb",
+            **meta,
+        }
+        for c, l, cf, meta in zip(f_coords, f_labels, f_confs, f_metadata)
     ]
-    del grey, dilated  # free full-resolution arrays (called up to 8× in orientation loop)
+    log.info(f"Gate: main.pt={len(main_dets)} dets → fb_filtered={len(filtered_dets)}")
+    del grey, preprocessed  # free full-resolution arrays (called up to 8× in orientation loop)
 
     # Compute score from confirmed Aadhaar detections
     aadhaar_confs = [
@@ -155,6 +171,7 @@ def run_full_gate_scoring(
     ]
     fb_confirmed = len(aadhaar_confs) > 0
     max_aadhaar_conf = max(aadhaar_confs) if aadhaar_confs else 0.0
+    log.info(f"Gate: fb_confirmed={fb_confirmed}, aadhaar_count={len(aadhaar_confs)}, max_conf={max_aadhaar_conf:.3f}")
 
     if aadhaar_confs:
         score = max_aadhaar_conf + min(len(aadhaar_confs), 3) * 0.05 + 0.1
@@ -168,17 +185,23 @@ def run_full_gate_scoring(
         else:
             score = len(main_dets) * 0.01
 
-    # Step 4: Find Aadhaar card bboxes
-    aadhaar_boxes = find_aadhaar_card_boxes(filtered_dets)
+    # Step 4: Find Aadhaar card bboxes, preserving front/back classifier metadata
+    aadhaar_dets = [
+        d for d in filtered_dets
+        if d.get("label", "").lower() == "aadhaar"
+    ]
+    aadhaar_boxes = [d["box"] for d in aadhaar_dets]
+    log.info(f"Gate: {len(aadhaar_boxes)} Aadhaar card boxes found, score={score:.4f}")
 
     # Step 5: Run best.pt on each Aadhaar crop (RGB)
     if aadhaar_boxes:
         all_merged = []
         aadhaar_crops = []
-        for abox in aadhaar_boxes:
+        for aadhaar_det in aadhaar_dets:
             crop_result = _process_single_aadhaar_crop(
-                image, abox, filtered_dets
+                image, aadhaar_det["box"], filtered_dets
             )
+            crop_result["fb_classes"] = aadhaar_det.get("fb_classes", [])
             all_merged.extend(crop_result["merged_dets"])
             aadhaar_crops.append(crop_result)
 
@@ -225,4 +248,3 @@ def run_full_gate_scoring(
     gate_result["best_qr_conf"] = max(best_qr_confs) if best_qr_confs else 0.0
 
     return score, gate_result
-

@@ -1,0 +1,11 @@
+---
+id: core_utils_angle_detector_py_import_core_config_orientation_angles
+type: Module
+source: ./core/utils/angle_detector.py
+community: 7
+community_label: rotate_image_affine()
+---
+
+## Connections
+
+- [[angle_detector]] (imports)

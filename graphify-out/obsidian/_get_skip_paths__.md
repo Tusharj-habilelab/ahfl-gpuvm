@@ -1,0 +1,13 @@
+---
+id: services_batch_processor_batch_py_get_skip_paths
+type: Function
+source: ./services/batch-processor/batch.py
+community: 31
+community_label: _write_pending()
+---
+
+## Connections
+
+- [[batch]] (defines)
+- [[run_batch__]] (calls)
+- [[run_batch_s3__]] (calls)
