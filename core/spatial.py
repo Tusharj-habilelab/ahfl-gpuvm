@@ -11,6 +11,9 @@ Key function:
 """
 
 from typing import List
+import logging
+
+log = logging.getLogger(__name__)
 
 
 def compute_intersection_area(

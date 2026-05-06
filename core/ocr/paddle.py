@@ -6,12 +6,15 @@ services so we do not end up debugging different OCR behaviors in each path.
 """
 
 import os
+import logging
 import threading
 
 import cv2
 from typing import Optional
 from paddleocr import PaddleOCR, DocImgOrientationClassification
 from core.config import PADDLE_OCR_MAX_SIDE, ROUTER_OCR_LITE_MAX_SIDE, ROUTER_OCR_LITE_MAX_TOKENS
+
+log = logging.getLogger(__name__)
 
 
 def _env_int(name: str, default: int) -> int:
@@ -29,11 +32,14 @@ def create_paddle_ocr() -> PaddleOCR:
     Build a PaddleOCR instance for Aadhaar text extraction (PaddleOCR 3.4.0+).
     Models cached to /root/.paddlex/official_models/ (volume-mounted, downloaded once on first run).
     """
-    return PaddleOCR(
+    log.info("PaddleOCR: initializing (lang=en, use_textline_orientation=True, device=gpu:0)")
+    ocr = PaddleOCR(
         lang="en",
         use_textline_orientation=True,
         device="gpu:0",
     )
+    log.info("PaddleOCR: initialization complete")
+    return ocr
 
 
 _doc_ori_model = None
@@ -52,9 +58,11 @@ def get_doc_orientation_model() -> DocImgOrientationClassification:
     if _doc_ori_model is None:
         with _doc_ori_lock:
             if _doc_ori_model is None:
+                log.info("DocOrientationModel: initializing (device=gpu:0)")
                 _doc_ori_model = DocImgOrientationClassification(
                     device="gpu:0",
                 )
+                log.info("DocOrientationModel: ready")
     return _doc_ori_model
 
 
@@ -109,8 +117,6 @@ def run_ocr_lite_for_routing(image, max_tokens: Optional[int] = None):
     Returns:
         List of text tokens (strings), or empty list on failure
     """
-    import logging
-    log = logging.getLogger(__name__)
     if max_tokens is None:
         max_tokens = ROUTER_OCR_LITE_MAX_TOKENS
     

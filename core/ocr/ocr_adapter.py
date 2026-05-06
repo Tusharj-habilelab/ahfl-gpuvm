@@ -106,6 +106,7 @@ def adapt_paddle_result(paddle_result):
                 log.debug(f"Skipped malformed detection: {e}")
                 continue
 
+    log.debug(f"adapt_paddle_result: {len(adapted)} tokens adapted")
     return adapted
 
 
