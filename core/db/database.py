@@ -12,10 +12,13 @@ Schema:
 """
 
 import os
+import logging
 import boto3
 from dotenv import load_dotenv
 
 load_dotenv()
+
+log = logging.getLogger(__name__)
 
 TABLE_NAME = os.environ.get("TABLE_NAME", "ahfl_processed_data")
 AWS_REGION = os.environ.get("AWS_REGION", "ap-south-1")
@@ -84,6 +87,7 @@ def get_dynamo_table(table_name: str = None):
         dynamodb = boto3.resource("dynamodb", region_name=AWS_REGION)
         table = dynamodb.Table(name)
         table.load()  # validates table exists; raises ClientError if not found
+        log.info(f"DynamoDB: connected to table '{name}' in {AWS_REGION}")
         return table
     except Exception as err:
         raise RuntimeError(f"[DB] DynamoDB connection failed: {err}") from err

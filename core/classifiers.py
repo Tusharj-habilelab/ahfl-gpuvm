@@ -18,7 +18,7 @@ import torch
 from typing import List, Tuple
 from ultralytics import YOLO
 from dotenv import load_dotenv
-from core.config import PVC_MAX_ROTATIONS, PVC_PERSON_CONFIDENCE_THRESHOLD
+from core.config import PVC_PERSON_CONFIDENCE_THRESHOLD
 
 load_dotenv()
 
@@ -56,10 +56,10 @@ def _get_person_model():
     return _person_model
 
 
-def detect_aadhaar_side(image, coordinates, labels, conf):
+def detect_aadhaar_side(image, coordinates, labels, conf, return_metadata: bool = False):
     """
     Filter detections — keep only those whose crop the classifier confirms
-    as Aadhaar front (class 0), back (class 1), or PVC (class 2).
+    as Aadhaar (class 0), front (class 1), or back (class 2).
 
     Passes numpy arrays directly to YOLO (no disk I/O).
 
@@ -69,9 +69,12 @@ def detect_aadhaar_side(image, coordinates, labels, conf):
         coordinates: list of [x1, y1, x2, y2]
         labels:      list of str — YOLO label per detection
         conf:        list of float — confidence per detection
+        return_metadata: if True, return metadata list with fb_classes and fb_pvc_detected
 
-    Returns:
-        filtered_coords, filtered_labels, filtered_conf
+        Returns:
+                If return_metadata=False: filtered_coords, filtered_labels, filtered_conf
+                If return_metadata=True: filtered_coords, filtered_labels, filtered_conf, filtered_metadata
+                    where metadata contains {"fb_classes": [...], "fb_pvc_detected": bool}
     """
     model = _get_classifier()
 
@@ -89,11 +92,13 @@ def detect_aadhaar_side(image, coordinates, labels, conf):
         crop = image[y1:y2, x1:x2]
         if crop.size == 0:
             continue
-        gray_crop = crop if is_greyscale else cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
-        crops.append(gray_crop)
+        bgr_crop = cv2.cvtColor(crop, cv2.COLOR_GRAY2BGR) if is_greyscale else crop
+        crops.append(bgr_crop)
         crop_indices.append(i)
 
     if not crops:
+        if return_metadata:
+            return [], [], [], []
         return [], [], []
 
     # Batch inference — single GPU call for all crops
@@ -102,6 +107,7 @@ def detect_aadhaar_side(image, coordinates, labels, conf):
     filtered_coords = []
     filtered_labels = []
     filtered_conf = []
+    filtered_metadata = []
 
     for result, orig_idx in zip(batch_results, crop_indices):
         detected_classes = []
@@ -113,7 +119,16 @@ def detect_aadhaar_side(image, coordinates, labels, conf):
             filtered_coords.append(coordinates[orig_idx])
             filtered_labels.append(labels[orig_idx])
             filtered_conf.append(conf[orig_idx])
+            if return_metadata:
+                filtered_metadata.append({
+                    "fb_classes": detected_classes,
+                    "fb_pvc_detected": lbl == "aadhaar" and 2 in detected_classes,
+                })
 
+    pvc_count = sum(1 for m in filtered_metadata if m.get("fb_pvc_detected")) if return_metadata else 0
+    log.info(f"detect_aadhaar_side: in={len(coordinates)} → out={len(filtered_coords)} pvc_detected={pvc_count}")
+    if return_metadata:
+        return filtered_coords, filtered_labels, filtered_conf, filtered_metadata
     return filtered_coords, filtered_labels, filtered_conf
 
 
@@ -153,7 +168,10 @@ def is_pan_card(ocr_texts: List[str]) -> bool:
     if re.search(r'\bPAN\b', combined_upper):
         signal_count += 1
 
-    return signal_count >= 2
+    result = signal_count >= 2
+    if result:
+        log.info(f"is_pan_card: PAN detected (signals={signal_count}) — will SKIP masking")
+    return result
 
 
 def normalize_aadhaar_keyword(text: str) -> str:
@@ -205,8 +223,10 @@ def is_aadhaar_card_confirmed(ocr_texts: List[str]) -> bool:
     
     for keyword in target_keywords:
         if keyword in normalized:
+            log.info(f"is_aadhaar_card_confirmed: confirmed via keyword '{keyword}'")
             return True
-    
+
+    log.debug("is_aadhaar_card_confirmed: not confirmed")
     return False
 
 
@@ -214,20 +234,31 @@ def mask_pvc_aadhaar(image: np.ndarray, aadhaar_crops: List[dict]) -> Tuple[np.n
     """
     Mask person photos on PVC Aadhaar cards using yolov8n.pt person detection.
 
-    Detects the smaller person region (ghost photo) on each Aadhaar card
-    and masks it with a black rectangle. Only runs if exactly 2 persons detected.
+    Detects the two person regions (main + ghost photo) on each Aadhaar card
+    and masks the smaller one with a black rectangle.
 
     Args:
-        image: Full BGR image.
+        image: Full BGR image (already at winning orientation from gate).
         aadhaar_crops: List of dicts from gate_result["aadhaar_crops"],
                        each containing "crop_box": [x1, y1, x2, y2].
+                       If "fb_pvc_detected" is present, only True crops are processed.
 
     Returns:
         Tuple of (modified_image, stats_dict) where:
-        - modified_image: Image with person photos masked (or original if no valid PVC detected)
+        - modified_image: Image with person photos masked
         - stats_dict: {"pvc_cards_processed": int, "pvc_cards_masked": int}
     """
     if not aadhaar_crops:
+        return image, {"pvc_cards_processed": 0, "pvc_cards_masked": 0}
+
+    # Filter to PVC-detected crops if metadata available, else fallback to all
+    has_pvc_flags = any("fb_pvc_detected" in crop_info for crop_info in aadhaar_crops)
+    pvc_candidate_crops = [
+        crop_info for crop_info in aadhaar_crops
+        if not has_pvc_flags or crop_info.get("fb_pvc_detected", False)
+    ]
+
+    if not pvc_candidate_crops:
         return image, {"pvc_cards_processed": 0, "pvc_cards_masked": 0}
 
     person_model = _get_person_model()
@@ -235,7 +266,7 @@ def mask_pvc_aadhaar(image: np.ndarray, aadhaar_crops: List[dict]) -> Tuple[np.n
     pvc_cards_processed = 0
     pvc_cards_masked = 0
 
-    for crop_info in aadhaar_crops:
+    for crop_info in pvc_candidate_crops:
         crop_box = crop_info.get("crop_box")
         if crop_box is None:
             continue
@@ -249,31 +280,21 @@ def mask_pvc_aadhaar(image: np.ndarray, aadhaar_crops: List[dict]) -> Tuple[np.n
             continue
 
         aadhaar_region = image[y1:y2, x1:x2]
+        blurred = cv2.GaussianBlur(aadhaar_region, (3, 3), 0)
+
         person_coordinates = []
-        num_rotations = 0
-        max_rotations = PVC_MAX_ROTATIONS
-
-        while num_rotations < max_rotations and len(person_coordinates) != 2:
-            blurred = cv2.GaussianBlur(aadhaar_region, (3, 3), 0)
-
-            try:
-                results = person_model(blurred)
-                for result in results:
-                    if result.boxes is not None:
-                        for box in result.boxes:
-                            class_id = int(box.cls[0])
-                            confidence = float(box.conf[0])
-                            if class_id == 0 and confidence >= PVC_PERSON_CONFIDENCE_THRESHOLD:
-                                person_coordinates.append(box.xyxy[0].tolist())
-            except Exception as e:
-                log.warning(f"PVC masking person detection failed: {e}")
-                break
-
-            if len(person_coordinates) == 2:
-                break
-
-            aadhaar_region = cv2.rotate(aadhaar_region, cv2.ROTATE_90_CLOCKWISE)
-            num_rotations += 1
+        try:
+            results = person_model(blurred)
+            for result in results:
+                if result.boxes is not None:
+                    for box in result.boxes:
+                        class_id = int(box.cls[0])
+                        confidence = float(box.conf[0])
+                        if class_id == 0 and confidence >= PVC_PERSON_CONFIDENCE_THRESHOLD:
+                            person_coordinates.append(box.xyxy[0].tolist())
+        except Exception as e:
+            log.warning(f"PVC masking person detection failed: {e}")
+            continue
 
         if len(person_coordinates) == 2:
             px11, py11, px12, py12 = map(int, person_coordinates[0])
@@ -292,9 +313,6 @@ def mask_pvc_aadhaar(image: np.ndarray, aadhaar_crops: List[dict]) -> Tuple[np.n
                 py12 = int(py12 + ((py12 - py11) / 10))
                 cv2.rectangle(aadhaar_region, (px11, py11), (px12, py12), (0, 0, 0), -1)
                 log.debug(f"PVC masking: masked smaller person at ({px11},{py11})-({px12},{py12})")
-
-            if num_rotations == 1:
-                aadhaar_region = cv2.rotate(aadhaar_region, cv2.ROTATE_90_COUNTERCLOCKWISE)
 
             image[y1:y2, x1:x2] = aadhaar_region
             pvc_cards_masked += 1

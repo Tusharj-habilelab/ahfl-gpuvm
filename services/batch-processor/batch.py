@@ -513,7 +513,8 @@ def _process_pdf(pdf_path: str, dest_path: str) -> dict:
     try:
         info = pdfinfo_from_path(pdf_path)
         total_pages = info.get("Pages", 0)
-    except Exception:
+    except Exception as e:
+        log.warning(f"pdfinfo failed for {pdf_path}: {e} — page limit check skipped")
         total_pages = 0  # proceed and let convert_from_path handle it
 
     if total_pages > MAX_PDF_PAGES:
@@ -1014,4 +1015,3 @@ if __name__ == "__main__":
             log_to_db=not args.no_db,
             dry_run=args.dry_run,
         )
-

@@ -46,7 +46,9 @@ def _get_ocr():
     if _ocr_instance is None:
         with _ocr_lock:
             if _ocr_instance is None:
+                log.info("PaddleOCR: creating singleton instance")
                 _ocr_instance = create_paddle_ocr()
+                log.info("PaddleOCR: singleton ready")
     return _ocr_instance
 
 
@@ -243,6 +245,7 @@ def _process_form_lane(
             "doc_orientation_failed": doc_orientation_failed,
         }
         report["mask_counts"] = _report_mask_counts(report)
+        log.info(f"form lane: SKIPPED reason={checks['skip_reason']}")
         return image, report
 
     tokens_list = [
@@ -272,6 +275,7 @@ def _process_form_lane(
         "doc_orientation_failed": doc_orientation_failed,
     }
     report["mask_counts"] = _report_mask_counts(report)
+    log.info(f"form lane: done ocr_patterns={len(detected_words)} ocr_failed={ocr_failed}")
     return image, report
 
 
@@ -289,6 +293,7 @@ def _process_card_like_lane(
     image, best_angle, gate_result = find_best_orientation(image, score_fn=run_full_gate_scoring)
     stats["orientation_seconds"] = time.perf_counter() - t0
     stats["orientation_angle"] = best_angle
+    log.info(f"{lane_name} lane: orientation={best_angle}° fb_confirmed={gate_result.get('fb_confirmed')} crops={len(gate_result.get('aadhaar_crops', []))}")
 
     t0 = time.perf_counter()
     image, all_texts, all_boxes, all_confidences, ocr_failed, doc_orientation_failed, aadhaar_crops = _run_ocr_for_card_path(
@@ -325,7 +330,12 @@ def _process_card_like_lane(
             "doc_orientation_failed": doc_orientation_failed,
         }
         report["mask_counts"] = _report_mask_counts(report)
+        log.info(f"{lane_name} lane: SKIPPED reason={checks['skip_reason']}")
         return image, report
+
+    pvc_stats = {"pvc_cards_processed": 0, "pvc_cards_masked": 0}
+    if aadhaar_crops:
+        image, pvc_stats = mask_pvc_aadhaar(image, aadhaar_crops)
 
     image, yolo_report = mask_yolo_detections(
         image,
@@ -335,10 +345,6 @@ def _process_card_like_lane(
         ocr=ocr,
         aadhaar_boxes=gate_result.get("aadhaar_boxes"),
     )
-
-    pvc_stats = {"pvc_cards_processed": 0, "pvc_cards_masked": 0}
-    if aadhaar_crops:
-        image, pvc_stats = mask_pvc_aadhaar(image, aadhaar_crops)
 
     tokens_list = [
         {"text": t, "coordinates": b, "confidence": c}
@@ -366,6 +372,11 @@ def _process_card_like_lane(
         "doc_orientation_failed": doc_orientation_failed,
     }
     report["mask_counts"] = _report_mask_counts(report)
+    log.info(
+        f"{lane_name} lane: done angle={best_angle}° "
+        f"pvc_processed={pvc_stats['pvc_cards_processed']} pvc_masked={pvc_stats['pvc_cards_masked']} "
+        f"ocr_patterns={len(detected_words)} aadhaar_verified={bool(aadhaar_confirmed)}"
+    )
     return image, report
 
 
@@ -379,8 +390,14 @@ def process_image(
     if image is None or image.size == 0:
         raise ValueError("Input image is None or empty")
 
+    if image.ndim == 2:
+        image = cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)
+    elif image.ndim == 3 and image.shape[2] == 4:
+        image = cv2.cvtColor(image, cv2.COLOR_BGRA2BGR)
+
     stats: Dict[str, Any] = {}
     start_time = time.perf_counter()
+    log.info(f"process_image: start shape={image.shape[1]}x{image.shape[0]}")
 
     try:
         ocr = _get_ocr()
@@ -392,7 +409,7 @@ def process_image(
         }
         if ROUTER_ENABLED:
             t0 = time.perf_counter()
-            ocr_tokens = run_ocr_lite_for_routing(image)
+            ocr_tokens = run_ocr_lite_for_routing(image, ocr=ocr)
             router_result = classify_document_lane(
                 ocr_tokens,
                 confidence_threshold=ROUTER_CONFIDENCE_THRESHOLD,
@@ -403,6 +420,7 @@ def process_image(
 
         lane = router_result.get("lane", "uncertain")
         stats["lane_chosen"] = lane
+        log.info(f"process_image: lane={lane} confidence={router_result.get('confidence', 0.0):.2f} reason={router_result.get('reasoning', '')[:60]}")
 
         if lane == "form":
             image, report = _process_form_lane(
@@ -435,6 +453,11 @@ def process_image(
         report["router"] = router_result
         report["stats"] = stats
         report["mask_counts"] = _report_mask_counts(report)
+        log.info(
+            f"process_image: done lane={report.get('lane_chosen')} "
+            f"angle={report.get('final_winning_angle')} skip={report.get('skipped')} "
+            f"masks={report.get('mask_counts')} t={stats['total_seconds']:.2f}s"
+        )
         return image, report
 
     finally:

@@ -6,12 +6,15 @@ services so we do not end up debugging different OCR behaviors in each path.
 """
 
 import os
+import logging
 import threading
 
 import cv2
 from typing import Optional
 from paddleocr import PaddleOCR, DocImgOrientationClassification
 from core.config import PADDLE_OCR_MAX_SIDE, ROUTER_OCR_LITE_MAX_SIDE, ROUTER_OCR_LITE_MAX_TOKENS
+
+log = logging.getLogger(__name__)
 
 
 def _env_int(name: str, default: int) -> int:
@@ -24,17 +27,34 @@ def _env_int(name: str, default: int) -> int:
         return default
 
 
+def _get_paddle_device() -> str:
+    """Return paddle device string: env override > GPU auto-detect > cpu."""
+    override = os.getenv("PADDLE_DEVICE")
+    if override:
+        return override
+    try:
+        import paddle
+        if paddle.is_compiled_with_cuda() and paddle.device.cuda.device_count() > 0:
+            return "gpu:0"
+    except Exception:
+        pass
+    return "cpu"
+
+
 def create_paddle_ocr() -> PaddleOCR:
     """
     Build a PaddleOCR instance for Aadhaar text extraction (PaddleOCR 3.4.0+).
-    Models are auto-downloaded to /root/.paddlex on first call and cached permanently.
-    GPU mode imports from core.config — single source of truth for GPU_ENABLED default.
+    Models cached to /root/.paddlex/official_models/ (volume-mounted, downloaded once on first run).
     """
-    return PaddleOCR(
+    device = _get_paddle_device()
+    log.info(f"PaddleOCR: initializing (lang=en, use_textline_orientation=True, device={device})")
+    ocr = PaddleOCR(
         lang="en",
         use_textline_orientation=True,
-        device="gpu:0",
+        device=device,
     )
+    log.info("PaddleOCR: initialization complete")
+    return ocr
 
 
 _doc_ori_model = None
@@ -45,15 +65,20 @@ def get_doc_orientation_model() -> DocImgOrientationClassification:
     """
     Lazy-load shared DocImgOrientationClassification instance.
 
-    Model: PP-LCNet_x1_0_doc_ori (7MB, ~3ms CPU inference).
+    Model: PP-LCNet_x1_0_doc_ori (7MB, ~3ms inference).
     Predicts whole-document rotation: 0 / 90 / 180 / 270 degrees.
-    Auto-downloaded to /root/.paddlex on first call and cached permanently.
+    Cached to /root/.paddlex/official_models/ (auto-downloaded once, reused offline).
     """
     global _doc_ori_model
     if _doc_ori_model is None:
         with _doc_ori_lock:
             if _doc_ori_model is None:
-                _doc_ori_model = DocImgOrientationClassification()
+                device = _get_paddle_device()
+                log.info(f"DocOrientationModel: initializing (device={device})")
+                _doc_ori_model = DocImgOrientationClassification(
+                    device=device,
+                )
+                log.info("DocOrientationModel: ready")
     return _doc_ori_model
 
 
@@ -94,27 +119,26 @@ def scale_adapted_ocr_results(adapted_results, scale_to_original: float):
     return scaled
 
 
-def run_ocr_lite_for_routing(image, max_tokens: Optional[int] = None):
+def run_ocr_lite_for_routing(image, max_tokens: Optional[int] = None, ocr=None):
     """
     Lightweight OCR for document routing only (not masking).
-    
+
     Resizes image aggressively and extracts only top N text tokens.
     No coordinate information returned - pure text for keyword matching.
-    
+
     Args:
         image: BGR numpy array
         max_tokens: Maximum number of tokens to extract
-    
+        ocr: Optional PaddleOCR singleton. If provided, used directly.
+             Falls back to pytesseract if None.
+
     Returns:
         List of text tokens (strings), or empty list on failure
     """
-    import logging
-    log = logging.getLogger(__name__)
     if max_tokens is None:
         max_tokens = ROUTER_OCR_LITE_MAX_TOKENS
-    
+
     try:
-        # Aggressive resize for speed - routing doesn't need high resolution
         height, width = image.shape[:2]
         max_side = ROUTER_OCR_LITE_MAX_SIDE
         if max(height, width) > max_side:
@@ -122,27 +146,34 @@ def run_ocr_lite_for_routing(image, max_tokens: Optional[int] = None):
             new_w = max(1, int(width * scale))
             new_h = max(1, int(height * scale))
             image = cv2.resize(image, (new_w, new_h), interpolation=cv2.INTER_AREA)
-        
-        # Use shared PaddleOCR instance from create_paddle_ocr()
-        # We can't create a separate instance here as it would waste GPU memory
-        # Instead we'll use a very simple pytesseract fallback for routing
-        # This keeps the router lightweight and independent
-        
-        # Simple pytesseract extraction for routing only
+
+        if ocr is not None:
+            try:
+                from core.ocr.ocr_adapter import adapt_paddle_result, get_texts_and_boxes
+                results = ocr.ocr(image)
+                if results and results[0]:
+                    adapted = adapt_paddle_result(results)
+                    texts, _, _ = get_texts_and_boxes(adapted)
+                    log.debug(f"run_ocr_lite_for_routing: PaddleOCR tokens={len(texts)}")
+                    return texts[:max_tokens]
+                return []
+            except Exception as e:
+                log.warning(f"run_ocr_lite_for_routing PaddleOCR failed: {e}")
+                return []
+
         try:
             import pytesseract
             text = pytesseract.image_to_string(image)
             if text:
-                # Split into tokens, filter empty, limit to max_tokens
                 tokens = [t.strip() for t in text.split() if t.strip()]
                 return tokens[:max_tokens]
         except ImportError:
-            log.warning("pytesseract not available for OCR-lite routing, using empty tokens")
+            log.warning("run_ocr_lite_for_routing: pytesseract not available and no ocr passed — returning empty tokens")
             return []
         except Exception as e:
-            log.warning(f"OCR-lite routing failed: {e}")
+            log.warning(f"run_ocr_lite_for_routing pytesseract failed: {e}")
             return []
-    
+
     except Exception as e:
         log.error(f"run_ocr_lite_for_routing failed: {e}")
         return []

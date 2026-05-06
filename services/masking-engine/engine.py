@@ -240,7 +240,7 @@ def _mask_pdf(pdf_path: str) -> dict:
 
             for page in pages:
                 img_path = os.path.join(tmp_dir, f"p{page_idx:04d}.jpg")
-                page.save(img_path, "JPEG")
+                page.convert('RGB').save(img_path, "JPEG")  # Force RGB — YOLO requires 3 channels
                 del page
 
                 try:
@@ -363,7 +363,7 @@ async def mask_file(file: UploadFile = File(...)):
         shutil.copyfileobj(file.file, buf)
 
     try:
-        loop = asyncio.get_event_loop()
+        loop = asyncio.get_running_loop()
         if ext == "pdf":
             page_reports = await loop.run_in_executor(None, _mask_pdf, str(output_path))
         else:
@@ -408,4 +408,3 @@ if __name__ == "__main__":
     uvicorn.run("engine:app", host="0.0.0.0",
                 port=int(os.environ.get("MASKING_ENGINE_PORT", 8001)),
                 reload=False)
-

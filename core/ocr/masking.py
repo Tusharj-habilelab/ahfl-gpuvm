@@ -22,7 +22,7 @@ import logging
 import cv2
 import numpy as np
 from collections import Counter
-from core.ocr.paddle import create_paddle_ocr
+from core.ocr.ocr_adapter import adapt_paddle_result, get_texts_and_boxes
 
 log = logging.getLogger(__name__)
 
@@ -351,7 +351,9 @@ def check_image_text(image, coordinates, label, stats=None, ocr=None):
         if ocr is None:
             raise ValueError("ocr must be provided; pass the shared PaddleOCR singleton")
         ocr_result = ocr.ocr(cropped_img)
-        text = ' '.join([words[1][0] for line in ocr_result if line for words in line]) if ocr_result else ""
+        adapted = adapt_paddle_result(ocr_result)
+        texts, _, _ = get_texts_and_boxes(adapted)
+        text = ' '.join(texts) if texts else ""
     except Exception:
         text = ""
 
@@ -388,15 +390,12 @@ def _ocr_verify_and_mask_number(image, box, label, ocr, stats=None):
         if ocr is None:
             raise ValueError("ocr must be provided; pass the shared PaddleOCR singleton")
         ocr_result = ocr.ocr(cropped)
-        if not ocr_result or not ocr_result[0]:
+        adapted = adapt_paddle_result(ocr_result)
+        if not adapted:
             return image, False
 
-        # Extract all text from OCR result
-        all_text = ""
-        for line in ocr_result:
-            if line:
-                for words in line:
-                    all_text += words[1][0] + " "
+        texts, _, _ = get_texts_and_boxes(adapted)
+        all_text = ' '.join(texts)
 
         # Extract digits only
         digits = re.sub(r'[^0-9]', '', all_text)
@@ -490,6 +489,10 @@ def mask_yolo_detections(image, merged_detections, debug=False, stats=None, ocr=
                     report_data["is_xx"] += 1
         elif "xx" in label:
             report_data["is_xx"] += 1
+    log.info(
+        f"mask_yolo: number={report_data['is_number']} masked={report_data['is_number_masked']} "
+        f"qr={report_data['is_qr']} qr_masked={report_data['is_qr_masked']} xx={report_data['is_xx']}"
+    )
     return image, report_data
 
 
@@ -709,6 +712,7 @@ def find_aadhaar_patterns(tokens_list):
                             "type": "number_safety"
                         })
 
+    log.info(f"find_aadhaar_patterns: {len(detected_words)} patterns found (cersai={cersai_found} crif={crif_found} aadhar={aadhar_found})")
     return detected_words
 
 

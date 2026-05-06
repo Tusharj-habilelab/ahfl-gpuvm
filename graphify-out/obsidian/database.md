@@ -1,0 +1,15 @@
+---
+id: core_db_database_py
+type: File
+source: ./core/db/database.py
+community: 26
+community_label: get_dynamo_table()
+---
+
+## Connections
+
+- [[os]] (imports)
+- [[boto3]] (imports)
+- [[dotenv_load_dotenv]] (imports)
+- [[build_default_record__]] (defines)
+- [[get_dynamo_table__]] (defines)

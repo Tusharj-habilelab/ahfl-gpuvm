@@ -15,6 +15,7 @@ Replaces: main.py + wsgi.py (1.0 Flask application)
 
 import os
 import hmac
+import logging
 import mimetypes
 from pathlib import Path
 
@@ -25,6 +26,9 @@ from fastapi.responses import FileResponse, JSONResponse
 from dotenv import load_dotenv
 
 load_dotenv()
+
+log = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s — %(message)s")
 
 # ──────────────────────────────────────────────
 # App setup
@@ -54,6 +58,7 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 MASKING_ENGINE_URL = os.environ.get("MASKING_ENGINE_URL", "http://masking-engine:8001")
 AUTHORIZED_KEYS_PATH = os.environ.get("AUTHORIZED_KEYS_PATH", "config/authorized-keys.txt")
+MAX_FILE_SIZE = int(os.environ.get("MAX_FILE_SIZE", 15 * 1024 * 1024))
 
 
 # ──────────────────────────────────────────────
@@ -66,15 +71,18 @@ def _load_api_keys() -> set:
         with open(AUTHORIZED_KEYS_PATH, "r") as f:
             return {line.strip() for line in f if line.strip()}
     except FileNotFoundError:
+        log.warning(f"authorized-keys.txt not found at {AUTHORIZED_KEYS_PATH} — all requests will be rejected")
         return set()
 
 
 def _validate_api_key(api_key: str) -> None:
     """Raise HTTPException if the API key is invalid."""
     if not api_key:
+        log.warning("Auth rejected: missing API key")
         raise HTTPException(status_code=401, detail="API Key is missing.")
     keys = _load_api_keys()
     if not any(hmac.compare_digest(api_key, k) for k in keys):
+        log.warning("Auth rejected: invalid API key")
         raise HTTPException(status_code=403, detail="Invalid API Key.")
 
 
@@ -105,17 +113,19 @@ async def create_upload_file(
     allowed_ext = {"pdf", "jpg", "jpeg", "png"}
     ext = file.filename.rsplit(".", 1)[-1].lower() if "." in file.filename else ""
     if ext not in allowed_ext:
+        log.warning(f"File rejected: unsupported type '.{ext}' filename={file.filename}")
         raise HTTPException(
             status_code=422,
             detail=f"Unsupported file type '.{ext}'. Allowed: {allowed_ext}"
         )
 
     # Forward to masking-engine
-    from core.config import MAX_FILE_SIZE
     file_bytes = await file.read(MAX_FILE_SIZE + 1)
     if len(file_bytes) > MAX_FILE_SIZE:
+        log.warning(f"File rejected: size {len(file_bytes)} > {MAX_FILE_SIZE} filename={file.filename}")
         raise HTTPException(status_code=413, detail=f"File exceeds {MAX_FILE_SIZE // (1024*1024)} MB limit.")
 
+    log.info(f"Forwarding to masking-engine: filename={file.filename} size={len(file_bytes)}")
     async with httpx.AsyncClient(timeout=300) as client:
         try:
             response = await client.post(
@@ -123,12 +133,16 @@ async def create_upload_file(
                 files={"file": (file.filename, file_bytes, file.content_type)},
             )
         except httpx.ConnectError:
+            log.error(f"Masking engine unavailable: {MASKING_ENGINE_URL}")
             raise HTTPException(status_code=503, detail="Masking engine unavailable.")
 
     engine_data = response.json()
 
     if response.status_code != 200:
+        log.error(f"Engine error {response.status_code}: {engine_data.get('detail', '')} filename={file.filename}")
         raise HTTPException(status_code=response.status_code, detail=engine_data.get("detail", "Engine error"))
+
+    log.info(f"Success: filename={file.filename} pages={engine_data.get('total_pages')} masked={engine_data.get('total_pages_masked')}")
 
     host_url = os.environ.get("HOST", "http://localhost:8000")
     file_name = engine_data.get("fileName", "")

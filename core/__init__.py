@@ -31,6 +31,7 @@ from .config import (
     ORIENTATION_ANGLES,
     LOG_LEVEL,
     PADDLE_MODEL_DIR,
+    YOLO_MAIN_DILATE_ENABLED,
     setup_logging,
 )
 
