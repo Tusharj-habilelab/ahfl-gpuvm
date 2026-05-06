@@ -409,7 +409,7 @@ def process_image(
         }
         if ROUTER_ENABLED:
             t0 = time.perf_counter()
-            ocr_tokens = run_ocr_lite_for_routing(image)
+            ocr_tokens = run_ocr_lite_for_routing(image, ocr=ocr)
             router_result = classify_document_lane(
                 ocr_tokens,
                 confidence_threshold=ROUTER_CONFIDENCE_THRESHOLD,

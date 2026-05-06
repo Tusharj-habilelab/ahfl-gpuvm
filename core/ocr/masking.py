@@ -22,7 +22,6 @@ import logging
 import cv2
 import numpy as np
 from collections import Counter
-from core.ocr.paddle import create_paddle_ocr
 from core.ocr.ocr_adapter import adapt_paddle_result, get_texts_and_boxes
 
 log = logging.getLogger(__name__)

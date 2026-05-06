@@ -58,6 +58,7 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 MASKING_ENGINE_URL = os.environ.get("MASKING_ENGINE_URL", "http://masking-engine:8001")
 AUTHORIZED_KEYS_PATH = os.environ.get("AUTHORIZED_KEYS_PATH", "config/authorized-keys.txt")
+MAX_FILE_SIZE = int(os.environ.get("MAX_FILE_SIZE", 15 * 1024 * 1024))
 
 
 # ──────────────────────────────────────────────
@@ -119,7 +120,6 @@ async def create_upload_file(
         )
 
     # Forward to masking-engine
-    from core.config import MAX_FILE_SIZE
     file_bytes = await file.read(MAX_FILE_SIZE + 1)
     if len(file_bytes) > MAX_FILE_SIZE:
         log.warning(f"File rejected: size {len(file_bytes)} > {MAX_FILE_SIZE} filename={file.filename}")
