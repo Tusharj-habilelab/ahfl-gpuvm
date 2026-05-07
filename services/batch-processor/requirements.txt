@@ -15,13 +15,17 @@ python-multipart==0.0.9
 pydantic==2.7.0
 
 # ML / Vision — GPU Variants
-paddlepaddle-gpu==3.3.0
+# Installed in Dockerfile from Paddle official cu121 index.
+# Keep commented here to avoid duplicate installs/resolution conflicts.
+# paddlepaddle-gpu==3.3.0
 paddleocr==3.4.0
 ultralytics==8.3.235
 
 # PyTorch + CUDA (for YOLO with GPU acceleration)
-torch==2.1.2+cu121
-torchvision==0.16.2+cu121
+# Installed in Dockerfile from PyTorch cu121 index.
+# Keep commented here to avoid duplicate installs/resolution conflicts.
+# torch==2.1.2+cu121
+# torchvision==0.16.2+cu121
 
 # OpenCV (GPU acceleration optional)
 opencv-python-headless==4.9.0.80
@@ -29,6 +33,7 @@ opencv-python-headless==4.9.0.80
 # Numerical computing
 numpy==1.26.4
 Pillow==10.4.0
+protobuf==3.20.3
 
 # PDF handling
 pdf2image==1.17.0

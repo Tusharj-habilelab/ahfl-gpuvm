@@ -35,10 +35,12 @@ opencv-python-headless==4.9.0.80
 # Numerical computing
 numpy==1.26.4
 Pillow==10.4.0
+protobuf==3.20.3
 
-# ONNX Runtime with GPU support (for inference optimization)
-onnx==1.15.0
-onnxruntime-gpu==1.17.0
+# ONNX Runtime disabled due CUDA/provider conflicts in current stack.
+# Re-enable only if we move inference path to ONNX end-to-end.
+# onnx==1.15.0
+# onnxruntime-gpu==1.17.0
 
 # Optional: TensorRT for YOLO optimization (comment out if not needed)
 # Note: TensorRT requires additional setup - see GPU_DEPLOYMENT_GUIDE.md

@@ -38,20 +38,29 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN pip install --upgrade --no-cache-dir pip setuptools wheel
 
 # PaddlePaddle GPU — cu121 index for CUDA 12.2 host (correct ABI match)
+# Single source install in Dockerfile; keep commented in requirements.txt.
 RUN pip install --no-cache-dir \
     paddlepaddle-gpu==3.3.0 \
     -i https://www.paddlepaddle.org.cn/packages/stable/cu121/
 
 # PyTorch GPU
+# Single source install in Dockerfile; keep commented in requirements.txt.
 RUN pip install --no-cache-dir \
     torch==2.1.2+cu121 \
     torchvision==0.16.2+cu121 \
     --index-url https://download.pytorch.org/whl/cu121
 
 COPY services/batch-processor/requirements.txt .
+# ONNX Runtime / TensorRT intentionally not installed in this image.
 RUN pip install --no-cache-dir \
     -r requirements.txt \
     --extra-index-url https://pypi.org/simple
+
+# Build-time validation: ensure core GPU libs import correctly and report CUDA availability.
+# These checks validate installs but do not fail on missing CUDA at build time.
+RUN python -c "import paddle; print('paddle', getattr(paddle, '__version__', 'unknown'))"
+RUN python -c "import torch; print('torch', getattr(torch, '__version__', 'unknown'), 'cuda_available=' + str(torch.cuda.is_available()))"
+RUN python -c "from paddleocr import PaddleOCR; print('PaddleOCR OK')"
 
 COPY services/batch-processor/ .
 COPY core/ ./core/

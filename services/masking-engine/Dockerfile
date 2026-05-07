@@ -67,14 +67,22 @@ RUN pip install --no-cache-dir \
 # ──────────────────────────────────────────────
 COPY services/masking-engine/requirements.txt .
 
+# Install Torch from the CUDA-specific PyTorch index here (single source).
 RUN pip install --no-cache-dir \
     torch==2.1.2+cu121 \
     torchvision==0.16.2+cu121 \
     --index-url https://download.pytorch.org/whl/cu121
 
+# ONNX Runtime / TensorRT intentionally not installed in this image.
 RUN pip install --no-cache-dir \
     -r requirements.txt \
     --extra-index-url https://pypi.org/simple
+
+# Build-time validation: ensure core GPU libs import correctly and report CUDA availability.
+# These checks validate installs but do not fail on missing CUDA at build time.
+RUN python -c "import paddle; print('paddle', getattr(paddle, '__version__', 'unknown'))"
+RUN python -c "import torch; print('torch', getattr(torch, '__version__', 'unknown'), 'cuda_available=' + str(torch.cuda.is_available()))"
+RUN python -c "from paddleocr import PaddleOCR; print('PaddleOCR OK')"
 
 # ──────────────────────────────────────────────
 # Layer 5: Application code + shared core library
