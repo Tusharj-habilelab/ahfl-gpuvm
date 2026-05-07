@@ -58,7 +58,7 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 MASKING_ENGINE_URL = os.environ.get("MASKING_ENGINE_URL", "http://masking-engine:8001")
 AUTHORIZED_KEYS_PATH = os.environ.get("AUTHORIZED_KEYS_PATH", "config/authorized-keys.txt")
-MAX_FILE_SIZE = int(os.environ.get("MAX_FILE_SIZE", 15 * 1024 * 1024))
+MAX_FILE_SIZE = int(os.environ.get("MAX_FILE_SIZE", 15 * 1024 * 1024))  # mirrors core.config — can't import core here (triggers ML stack)
 
 
 # ──────────────────────────────────────────────

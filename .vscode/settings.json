@@ -1,10 +1,10 @@
 {
     "chat.useClaudeHooks": true,
     "github.copilot.chat.claudeAgent.allowDangerouslySkipPermissions": true,
-    "github.copilot.chat.anthropic.tools.websearch.enabled": true,
-    "chat.agent.allowedNetworkDomains": [
-    "github.com",
-    "pypi.org",
-    "www.paddleocr.ai"
-  ]
+    "github.copilot.chat.anthropic.tools.websearch.enabled": true
+    // "chat.agent.allowedNetworkDomains": [
+    // "github.com",
+    // "pypi.org",
+    // "www.paddleocr.ai"
+  // ]
 }

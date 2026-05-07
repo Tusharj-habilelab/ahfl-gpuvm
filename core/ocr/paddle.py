@@ -158,8 +158,7 @@ def run_ocr_lite_for_routing(image, max_tokens: Optional[int] = None, ocr=None):
                     return texts[:max_tokens]
                 return []
             except Exception as e:
-                log.warning(f"run_ocr_lite_for_routing PaddleOCR failed: {e}")
-                return []
+                log.warning(f"run_ocr_lite_for_routing PaddleOCR failed: {e} — falling back to pytesseract")
 
         try:
             import pytesseract
