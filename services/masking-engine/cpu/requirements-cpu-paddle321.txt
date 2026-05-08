@@ -1,17 +1,14 @@
-# AHFL-Masking 1.1 — Masking Engine CPU Current Stack
+# AHFL-Masking 1.1 — Masking Engine CPU Compatibility Stack
 # Python: 3.10
 # PaddleOCR: 3.4.0
-# PaddlePaddle (CPU): 3.3.0
-# Legacy note kept as comments per team rule:
-# paddlepaddle (CPU) and torch/torchvision are installed separately in Dockerfile.
-# Keep them commented here to avoid duplicate installs/resolution conflicts.
+# PaddlePaddle (CPU): 3.2.1
 #
-#   paddlepaddle==3.3.0          (CPU, PyPI)
-#   torch==2.1.2                 (CPU, PyPI)
-#   torchvision==0.16.2          (CPU, PyPI)
+# Purpose:
+# - Compatibility fallback for Paddle 3.3.0 CPU oneDNN/PIR crash.
+#
 # Single source of truth: keep paddle/torch pins here.
 # For torch CPU wheels, install with:
-#   pip install -r requirements-cpu-current.txt --extra-index-url https://download.pytorch.org/whl/cpu
+#   pip install -r requirements-cpu-paddle321.txt --extra-index-url https://download.pytorch.org/whl/cpu
 
 # FastAPI + Server
 fastapi==0.115.0
@@ -24,16 +21,11 @@ pydantic-settings==2.2.0
 # ML / Vision
 # PaddleOCR (CPU-accelerated via paddlepaddle[cpu])
 paddleocr==3.4.0
-paddlepaddle==3.3.0
-# Legacy commented pins kept for history/reference:
-# paddlepaddle==3.3.0
-#
+paddlepaddle==3.2.1
+
 # PyTorch CPU
 torch==2.1.2+cpu
 torchvision==0.16.2+cpu
-# Legacy commented pins kept for history/reference:
-# torch==2.1.2
-# torchvision==0.16.2
 
 # Ultralytics YOLO (uses PyTorch automatically)
 ultralytics==8.3.235

@@ -4,12 +4,16 @@
 # PaddleOCR: 3.4.0
 # PaddlePaddle (CPU): 3.1.1
 #
+# Legacy note kept as comments per team rule:
 # paddlepaddle (CPU) and torch/torchvision are installed separately in Dockerfile.
 # Keep them commented here to avoid duplicate installs/resolution conflicts.
 #
 #   paddlepaddle==3.1.1          (CPU, PyPI)
 #   torch==2.1.2                 (CPU, PyPI)
 #   torchvision==0.16.2          (CPU, PyPI)
+# Single source of truth: keep paddle/torch pins here.
+# For torch CPU wheels, install with:
+#   pip install -r requirements-cpu-stable.txt --extra-index-url https://download.pytorch.org/whl/cpu
 
 # FastAPI + Server
 fastapi==0.115.0
@@ -22,10 +26,14 @@ pydantic-settings==2.2.0
 # ML / Vision
 # PaddleOCR (CPU-accelerated via paddlepaddle[cpu])
 paddleocr==3.4.0
+paddlepaddle==3.1.1
+# Legacy commented pin kept for history/reference:
 # paddlepaddle==3.1.1
 
-# PyTorch CPU — installed in Dockerfile.
-# Keep commented here to avoid duplicate installs/resolution conflicts.
+# PyTorch CPU
+torch==2.1.2+cpu
+torchvision==0.16.2+cpu
+# Legacy commented pins kept for history/reference:
 # torch==2.1.2
 # torchvision==0.16.2
 

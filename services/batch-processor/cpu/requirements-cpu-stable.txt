@@ -1,26 +1,21 @@
 # AHFL-Masking 1.1 — Batch Processor CPU Stability Stack
 #
-# paddlepaddle (CPU) and torch/torchvision are installed separately in Dockerfile.
-# Keep them commented here to avoid duplicate installs/resolution conflicts.
-#
-#   paddlepaddle==3.1.1          (CPU, PyPI)
-#   torch==2.1.2                 (CPU, PyPI)
-#   torchvision==0.16.2          (CPU, PyPI)
+# Single source of truth: keep paddle/torch pins here.
+# For torch CPU wheels, install with:
+#   pip install -r requirements-cpu-stable.txt --extra-index-url https://download.pytorch.org/whl/cpu
 
 python-dotenv==1.0.1
 python-multipart==0.0.9
 pydantic==2.7.0
 
 # ML / Vision
-# Installed in Dockerfile — keep commented here.
-# paddlepaddle==3.1.1
+paddlepaddle==3.1.1
 paddleocr==3.4.0
 ultralytics==8.3.235
 
-# PyTorch CPU — installed in Dockerfile.
-# Keep commented here to avoid duplicate installs/resolution conflicts.
-# torch==2.1.2
-# torchvision==0.16.2
+# PyTorch CPU
+torch==2.1.2+cpu
+torchvision==0.16.2+cpu
 
 opencv-python-headless==4.9.0.80
 numpy==1.26.4

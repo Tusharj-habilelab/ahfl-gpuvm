@@ -24,18 +24,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN pip install --upgrade --no-cache-dir pip setuptools wheel
 
-# PaddlePaddle CPU — current stack (3.3.0)
-# Single source install in Dockerfile; keep commented in requirements-cpu-current.txt.
-RUN pip install --no-cache-dir paddlepaddle==3.3.0
+# # PaddlePaddle CPU — current stack (3.3.0)
+# # Single source install in Dockerfile; keep commented in requirements-cpu-current.txt.
+# RUN pip install --no-cache-dir paddlepaddle==3.3.0
+# Legacy install block kept as comments per team rule (do not delete lines):
+# RUN pip install --no-cache-dir paddlepaddle==3.3.0
+# RUN pip install --no-cache-dir \
+#     torch==2.1.2 \
+#     torchvision==0.16.2
 
-# PyTorch CPU — single source install in Dockerfile.
-# Keep commented in requirements-cpu-current.txt.
-RUN pip install --no-cache-dir \
-    torch==2.1.2 \
-    torchvision==0.16.2
-
+# Build step note: this is where Docker image build picks the CPU requirements file.
 COPY services/masking-engine/cpu/requirements-cpu-current.txt /app/requirements-cpu.txt
-RUN pip install --no-cache-dir -r /app/requirements-cpu.txt
+# Build step note: install everything from the single requirements file (+ cpu torch index).
+RUN pip install --no-cache-dir \
+    --extra-index-url https://download.pytorch.org/whl/cpu \
+    -r /app/requirements-cpu.txt
 
 COPY services/masking-engine/ /app/
 COPY core/ /app/core/
