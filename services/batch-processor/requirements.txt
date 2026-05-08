@@ -33,7 +33,10 @@ opencv-python-headless==4.9.0.80
 # Numerical computing
 numpy==1.26.4
 Pillow==10.4.0
-protobuf==3.20.3
+## Pin protobuf to avoid ML wheel binary incompatibility.
+# Vendor wheels: paddlepaddle, paddleocr, torch.
+# Do not change without testing native wheel compatibility.
+# protobuf==3.20.3
 
 # PDF handling
 pdf2image==1.17.0
