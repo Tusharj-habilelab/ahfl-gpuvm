@@ -1,0 +1,52 @@
+FROM python:3.10-slim
+
+LABEL service="masking-engine-cpu" version="1.1.0" description="CPU AHFL Masking Engine (current stack)"
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    GPU_ENABLED=false
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    git \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
+    libgl1 \
+    tesseract-ocr \
+    poppler-utils \
+    ca-certificates \
+    && update-ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --upgrade --no-cache-dir pip setuptools wheel
+
+# PaddlePaddle CPU — current stack (3.3.0)
+# Single source install in Dockerfile; keep commented in requirements-cpu-current.txt.
+RUN pip install --no-cache-dir paddlepaddle==3.3.0
+
+# PyTorch CPU — single source install in Dockerfile.
+# Keep commented in requirements-cpu-current.txt.
+RUN pip install --no-cache-dir \
+    torch==2.1.2 \
+    torchvision==0.16.2
+
+COPY services/masking-engine/cpu/requirements-cpu-current.txt /app/requirements-cpu.txt
+RUN pip install --no-cache-dir -r /app/requirements-cpu.txt
+
+COPY services/masking-engine/ /app/
+COPY core/ /app/core/
+
+RUN mkdir -p /app/models/paddleocr/det \
+             /app/models/paddleocr/rec \
+             /app/models/paddleocr/cls \
+             /app/models/paddleocr/doc_orientation
+
+VOLUME ["/app/models", "/app/output"]
+
+EXPOSE 8001
+
+CMD ["uvicorn", "engine:app", "--host", "0.0.0.0", "--port", "8001", "--workers", "1"]

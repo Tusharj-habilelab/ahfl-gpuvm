@@ -1,0 +1,57 @@
+FROM python:3.10-slim
+
+LABEL service="batch-processor-cpu" version="1.1.0" description="CPU AHFL Batch Processor (current stack)"
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    GPU_ENABLED=false
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    git \
+    wget \
+    pkg-config \
+    libopenblas-dev \
+    liblapack-dev \
+    gfortran \
+    libgomp1 \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
+    libgl1 \
+    tesseract-ocr \
+    poppler-utils \
+    ca-certificates \
+    && update-ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --upgrade --no-cache-dir pip setuptools wheel
+
+# PaddlePaddle CPU — current stack (3.3.0)
+# Single source install in Dockerfile; keep commented in requirements-cpu-current.txt.
+RUN pip install --no-cache-dir paddlepaddle==3.3.0
+
+# PyTorch CPU — single source install in Dockerfile.
+# Keep commented in requirements-cpu-current.txt.
+RUN pip install --no-cache-dir \
+    torch==2.1.2 \
+    torchvision==0.16.2
+
+COPY services/batch-processor/cpu/requirements-cpu-current.txt /app/requirements-cpu.txt
+RUN pip install --no-cache-dir -r /app/requirements-cpu.txt
+
+# Build-time validation
+RUN python -c "import paddle; print('paddle', getattr(paddle, '__version__', 'unknown'))"
+RUN python -c "import torch; print('torch', getattr(torch, '__version__', 'unknown'))"
+RUN python -c "from paddleocr import PaddleOCR; print('PaddleOCR OK')"
+
+COPY services/batch-processor/ /app/
+COPY core/ /app/core/
+
+VOLUME ["/app/models"]
+
+ENTRYPOINT ["python", "batch.py"]
+CMD ["--s3"]

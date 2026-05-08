@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+  masking-engine:
+    build:
+      context: .
+      dockerfile: services/masking-engine/cpu/Dockerfile.cpu.current
+    image: ahfl-masking:cpu-current
+    environment:
+      - GPU_ENABLED=false
+      - OUTPUT_FOLDER=/app/output/masked
+      - MODEL_MAIN=/app/models/main.pt
+      - MODEL_BEST=/app/models/best.pt
+      - MODEL_FRONT_BACK=/app/models/front_back_detect.pt
+      - MODEL_YOLO_N=/app/models/yolov8n.pt
+      - MASKING_ENGINE_PORT=8001
+      - PADDLE_MODEL_DIR=/app/models/paddleocr
+      - ORIENTATION_STRONG_THRESHOLD=0.75
+      - ORIENTATION_TARGET_THRESHOLD=0.7
+      - PVC_PERSON_CONFIDENCE_THRESHOLD=0.5
+      - YOLO_MAIN_DILATE_ENABLED=false
+    deploy:
+      resources:
+        reservations:
+          devices: []
+
+  batch-processor:
+    build:
+      context: .
+      dockerfile: services/batch-processor/cpu/Dockerfile.cpu.current
+    image: ahfl-batch:cpu-current
+    environment:
+      - GPU_ENABLED=false
+      - MODEL_MAIN=/app/models/main.pt
+      - MODEL_BEST=/app/models/best.pt
+      - MODEL_FRONT_BACK=/app/models/front_back_detect.pt
+      - MODEL_YOLO_N=/app/models/yolov8n.pt
+      - PADDLE_MODEL_DIR=/app/models/paddleocr
+      - ORIENTATION_STRONG_THRESHOLD=0.75
+      - ORIENTATION_TARGET_THRESHOLD=0.7
+      - PVC_PERSON_CONFIDENCE_THRESHOLD=0.5
+      - YOLO_MAIN_DILATE_ENABLED=false
+    deploy:
+      resources:
+        reservations:
+          devices: []
