@@ -552,7 +552,7 @@ def find_aadhaar_patterns(tokens_list):
                 "type": "number"
             })
 
-        if (aadhar_found or crif_found) and is_twelve_digit_number(word + next_word):
+        if (aadhar_found or crif_found) and i + 1 < n and is_twelve_digit_number(word + next_word):
             s = word + next_word
             if is_valid_aadhaar_number(s):
                 left_coords = tokens_list[i]["coordinates"]
