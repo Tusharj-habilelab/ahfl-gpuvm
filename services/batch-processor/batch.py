@@ -9,7 +9,7 @@ Processes entire folders of documents (PDF / image) for Aadhaar masking,
 logs results to DynamoDB, and writes output files.
 
 Usage:
-    python batch.py --source <folder> --dest <folder> [--dry-run]
+    python batch.py --source <folder> [--dest <folder>] [--dry-run]
 
 Replaces: bulk.py, bulk-script/bulk1.py, bulk-script/bulk2.py (1.0)
 """
@@ -684,16 +684,12 @@ def run_batch(source_dir: str, dest_dir: str, log_to_db: bool = True, dry_run: b
                         continue
                     page_reports = _process_pdf(file_path, dest_file)
                 else:
-                    # Mask in a temp file first — only move to dest on success
-                    tmp_dest = dest_file + ".tmp"
-                    shutil.copy2(file_path, tmp_dest)
-                    try:
+                    # Keep original filename in isolated temp dir, then atomically move to dest
+                    with tempfile.TemporaryDirectory(prefix="mask_", dir=str(Path(dest_file).parent)) as tmpdir:
+                        tmp_dest = str(Path(tmpdir) / Path(dest_file).name)
+                        shutil.copy2(file_path, tmp_dest)
                         report = _process_image(tmp_dest)
                         os.replace(tmp_dest, dest_file)
-                    except Exception:
-                        if os.path.exists(tmp_dest):
-                            os.unlink(tmp_dest)
-                        raise
                     page_reports = {"1": report}
 
                 if table:
@@ -973,7 +969,7 @@ if __name__ == "__main__":
     parser.add_argument("--s3",    action="store_true", help="S3 mode: read from RAW_BUCKET, write to MASKED_BUCKET")
     parser.add_argument("--prefix", default="", help="S3 key prefix to filter (e.g. '301012320/'). Only used with --s3")
     parser.add_argument("--source", default="", help="Source folder (local mode only)")
-    parser.add_argument("--dest",   default="", help="Destination folder (local mode only)")
+    parser.add_argument("--dest",   default="masked_output", help="Destination folder (local mode only). Default: ./masked_output")
     parser.add_argument("--no-db",  action="store_true", help="Disable DB logging")
     parser.add_argument("--dry-run", action="store_true", help="Scan only, do not mask")
     parser.add_argument(
@@ -994,8 +990,8 @@ if __name__ == "__main__":
         torch.cuda.set_per_process_memory_fraction(args.gpu_memory_fraction)
         log.info(f"GPU memory fraction overridden via CLI: {args.gpu_memory_fraction*100:.0f}%")
 
-    if not args.s3 and (not args.source or not args.dest):
-        parser.error("--source and --dest are required in local mode (or use --s3)")
+    if not args.s3 and not args.source:
+        parser.error("--source is required in local mode (or use --s3)")
 
     if not args.no_preload_models and not args.dry_run:
         if args.s3:
