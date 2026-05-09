@@ -33,7 +33,7 @@ from core.ocr.paddle import (
     scale_adapted_ocr_results,
 )
 from core.router import classify_document_lane
-from core.utils.angle_detector import find_best_orientation
+from core.utils.angle_detector import find_best_orientation, rotate_image
 
 log = logging.getLogger(__name__)
 
@@ -352,6 +352,14 @@ def _process_card_like_lane(
     ]
     detected_words = find_aadhaar_patterns(tokens_list)
     image = mask_ocr_detections(image, detected_words, tokens_list)
+
+    # Rotate back to original orientation after all masking is complete.
+    # find_best_orientation returns a rotated image; we must undo the rotation
+    # so the output matches the original input orientation.
+    if best_angle != 0:
+        inverse_angle = {90: 270, 180: 180, 270: 90}.get(best_angle, 0)
+        image = rotate_image(image, inverse_angle)
+        log.info(f"{lane_name} lane: rotated back to original orientation (inverse of {best_angle}°)")
 
     report = {
         **yolo_report,

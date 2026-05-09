@@ -41,7 +41,9 @@ def _get_classifier():
         with _model_lock:
             if _model is None:
                 model_path = os.environ.get("MODEL_FRONT_BACK", "models/front_back_detect.pt")
+                log.info(f"Loading front/back classifier from {model_path} on {_DEVICE}")
                 _model = YOLO(model_path).to(_DEVICE)
+                log.info("\u2713 front/back classifier loaded")
     return _model
 
 
@@ -52,7 +54,9 @@ def _get_person_model():
         with _person_model_lock:
             if _person_model is None:
                 model_path = os.environ.get("MODEL_YOLO_N", "models/yolov8n.pt")
+                log.info(f"Loading person detector (yolov8n) from {model_path} on {_DEVICE}")
                 _person_model = YOLO(model_path).to(_DEVICE)
+                log.info("\u2713 person detector loaded")
     return _person_model
 
 

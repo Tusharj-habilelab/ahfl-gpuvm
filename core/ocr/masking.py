@@ -126,6 +126,10 @@ def compute_digit_mask_region(
         (x1, y1, x2_mask, y2_mask) — the region to black out.
     """
     x1, y1, x2, y2 = [int(c) for c in box]
+    # Shift mask window by 3px left to catch the first digit fully, and trim
+    # 3px from the right edge to keep net mask width stable.
+    x1 = max(0, x1 - 3)
+    x2 = max(x1 + 1, x2 - 3)
     w = x2 - x1
     h = y2 - y1
     fraction = mask_digits / total_digits
@@ -380,6 +384,8 @@ def _ocr_verify_and_mask_number(image, box, label, ocr, stats=None):
     if x2 <= x1 or y2 <= y1:
         return image, False
 
+    log.info(f"OCR verify: label={label} box=[{x1},{y1},{x2},{y2}]")
+
     cropped = image[y1:y2, x1:x2]
     if label.lower() == 'number_anticlockwise':
         cropped = cv2.rotate(cropped, cv2.ROTATE_180)
@@ -392,6 +398,7 @@ def _ocr_verify_and_mask_number(image, box, label, ocr, stats=None):
         ocr_result = ocr.ocr(cropped)
         adapted = adapt_paddle_result(ocr_result)
         if not adapted:
+            log.info("OCR verify: no adapted result — fallback to proportional mask")
             return image, False
 
         texts, _, _ = get_texts_and_boxes(adapted)
@@ -399,27 +406,47 @@ def _ocr_verify_and_mask_number(image, box, label, ocr, stats=None):
 
         # Extract digits only
         digits = re.sub(r'[^0-9]', '', all_text)
+        log.info(f"OCR verify: read digits={len(digits)} text='{all_text[:40]}'")
 
         if len(digits) != 12 or not is_valid_aadhaar_number(digits):
+            log.info(f"OCR verify: invalid Aadhaar (digits={len(digits)}) — fallback to proportional mask")
             return image, False
 
-        # Valid 12-digit Aadhaar found via OCR — mask first 8 digits
-        # Use proportional masking: 8/12 of the bbox width/height
+        # Valid 12-digit Aadhaar found via OCR — mask first 8 digits.
+        # Use character-position-based fraction to handle spaces in "XXXX XXXX XXXX"
+        # so we mask exactly up to digit 8 without overshooting into digit 9.
+        char_idx = 0
+        digit_count = 0
+        for ch in all_text:
+            char_idx += 1
+            if ch.isdigit():
+                digit_count += 1
+            if digit_count == 8:
+                break
+        mask_fraction = char_idx / len(all_text) if all_text else (8 / 12)
+
         color = (0, 0, 0)
-        mask_region = compute_digit_mask_region(box, mask_digits=8, total_digits=12)
-        cv2.rectangle(
-            image,
-            (mask_region[0], mask_region[1]),
-            (mask_region[2], mask_region[3]),
-            color, -1
-        )
+        # Shift mask window by 3px left and trim 3px on right to keep net width stable.
+        x1_mask = max(0, x1 - 3)
+        x2_mask_bound = max(x1_mask + 1, x2 - 3)
+        w = x2_mask_bound - x1_mask
+        h = y2 - y1
+        if w > h:
+            x2_mask = int(x1_mask + mask_fraction * w)
+            cv2.rectangle(image, (x1_mask, y1), (x2_mask, y2), color, -1)
+        else:
+            y2_mask = int(y1 + mask_fraction * h)
+            cv2.rectangle(image, (x1_mask, y1), (x2_mask_bound, y2_mask), color, -1)
+
+        log.info(f"OCR verify: masked first 8 digits (char-fraction={mask_fraction:.3f})")
 
         if stats is not None:
             stats["ocr_verified_masks"] = stats.get("ocr_verified_masks", 0) + 1
 
         return image, True
 
-    except Exception:
+    except Exception as e:
+        log.info(f"OCR verify: exception '{e}' — fallback to proportional mask")
         return image, False
 
 
@@ -452,6 +479,7 @@ def mask_yolo_detections(image, merged_detections, debug=False, stats=None, ocr=
         conf = det["conf"]
         if debug:
             log.debug(f"[{det['model']}] {det['label']} conf={conf:.3f} box=[{x1},{y1},{x2},{y2}]")
+        log.info(f"YOLO det: [{det['model']}] {det['label']} conf={conf:.2f} box=[{x1},{y1},{x2},{y2}]")
         if "qr" in label and conf > 0.3:
             report_data["is_qr"] += 1
             if "masked" not in label:
@@ -459,10 +487,11 @@ def mask_yolo_detections(image, merged_detections, debug=False, stats=None, ocr=
                 if aadhaar_boxes and is_inside_aadhaar_by_area(det["box"], aadhaar_boxes):
                     cv2.rectangle(image, (x1, y1), (x2, y2), color, -1)
                     report_data["is_qr_masked"] += 1
+                    log.info(f"QR masked: box=[{x1},{y1},{x2},{y2}]")
                 elif not aadhaar_boxes:
-                    log.debug(f"QR skipped (no Aadhaar bbox): box=[{x1},{y1},{x2},{y2}]")
+                    log.info(f"QR skipped (no Aadhaar bbox): box=[{x1},{y1},{x2},{y2}]")
                 else:
-                    log.debug(f"QR skipped (outside Aadhaar bbox): box=[{x1},{y1},{x2},{y2}]")
+                    log.info(f"QR skipped (outside Aadhaar bbox): box=[{x1},{y1},{x2},{y2}]")
         elif "number" in label and conf > 0.3:
             report_data["is_number"] += 1
             if "masked" not in label and "xx" not in label:
@@ -471,12 +500,12 @@ def mask_yolo_detections(image, merged_detections, debug=False, stats=None, ocr=
                 except Exception:
                     already_masked = False
                 if not already_masked:
-                    # Primary: OCR-verified digit masking
+                    # Primary: OCR-verified digit masking (char-position-aware fraction)
                     image, ocr_success = _ocr_verify_and_mask_number(
                         image, det["box"], det["label"], ocr, stats=stats
                     )
                     if not ocr_success:
-                        # Fallback: proportional width masking (8/12)
+                        # Fallback: proportional width masking (8/12, with 3px left-edge padding)
                         mask_region = compute_digit_mask_region(det["box"])
                         cv2.rectangle(
                             image,
@@ -484,8 +513,10 @@ def mask_yolo_detections(image, merged_detections, debug=False, stats=None, ocr=
                             (mask_region[2], mask_region[3]),
                             color, -1
                         )
+                        log.info(f"number mask: proportional-fallback label={det['label']} region={mask_region}")
                     report_data["is_number_masked"] += 1
                 else:
+                    log.info(f"number already masked (x/y/k detected): box=[{x1},{y1},{x2},{y2}]")
                     report_data["is_xx"] += 1
         elif "xx" in label:
             report_data["is_xx"] += 1

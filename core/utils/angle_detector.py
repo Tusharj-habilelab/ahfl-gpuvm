@@ -116,6 +116,7 @@ def find_best_orientation(
     scored_cache: Dict[int, Tuple[np.ndarray, float, Dict[str, Any]]] = {0: (image, score_0, data_0)}
 
     hint_angle = _get_doc_orientation_hint(image)
+    log.info(f"Orientation: doc hint={hint_angle}°")
     if hint_angle != 0 and hint_angle in ORIENTATION_ANGLES:
         hint_rotated = _rotate_by_angle(image, hint_angle)
         hint_score, hint_data = score_fn(hint_rotated)
@@ -140,6 +141,13 @@ def find_best_orientation(
         else:
             rotated = _rotate_by_angle(image, angle)
             score, data = score_fn(rotated)
+
+        log.info(
+            f"Orientation: angle={angle}° score={score:.4f} "
+            f"aadhaar_conf={data.get('max_aadhaar_conf', 0):.3f} "
+            f"number_conf={data.get('best_number_conf', 0):.3f} "
+            f"qr_conf={data.get('best_qr_conf', 0):.3f}"
+        )
 
         if _check_composite_early_exit(data):
             log.info(
