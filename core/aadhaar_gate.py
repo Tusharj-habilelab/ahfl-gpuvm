@@ -26,6 +26,7 @@ import logging
 from typing import Any, Dict, List, Tuple
 
 import numpy as np
+import torch
 
 from core.config import GPU_ENABLED, YOLO_MAIN_DILATE_ENABLED
 from core.models.yolo_runner import get_yolo_main, get_yolo_best
@@ -37,6 +38,7 @@ from core.spatial import (
 )
 
 log = logging.getLogger(__name__)
+_USE_HALF = bool(GPU_ENABLED and torch.cuda.is_available())
 
 
 def _preprocess_greyscale(image: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
@@ -87,7 +89,7 @@ def _process_single_aadhaar_crop(
     crop_box = [x1, y1, x2, y2]
 
     yolo_best = get_yolo_best()
-    results_best = yolo_best(crop, half=GPU_ENABLED)[0]
+    results_best = yolo_best(crop, half=_USE_HALF)[0]
     dets_best_crop = yolo_results_to_detections(results_best, model_name="best")
     del results_best
     log.debug(f"Gate crop [{x1},{y1},{x2},{y2}]: best.pt={len(dets_best_crop)} dets")
@@ -138,7 +140,7 @@ def run_full_gate_scoring(
     # Step 2: Run main.pt on preprocessed greyscale — convert to BGR (main.pt expects 3-channel)
     yolo_main = get_yolo_main()
     preprocessed_bgr = cv2.cvtColor(preprocessed, cv2.COLOR_GRAY2BGR)
-    results_main = yolo_main(preprocessed_bgr, half=GPU_ENABLED)[0]
+    results_main = yolo_main(preprocessed_bgr, half=_USE_HALF)[0]
     main_dets = yolo_results_to_detections(results_main, model_name="main")
     del results_main
     del preprocessed_bgr
@@ -219,7 +221,7 @@ def run_full_gate_scoring(
     else:
         # No Aadhaar cards — fallback: best.pt on full image (RGB)
         yolo_best = get_yolo_best()
-        results_best = yolo_best(image, half=GPU_ENABLED)[0]
+        results_best = yolo_best(image, half=_USE_HALF)[0]
         dets_best = yolo_results_to_detections(results_best, model_name="best")
         del results_best
         all_merged = merge_detections(filtered_dets, dets_best)
