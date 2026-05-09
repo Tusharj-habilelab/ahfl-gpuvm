@@ -367,6 +367,64 @@ def check_image_text(image, coordinates, label, stats=None, ocr=None):
     return 'x' in text.lower() or 'y' in text.lower() or 'k' in text.lower()
 
 
+def _first_8_digit_region_from_ocr_tokens(texts, boxes, crop_w, crop_h, rotated_180=False):
+    """
+    Derive the exact mask span for the first 8 digits from OCR token bboxes.
+
+    Notes:
+    - Uses OCR token coordinates (not char-count fraction).
+    - Approximates per-digit centers inside each token bbox by character index.
+    - Supports the Number_anticlockwise path by mapping rotated OCR coords
+      back to the original crop coordinate system.
+    """
+    horizontal = crop_w > crop_h
+    digit_points = []
+
+    for text, box in zip(texts, boxes):
+        token = str(text or "")
+        if not token or not box:
+            continue
+
+        xs = [p[0] for p in box]
+        ys = [p[1] for p in box]
+        if not xs or not ys:
+            continue
+
+        axis_min = float(min(xs) if horizontal else min(ys))
+        axis_max = float(max(xs) if horizontal else max(ys))
+        token_len = max(1, len(token))
+        axis_span = max(1.0, axis_max - axis_min)
+        per_char_span = axis_span / token_len
+
+        for idx, ch in enumerate(token):
+            if not ch.isdigit():
+                continue
+
+            # Center of this character along the main text axis.
+            pos = axis_min + ((idx + 0.5) / token_len) * axis_span
+            span = per_char_span
+
+            if rotated_180:
+                if horizontal:
+                    pos = crop_w - pos
+                else:
+                    pos = crop_h - pos
+
+            digit_points.append((pos, span))
+            if len(digit_points) == 8:
+                break
+
+        if len(digit_points) == 8:
+            break
+
+    if len(digit_points) < 8:
+        return None
+
+    starts = [p - (s / 2.0) for p, s in digit_points]
+    ends = [p + (s / 2.0) for p, s in digit_points]
+    return (min(starts), max(ends), horizontal)
+
+
 def _ocr_verify_and_mask_number(image, box, label, ocr, stats=None):
     """
     Try to read digits from a YOLO number bbox via OCR and mask first 8 precisely.
@@ -401,7 +459,7 @@ def _ocr_verify_and_mask_number(image, box, label, ocr, stats=None):
             log.info("OCR verify: no adapted result — fallback to proportional mask")
             return image, False
 
-        texts, _, _ = get_texts_and_boxes(adapted)
+        texts, boxes, _ = get_texts_and_boxes(adapted)
         all_text = ' '.join(texts)
 
         # Extract digits only
@@ -412,33 +470,57 @@ def _ocr_verify_and_mask_number(image, box, label, ocr, stats=None):
             log.info(f"OCR verify: invalid Aadhaar (digits={len(digits)}) — fallback to proportional mask")
             return image, False
 
-        # Valid 12-digit Aadhaar found via OCR — mask first 8 digits.
-        # Use character-position-based fraction to handle spaces in "XXXX XXXX XXXX"
-        # so we mask exactly up to digit 8 without overshooting into digit 9.
-        char_idx = 0
-        digit_count = 0
-        for ch in all_text:
-            char_idx += 1
-            if ch.isdigit():
-                digit_count += 1
-            if digit_count == 8:
-                break
-        mask_fraction = char_idx / len(all_text) if all_text else (8 / 12)
-
         color = (0, 0, 0)
-        # Shift mask window by 3px left and trim 3px on right to keep net width stable.
-        x1_mask = max(0, x1 - 3)
-        x2_mask_bound = max(x1_mask + 1, x2 - 3)
-        w = x2_mask_bound - x1_mask
-        h = y2 - y1
-        if w > h:
-            x2_mask = int(x1_mask + mask_fraction * w)
-            cv2.rectangle(image, (x1_mask, y1), (x2_mask, y2), color, -1)
-        else:
-            y2_mask = int(y1 + mask_fraction * h)
-            cv2.rectangle(image, (x1_mask, y1), (x2_mask_bound, y2_mask), color, -1)
 
-        log.info(f"OCR verify: masked first 8 digits (char-fraction={mask_fraction:.3f})")
+        # Primary: OCR token-bbox based span for first 8 digits.
+        # This avoids char-count fraction drift and reduces 9th-digit bleed.
+        rotated_180 = (label.lower() == 'number_anticlockwise')
+        bbox_region = _first_8_digit_region_from_ocr_tokens(
+            texts,
+            boxes,
+            crop_w=cropped.shape[1],
+            crop_h=cropped.shape[0],
+            rotated_180=rotated_180,
+        )
+
+        # Keep existing left-padding rule to catch partially exposed first digit.
+        if bbox_region is not None:
+            span_start, span_end, horizontal = bbox_region
+            if horizontal:
+                x1_mask = max(0, int(x1 + span_start) - 3)
+                x2_mask = min(w_img, int(x1 + span_end))
+                x2_mask = max(x1_mask + 1, x2_mask)
+                cv2.rectangle(image, (x1_mask, y1), (x2_mask, y2), color, -1)
+                log.info(
+                    f"OCR verify: bbox-mask horizontal yolo=[{x1},{y1},{x2},{y2}] "
+                    f"ocr_span=({span_start:.1f},{span_end:.1f}) abs=({x1_mask},{x2_mask})"
+                )
+            else:
+                y1_mask = max(0, int(y1 + span_start) - 3)
+                y2_mask = min(h_img, int(y1 + span_end))
+                y2_mask = max(y1_mask + 1, y2_mask)
+                x1_mask = max(0, x1 - 3)
+                x2_mask_bound = min(w_img, x2)
+                cv2.rectangle(image, (x1_mask, y1_mask), (x2_mask_bound, y2_mask), color, -1)
+                log.info(
+                    f"OCR verify: bbox-mask vertical yolo=[{x1},{y1},{x2},{y2}] "
+                    f"ocr_span=({span_start:.1f},{span_end:.1f}) abs=({y1_mask},{y2_mask})"
+                )
+        else:
+            # Fallback retained: proportional mask when OCR token geometry is insufficient.
+            # NOTE: kept for resilience on low-quality scans.
+            mask_region = compute_digit_mask_region([x1, y1, x2, y2])
+            cv2.rectangle(
+                image,
+                (mask_region[0], mask_region[1]),
+                (mask_region[2], mask_region[3]),
+                color,
+                -1,
+            )
+            log.info(
+                f"OCR verify: bbox-mask unavailable -> proportional fallback region={mask_region} "
+                f"token_count={len(texts)}"
+            )
 
         if stats is not None:
             stats["ocr_verified_masks"] = stats.get("ocr_verified_masks", 0) + 1

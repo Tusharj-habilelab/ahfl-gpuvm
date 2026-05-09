@@ -17,10 +17,11 @@ import os
 import hmac
 import logging
 import mimetypes
+import time
 from pathlib import Path
 
 import httpx
-from fastapi import FastAPI, UploadFile, File, Header, HTTPException
+from fastapi import FastAPI, UploadFile, File, Header, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from dotenv import load_dotenv
@@ -86,6 +87,15 @@ def _validate_api_key(api_key: str) -> None:
         raise HTTPException(status_code=403, detail="Invalid API Key.")
 
 
+def _mask_api_key(api_key: str) -> str:
+    """Return masked API key for logs (never log full key)."""
+    if not api_key:
+        return ""
+    if len(api_key) <= 6:
+        return "***"
+    return f"{api_key[:4]}***{api_key[-2:]}"
+
+
 # ──────────────────────────────────────────────
 # Endpoints
 # ──────────────────────────────────────────────
@@ -97,6 +107,7 @@ async def health():
 
 @app.post("/aadhaar-masking")
 async def create_upload_file(
+    request: Request,
     file: UploadFile = File(...),
     apiKey: str = Header(None),
 ):
@@ -109,6 +120,12 @@ async def create_upload_file(
     - Returns the masking report and a download URL.
     """
     _validate_api_key(apiKey)
+    # NOTE: Request-context log for audit/debug with masked key only.
+    client_ip = request.client.host if request.client else "unknown"
+    log.info(
+        f"Request start: route=/aadhaar-masking client_ip={client_ip} "
+        f"apiKey={_mask_api_key(apiKey)} filename={file.filename}"
+    )
 
     allowed_ext = {"pdf", "jpg", "jpeg", "png"}
     ext = file.filename.rsplit(".", 1)[-1].lower() if "." in file.filename else ""
@@ -126,6 +143,7 @@ async def create_upload_file(
         raise HTTPException(status_code=413, detail=f"File exceeds {MAX_FILE_SIZE // (1024*1024)} MB limit.")
 
     log.info(f"Forwarding to masking-engine: filename={file.filename} size={len(file_bytes)}")
+    proxy_start = time.perf_counter()
     async with httpx.AsyncClient(timeout=300) as client:
         try:
             response = await client.post(
@@ -135,6 +153,10 @@ async def create_upload_file(
         except httpx.ConnectError:
             log.error(f"Masking engine unavailable: {MASKING_ENGINE_URL}")
             raise HTTPException(status_code=503, detail="Masking engine unavailable.")
+
+    proxy_ms = (time.perf_counter() - proxy_start) * 1000.0
+    # NOTE: Proxy latency log for gateway -> masking-engine call.
+    log.info(f"Proxy complete: status={response.status_code} latency_ms={proxy_ms:.1f} filename={file.filename}")
 
     engine_data = response.json()
 

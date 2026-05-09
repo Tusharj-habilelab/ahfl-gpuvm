@@ -75,6 +75,26 @@ logging.basicConfig(
 )
 log = logging.getLogger("batch-processor")
 
+
+def _enable_file_logging(log_file_path: str) -> None:
+    """Attach file logger so every run persists diagnostics to disk."""
+    if not log_file_path:
+        return
+
+    root_logger = logging.getLogger()
+    abs_path = os.path.abspath(log_file_path)
+
+    # Avoid duplicate handlers if called more than once in the same process.
+    for handler in root_logger.handlers:
+        if isinstance(handler, logging.FileHandler) and getattr(handler, "baseFilename", None) == abs_path:
+            return
+
+    file_handler = logging.FileHandler(abs_path, mode="a", encoding="utf-8")
+    file_handler.setLevel(logging.INFO)
+    file_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(message)s", "%Y-%m-%d %H:%M:%S"))
+    root_logger.addHandler(file_handler)
+    log.info(f"File logging enabled: {abs_path}")
+
 # ──────────────────────────────────────────────
 # Config
 # ──────────────────────────────────────────────
@@ -973,6 +993,11 @@ if __name__ == "__main__":
     parser.add_argument("--no-db",  action="store_true", help="Disable DB logging")
     parser.add_argument("--dry-run", action="store_true", help="Scan only, do not mask")
     parser.add_argument(
+        "--log-file",
+        default="batch_run_v2.log",
+        help="Persist run logs to this file. Default: ./batch_run_v2.log",
+    )
+    parser.add_argument(
         "--no-preload-models",
         action="store_true",
         help="Skip explicit model warm-up before batch processing starts",
@@ -984,6 +1009,9 @@ if __name__ == "__main__":
         help="GPU memory fraction (0.0-1.0). Overrides TORCH_CUDA_MAX_MEMORY_FRAC env var.",
     )
     args = parser.parse_args()
+
+    # Always persist logs unless explicitly set to empty string.
+    _enable_file_logging(args.log_file)
 
     # Apply CLI GPU memory fraction override
     if args.gpu_memory_fraction is not None and CUDA_AVAILABLE:

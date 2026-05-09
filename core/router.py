@@ -229,6 +229,13 @@ def classify_document_lane(
         reasoning = f'Mixed signals - card: {card_matches}, form: {form_matches}'
     
     # Apply confidence threshold
+    # NOTE: Boundary logging helps diagnose close-call routing behavior.
+    if lane != 'uncertain' and abs(confidence - confidence_threshold) <= 0.05:
+        log.info(
+            "Router threshold edge: "
+            f"lane={lane} confidence={confidence:.2f} threshold={confidence_threshold:.2f}"
+        )
+
     if confidence < confidence_threshold and lane != 'uncertain':
         original_lane = lane
         lane = 'uncertain'

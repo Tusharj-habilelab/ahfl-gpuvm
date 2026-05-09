@@ -58,15 +58,21 @@ def _correct_doc_orientation(image: np.ndarray) -> Tuple[np.ndarray, bool]:
         model = get_doc_orientation_model()
         result = model.predict(image)[0]
         angle = int(result.json["res"]["label_names"][0])
+        # NOTE: Log model-predicted orientation angle to make correction decisions explicit.
+        log.info(f"doc_orientation: predicted_angle={angle}°")
         if angle == 90:
+            log.info("doc_orientation: applied ROTATE_90_COUNTERCLOCKWISE")
             return cv2.rotate(image, cv2.ROTATE_90_COUNTERCLOCKWISE), False
         if angle == 180:
+            log.info("doc_orientation: applied ROTATE_180")
             return cv2.rotate(image, cv2.ROTATE_180), False
         if angle == 270:
+            log.info("doc_orientation: applied ROTATE_90_CLOCKWISE")
             return cv2.rotate(image, cv2.ROTATE_90_CLOCKWISE), False
     except Exception as e:
         log.warning(f"doc_orientation correction failed: {e}")
         return image, True
+    log.info("doc_orientation: no rotation needed (0°)")
     return image, False
 
 
@@ -179,6 +185,17 @@ def _derive_yolo_report_from_dets(merged_dets: list) -> Dict[str, int]:
         elif "xx" in label:
             report["is_xx"] += 1
     return report
+
+
+def _summarize_detection_labels(dets: list) -> Dict[str, int]:
+    """Summarize merged detection labels before masking for observability."""
+    counts: Dict[str, int] = {}
+    for det in dets or []:
+        label = str(det.get("label", "")).lower()
+        if not label:
+            continue
+        counts[label] = counts.get(label, 0) + 1
+    return counts
 
 
 def _run_ocr_for_card_path(image: np.ndarray, ocr, gate_result: Dict[str, Any]) -> Tuple[np.ndarray, list, list, list, bool, bool, list]:
@@ -302,6 +319,12 @@ def _process_card_like_lane(
     stats["ocr_seconds"] = time.perf_counter() - t0
 
     aadhaar_confirmed = bool(aadhaar_crops) and is_aadhaar_card_confirmed(all_texts)
+    # NOTE: Explicit verification outcome log for Aadhaar card confirmation.
+    log.info(
+        f"{lane_name} lane: aadhaar_verification="
+        f"{'confirmed' if aadhaar_confirmed else 'rejected'} "
+        f"(crops={len(aadhaar_crops)} tokens={len(all_texts)})"
+    )
     checks = _verify_skip_pan(
         all_texts,
         skip_keywords_enabled=skip_keywords_enabled,
@@ -336,6 +359,10 @@ def _process_card_like_lane(
     pvc_stats = {"pvc_cards_processed": 0, "pvc_cards_masked": 0}
     if aadhaar_crops:
         image, pvc_stats = mask_pvc_aadhaar(image, aadhaar_crops)
+
+    # NOTE: Log detection counts by label before masking begins.
+    det_label_counts = _summarize_detection_labels(gate_result.get("merged_dets", []))
+    log.info(f"{lane_name} lane: pre-mask detection counts={det_label_counts}")
 
     image, yolo_report = mask_yolo_detections(
         image,

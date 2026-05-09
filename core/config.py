@@ -141,6 +141,31 @@ LOG_FORMAT = "%(asctime)s [%(levelname)s] %(name)s — %(message)s"
 LOG_DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 
 
+_CONFIG_LOGGED = False
+
+
+def _log_runtime_config_snapshot(logger: logging.Logger) -> None:
+    """Log sanitized config snapshot once per process for startup debugging."""
+    global _CONFIG_LOGGED
+    if _CONFIG_LOGGED:
+        return
+
+    # NOTE: This is intentionally sanitized. We log only non-secret operational config.
+    logger.info(
+        "Config snapshot: "
+        f"GPU_ENABLED={GPU_ENABLED} "
+        f"PADDLE_MODEL_DIR={PADDLE_MODEL_DIR} "
+        f"MODEL_MAIN={MODEL_MAIN} "
+        f"MODEL_BEST={MODEL_BEST} "
+        f"MODEL_FRONT_BACK={MODEL_FRONT_BACK} "
+        f"MODEL_YOLO_N={MODEL_YOLO_N} "
+        f"TABLE_NAME={TABLE_NAME} "
+        f"RAW_BUCKET={os.environ.get('RAW_BUCKET', '')} "
+        f"MASKED_BUCKET={os.environ.get('MASKED_BUCKET', '')}"
+    )
+    _CONFIG_LOGGED = True
+
+
 def validate_required_env_vars() -> None:
     """Raise RuntimeError if required env vars are missing at startup."""
     required = ["TABLE_NAME", "AWS_REGION", "RAW_BUCKET", "MASKED_BUCKET"]
@@ -167,4 +192,7 @@ def setup_logging(service_name: str) -> logging.Logger:
         format=LOG_FORMAT,
         datefmt=LOG_DATE_FORMAT,
     )
-    return logging.getLogger(service_name)
+    logger = logging.getLogger(service_name)
+    # NOTE: Emit one-time config snapshot after logger setup for startup observability.
+    _log_runtime_config_snapshot(logger)
+    return logger

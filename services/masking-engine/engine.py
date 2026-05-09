@@ -27,6 +27,7 @@ import tempfile
 import gc
 import logging
 import signal
+import time
 from pathlib import Path
 from typing import Dict, Any
 
@@ -341,6 +342,10 @@ async def mask_file(file: UploadFile = File(...)):
     Accepts: PDF, JPG, JPEG, PNG (max configured in core.config.MAX_FILE_SIZE)
     Returns: JSON with masking report + output filename
     """
+    # NOTE: Correlation id ties request lifecycle and failures in logs.
+    correlation_id = str(uuid.uuid4())
+    started_at = time.perf_counter()
+
     ext = Path(file.filename).suffix.lower().lstrip(".")
     if ext not in ("pdf", "jpg", "jpeg", "png"):
         raise HTTPException(status_code=422, detail=f"Unsupported file type: .{ext}")
@@ -353,6 +358,11 @@ async def mask_file(file: UploadFile = File(...)):
             status_code=413,
             detail=f"File size {content_length / 1e6:.1f}MB exceeds limit {MAX_FILE_SIZE / 1e6:.1f}MB"
         )
+
+    logger.info(
+        f"mask request start: cid={correlation_id} filename={file.filename} "
+        f"ext={ext} bytes={content_length}"
+    )
 
     file_id = str(uuid.uuid4())
     output_filename = f"{file_id}.{ext}"
@@ -377,6 +387,12 @@ async def mask_file(file: UploadFile = File(...)):
             for p in page_reports.values()
         )
 
+        duration_ms = (time.perf_counter() - started_at) * 1000.0
+        logger.info(
+            f"mask request done: cid={correlation_id} status=200 "
+            f"pages={total_pages} masked_pages={total_masked} duration_ms={duration_ms:.1f}"
+        )
+
         return JSONResponse({
             "status": 200,
             "message": "File processed successfully.",
@@ -388,6 +404,12 @@ async def mask_file(file: UploadFile = File(...)):
 
     except Exception as e:
         output_path.unlink(missing_ok=True)
+        duration_ms = (time.perf_counter() - started_at) * 1000.0
+        logger.error(
+            f"mask request failed: cid={correlation_id} duration_ms={duration_ms:.1f} "
+            f"error={type(e).__name__}: {e}",
+            exc_info=True,
+        )
         logger.error("Mask endpoint failed: %s: %s", type(e).__name__, e, exc_info=True)
         raise HTTPException(status_code=500, detail=f"{type(e).__name__}: {str(e)}")
 

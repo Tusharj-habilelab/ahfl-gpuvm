@@ -41,6 +41,17 @@ log = logging.getLogger(__name__)
 _USE_HALF = bool(GPU_ENABLED and torch.cuda.is_available())
 
 
+def _count_labels(dets: List[dict]) -> Dict[str, int]:
+    """Count detections by label for compact gate-stage logging."""
+    counts: Dict[str, int] = {}
+    for det in dets or []:
+        label = str(det.get("label", "")).lower()
+        if not label:
+            continue
+        counts[label] = counts.get(label, 0) + 1
+    return counts
+
+
 def _preprocess_greyscale(image: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     """
     Convert BGR image to greyscale and optionally dilated greyscale. Done ONCE per angle.
@@ -144,6 +155,8 @@ def run_full_gate_scoring(
     main_dets = yolo_results_to_detections(results_main, model_name="main")
     del results_main
     del preprocessed_bgr
+    # NOTE: This exposes model output composition before fb filtering.
+    log.info(f"Gate: main label counts={_count_labels(main_dets)}")
 
     # Step 3: Run front_back_detect.pt filter (reuses grey — no duplicate cvtColor)
     coordinates = [d["box"] for d in main_dets]
@@ -164,6 +177,8 @@ def run_full_gate_scoring(
         for c, l, cf, meta in zip(f_coords, f_labels, f_confs, f_metadata)
     ]
     log.info(f"Gate: main.pt={len(main_dets)} dets → fb_filtered={len(filtered_dets)}")
+    # NOTE: This exposes post-filter composition used by scoring/orientation.
+    log.info(f"Gate: fb-filtered label counts={_count_labels(filtered_dets)}")
     del grey, preprocessed  # free full-resolution arrays (called up to 8× in orientation loop)
 
     # Compute score from confirmed Aadhaar detections

@@ -8,13 +8,37 @@ services so we do not end up debugging different OCR behaviors in each path.
 import os
 import logging
 import threading
+from pathlib import Path
 
 import cv2
 from typing import Optional
 from paddleocr import PaddleOCR, DocImgOrientationClassification
-from core.config import PADDLE_OCR_MAX_SIDE, ROUTER_OCR_LITE_MAX_SIDE, ROUTER_OCR_LITE_MAX_TOKENS
+from core.config import PADDLE_MODEL_DIR, PADDLE_OCR_MAX_SIDE, ROUTER_OCR_LITE_MAX_SIDE, ROUTER_OCR_LITE_MAX_TOKENS
 
 log = logging.getLogger(__name__)
+
+
+def _log_paddle_cache_resolution() -> None:
+    """Log resolved Paddle cache/model path details (including symlink targets)."""
+    # NOTE: Keep this explicit because cache-path confusion caused debugging overhead before.
+    env_model_dir = str(PADDLE_MODEL_DIR)
+    expanded_model_dir = str(Path(env_model_dir).expanduser())
+    default_cache_dir = Path("~/.paddlex").expanduser()
+    cache_symlink_target = ""
+    if default_cache_dir.is_symlink():
+        try:
+            cache_symlink_target = str(default_cache_dir.resolve())
+        except Exception:
+            cache_symlink_target = "<unresolved>"
+
+    log.info(
+        "PaddleOCR cache/model paths: "
+        f"PADDLE_MODEL_DIR={env_model_dir} "
+        f"expanded={expanded_model_dir} "
+        f"default_cache={default_cache_dir} "
+        f"default_cache_symlink={default_cache_dir.is_symlink()} "
+        f"default_cache_target={cache_symlink_target}"
+    )
 
 
 def _env_int(name: str, default: int) -> int:
@@ -47,7 +71,11 @@ def create_paddle_ocr() -> PaddleOCR:
     Models cached to /root/.paddlex/official_models/ (volume-mounted, downloaded once on first run).
     """
     device = _get_paddle_device()
+    # NOTE: Log cache/model resolution before initialization to diagnose model-source/path issues.
+    _log_paddle_cache_resolution()
     log.info(f"PaddleOCR: initializing (lang=en, use_textline_orientation=True, device={device})")
+    # NOTE: Paddle downloads internally on first run; this log marks potential cold start.
+    log.info("PaddleOCR: init start (if cache missing, model download may occur)")
     ocr = PaddleOCR(
         lang="en",
         use_textline_orientation=True,
@@ -154,7 +182,8 @@ def run_ocr_lite_for_routing(image, max_tokens: Optional[int] = None, ocr=None):
                 if results and results[0]:
                     adapted = adapt_paddle_result(results)
                     texts, _, _ = get_texts_and_boxes(adapted)
-                    log.debug(f"run_ocr_lite_for_routing: PaddleOCR tokens={len(texts)}")
+                    # NOTE: INFO level by request so lane-routing evidence is visible in normal runs.
+                    log.info(f"run_ocr_lite_for_routing: tokens={len(texts)}")
                     return texts[:max_tokens]
                 return []
             except Exception as e:
