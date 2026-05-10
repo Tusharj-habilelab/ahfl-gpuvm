@@ -372,7 +372,9 @@ def _process_card_like_lane(
         debug=debug,
         stats=stats,
         ocr=ocr,
-        aadhaar_boxes=gate_result.get("aadhaar_boxes"),
+        # NOTE: QR masking must only use Aadhaar boxes when Aadhaar is OCR-verified.
+        # This prevents PAN QR from being masked when gate falsely labels the card as Aadhaar.
+        aadhaar_boxes=(gate_result.get("aadhaar_boxes") if aadhaar_confirmed else []),
     )
 
     tokens_list = [

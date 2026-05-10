@@ -929,7 +929,9 @@ def run_debug(input_path: Path, out_dir: Path):
                 debug=True,
                 stats={},
                 ocr=ocr,
-                aadhaar_boxes=gate_result.get("aadhaar_boxes"),
+                # NOTE: Mirror core.pipeline rule: only allow QR masking when
+                # Aadhaar was OCR-verified for this oriented winner pass.
+                aadhaar_boxes=(gate_result.get("aadhaar_boxes") if aadhaar_confirmed else []),
             )
             _save_image(folders["card"] / "440_after_yolo_mask.png", after_yolo)
 
