@@ -563,46 +563,48 @@ def mask_yolo_detections(image, merged_detections, debug=False, stats=None, ocr=
         if debug:
             log.debug(f"[{det['model']}] {det['label']} conf={conf:.3f} box=[{x1},{y1},{x2},{y2}]")
         log.info(f"YOLO det: [{det['model']}] {det['label']} conf={conf:.2f} box=[{x1},{y1},{x2},{y2}]")
+        
+        # Skip structural/non-maskable detections: card bbox, already-masked regions, etc.
+        if "aadhaar" in label or "masked" in label or "xx" in label:
+            log.info(f"YOLO det skipped (structural/masked): {det['label']}")
+            continue
+        
         if "qr" in label and conf > 0.3:
             report_data["is_qr"] += 1
-            if "masked" not in label:
-                # Spatial check: only mask QR inside Aadhaar card bbox
-                if aadhaar_boxes and is_inside_aadhaar_by_area(det["box"], aadhaar_boxes):
-                    cv2.rectangle(image, (x1, y1), (x2, y2), color, -1)
-                    report_data["is_qr_masked"] += 1
-                    log.info(f"QR masked: box=[{x1},{y1},{x2},{y2}]")
-                elif not aadhaar_boxes:
-                    log.info(f"QR skipped (no Aadhaar bbox): box=[{x1},{y1},{x2},{y2}]")
-                else:
-                    log.info(f"QR skipped (outside Aadhaar bbox): box=[{x1},{y1},{x2},{y2}]")
+            # Spatial check: only mask QR inside Aadhaar card bbox
+            if aadhaar_boxes and is_inside_aadhaar_by_area(det["box"], aadhaar_boxes):
+                cv2.rectangle(image, (x1, y1), (x2, y2), color, -1)
+                report_data["is_qr_masked"] += 1
+                log.info(f"QR masked: box=[{x1},{y1},{x2},{y2}]")
+            elif not aadhaar_boxes:
+                log.info(f"QR skipped (no Aadhaar bbox): box=[{x1},{y1},{x2},{y2}]")
+            else:
+                log.info(f"QR skipped (outside Aadhaar bbox): box=[{x1},{y1},{x2},{y2}]")
         elif "number" in label and conf > 0.3:
             report_data["is_number"] += 1
-            if "masked" not in label and "xx" not in label:
-                try:
-                    already_masked = check_image_text(image, det["box"], det["label"], stats=stats, ocr=ocr)
-                except Exception:
-                    already_masked = False
-                if not already_masked:
-                    # Primary: OCR-verified digit masking (char-position-aware fraction)
-                    image, ocr_success = _ocr_verify_and_mask_number(
-                        image, det["box"], det["label"], ocr, stats=stats
+            try:
+                already_masked = check_image_text(image, det["box"], det["label"], stats=stats, ocr=ocr)
+            except Exception:
+                already_masked = False
+            if not already_masked:
+                # Primary: OCR-verified digit masking (char-position-aware fraction)
+                image, ocr_success = _ocr_verify_and_mask_number(
+                    image, det["box"], det["label"], ocr, stats=stats
+                )
+                if not ocr_success:
+                    # Fallback: proportional width masking (8/12, with 3px left-edge padding)
+                    mask_region = compute_digit_mask_region(det["box"])
+                    cv2.rectangle(
+                        image,
+                        (mask_region[0], mask_region[1]),
+                        (mask_region[2], mask_region[3]),
+                        color, -1
                     )
-                    if not ocr_success:
-                        # Fallback: proportional width masking (8/12, with 3px left-edge padding)
-                        mask_region = compute_digit_mask_region(det["box"])
-                        cv2.rectangle(
-                            image,
-                            (mask_region[0], mask_region[1]),
-                            (mask_region[2], mask_region[3]),
-                            color, -1
-                        )
-                        log.info(f"number mask: proportional-fallback label={det['label']} region={mask_region}")
-                    report_data["is_number_masked"] += 1
-                else:
-                    log.info(f"number already masked (x/y/k detected): box=[{x1},{y1},{x2},{y2}]")
-                    report_data["is_xx"] += 1
-        elif "xx" in label:
-            report_data["is_xx"] += 1
+                    log.info(f"number mask: proportional-fallback label={det['label']} region={mask_region}")
+                report_data["is_number_masked"] += 1
+            else:
+                log.info(f"number already masked (x/y/k detected): box=[{x1},{y1},{x2},{y2}]")
+                report_data["is_xx"] += 1
     log.info(
         f"mask_yolo: number={report_data['is_number']} masked={report_data['is_number_masked']} "
         f"qr={report_data['is_qr']} qr_masked={report_data['is_qr_masked']} xx={report_data['is_xx']}"
