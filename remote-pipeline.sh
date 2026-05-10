@@ -22,7 +22,10 @@ scp -i ~/.ssh/ahfl_server "$IMG" \
   "kisandep@20.244.26.183:/tmp/test_input.png"
 
 ssh -i ~/.ssh/ahfl_server kisandep@20.244.26.183 "
+# NOTE: Sync remote repo before run so latest masking/rotation fixes are executed.
+cd /ahfl-masking-1.1 && \
 source /ahfl-masking-1.1/venv-paddle3.2.1-ocr3.4.0/bin/activate && \
+git pull --ff-only && \
 export MODEL_MAIN=/ahfl-models/main.pt && \
 export MODEL_BEST=/ahfl-models/best.pt && \
 export MODEL_FRONT_BACK=/ahfl-models/front_back_detect.pt && \
