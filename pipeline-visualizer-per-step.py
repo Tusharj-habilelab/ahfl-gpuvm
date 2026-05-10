@@ -39,7 +39,7 @@ from core.pipeline import (
 )
 from core.router import classify_document_lane
 from core.spatial import filter_dets_inside_box, map_crop_dets_to_full
-from core.utils.angle_detector import rotate_image, rotate_image_affine
+from core.utils.angle_detector import rotate_back_to_original_space, rotate_image, rotate_image_affine
 
 
 _USE_HALF = bool(GPU_ENABLED and torch.cuda.is_available())
@@ -197,6 +197,32 @@ def _count_labels(dets: List[dict]) -> Dict[str, int]:
             continue
         counts[label] = counts.get(label, 0) + 1
     return counts
+
+
+def _derive_yolo_report_from_dets(merged_dets: List[dict]) -> Dict[str, int]:
+    """
+    Mirror core.pipeline skip-branch aggregation:
+    when masking is skipped, still report detected label counts.
+    """
+    report = {
+        "is_aadhaar": 0,
+        "is_number": 0,
+        "is_number_masked": 0,
+        "is_qr": 0,
+        "is_qr_masked": 0,
+        "is_xx": 0,
+    }
+    for det in merged_dets or []:
+        label = str(det.get("label", "")).lower()
+        if "aadhaar" in label:
+            report["is_aadhaar"] += 1
+        elif "number" in label:
+            report["is_number"] += 1
+        elif "qr" in label:
+            report["is_qr"] += 1
+        elif "xx" in label:
+            report["is_xx"] += 1
+    return report
 
 
 def _rot(image: np.ndarray, angle: int) -> np.ndarray:
@@ -426,6 +452,7 @@ def run_debug(input_path: Path, out_dir: Path):
     if image is None:
         _detach_file_logger(root_logger, file_handler)
         raise ValueError(f"Cannot read image: {input_path}")
+    original_shape = image.shape[:2]
 
     report_stages = []
     t_total_start = time.perf_counter()
@@ -878,6 +905,11 @@ def run_debug(input_path: Path, out_dir: Path):
         }
 
         if checks["skipped"]:
+            # Keep parity with core.pipeline: include detected YOLO counts even when
+            # skip/PAN short-circuits masking.
+            yolo_report = _derive_yolo_report_from_dets(gate_result.get("merged_dets", []))
+            if winner_angle not in (0, 90, 180, 270):
+                rotate_back_info["note"] = "non_cardinal_winner_angle_no_inverse_applied"
             _save_image(folders["card"] / "430_after_pvc_mask.png", work_img)
             _save_image(folders["card"] / "440_after_yolo_mask.png", work_img)
             _save_image(folders["card"] / "450_card_ocr_patterns_overlay.png", work_img)
@@ -910,11 +942,9 @@ def run_debug(input_path: Path, out_dir: Path):
 
             final_img = after_ocr
             if winner_angle != 0:
-                inverse_angle = {90: 270, 180: 180, 270: 90}.get(winner_angle, 0)
-                if inverse_angle != 0:
-                    final_img = rotate_image(final_img, inverse_angle)
-                    rotate_back_info["inverse_angle_applied"] = int(inverse_angle)
-                    rotate_back_info["rotation_applied"] = True
+                final_img = rotate_back_to_original_space(final_img, int(winner_angle), original_shape)
+                rotate_back_info["inverse_angle_applied"] = int(-winner_angle)
+                rotate_back_info["rotation_applied"] = True
             _save_image(folders["card"] / "499_final.png", final_img)
 
         _save_json(folders["card"] / "470_rotate_back_info.json", rotate_back_info)

@@ -46,7 +46,22 @@ def rotate_image(image: np.ndarray, angle: int) -> np.ndarray:
 
 def rotate_image_affine(image: np.ndarray, angle: float) -> np.ndarray:
     """Rotate image by arbitrary angle using affine transform."""
-    h, w = image.shape[:2]
+    # NOTE: Keep matrix construction centralized so inverse mapping can reuse it.
+    M, new_w, new_h = _build_rotation_matrix(image.shape[1], image.shape[0], angle)
+
+    return cv2.warpAffine(
+        image,
+        M,
+        (new_w, new_h),
+        flags=cv2.INTER_LINEAR,
+        borderMode=cv2.BORDER_CONSTANT,
+        borderValue=(255, 255, 255),
+    )
+
+
+def _build_rotation_matrix(width: int, height: int, angle: float):
+    """Build forward affine matrix for original->rotated canvas and return new bounds."""
+    w, h = int(width), int(height)
     cx, cy = w / 2, h / 2
 
     M = cv2.getRotationMatrix2D((cx, cy), -angle, 1.0)
@@ -59,10 +74,40 @@ def rotate_image_affine(image: np.ndarray, angle: float) -> np.ndarray:
     M[0, 2] += (new_w - w) / 2
     M[1, 2] += (new_h - h) / 2
 
+    return M, new_w, new_h
+
+
+def rotate_back_to_original_space(
+    rotated_image: np.ndarray,
+    angle: int,
+    original_shape: Tuple[int, int],
+) -> np.ndarray:
+    """
+    Rotate winner-angle image back to original orientation for any angle.
+
+    Args:
+        rotated_image: Image currently in winner-angle orientation.
+        angle: Winner angle used for forward rotation.
+        original_shape: Original image shape as (height, width).
+    """
+    if angle == 0:
+        return rotated_image
+
+    orig_h, orig_w = int(original_shape[0]), int(original_shape[1])
+
+    # Fast-path for cardinal angles keeps existing behavior and avoids interpolation drift.
+    if angle in (90, 180, 270):
+        inverse_angle = {90: 270, 180: 180, 270: 90}[int(angle)]
+        return rotate_image(rotated_image, inverse_angle)
+
+    # NOTE: For non-cardinal angles (45/135/225/315), use inverse affine transform.
+    fwd_M, _, _ = _build_rotation_matrix(orig_w, orig_h, float(angle))
+    inv_M = cv2.invertAffineTransform(fwd_M)
+
     return cv2.warpAffine(
-        image,
-        M,
-        (new_w, new_h),
+        rotated_image,
+        inv_M,
+        (orig_w, orig_h),
         flags=cv2.INTER_LINEAR,
         borderMode=cv2.BORDER_CONSTANT,
         borderValue=(255, 255, 255),

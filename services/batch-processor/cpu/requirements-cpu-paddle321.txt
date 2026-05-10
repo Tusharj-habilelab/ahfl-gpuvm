@@ -20,7 +20,8 @@ paddleocr==3.4.0
 ultralytics==8.3.235
 
 # PyTorch CPU
-torch==2.1.2+cpu
+# torch==2.1.2+cpu
+torch==2.1.2+cpu torchvision==0.16.2+cpu --index-url https://download.pytorch.org/whl/cpu
 torchvision==0.16.2+cpu
 
 opencv-python-headless==4.9.0.80

@@ -33,7 +33,7 @@ from core.ocr.paddle import (
     scale_adapted_ocr_results,
 )
 from core.router import classify_document_lane
-from core.utils.angle_detector import find_best_orientation, rotate_image
+from core.utils.angle_detector import find_best_orientation, rotate_back_to_original_space
 
 log = logging.getLogger(__name__)
 
@@ -306,6 +306,8 @@ def _process_card_like_lane(
     stats: Dict[str, Any],
 ) -> Tuple[np.ndarray, Dict[str, Any]]:
     """Card/uncertain lane with full gate and verification-before-masking."""
+    # NOTE: Keep original shape so we can restore output orientation for all winner angles.
+    original_shape = image.shape[:2]
     t0 = time.perf_counter()
     image, best_angle, gate_result = find_best_orientation(image, score_fn=run_full_gate_scoring)
     stats["orientation_seconds"] = time.perf_counter() - t0
@@ -381,11 +383,9 @@ def _process_card_like_lane(
     image = mask_ocr_detections(image, detected_words, tokens_list)
 
     # Rotate back to original orientation after all masking is complete.
-    # find_best_orientation returns a rotated image; we must undo the rotation
-    # so the output matches the original input orientation.
+    # NOTE: Supports both cardinal and non-cardinal winners (45/135/225/315).
     if best_angle != 0:
-        inverse_angle = {90: 270, 180: 180, 270: 90}.get(best_angle, 0)
-        image = rotate_image(image, inverse_angle)
+        image = rotate_back_to_original_space(image, int(best_angle), original_shape)
         log.info(f"{lane_name} lane: rotated back to original orientation (inverse of {best_angle}°)")
 
     report = {
