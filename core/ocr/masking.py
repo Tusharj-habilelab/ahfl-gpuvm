@@ -374,7 +374,22 @@ def check_image_text(image, coordinates, label, stats=None, ocr=None):
     if stats is not None and start_time is not None:
         stats["paddle_ocr_calls"] = stats.get("paddle_ocr_calls", 0) + 1
         stats["paddle_ocr_seconds"] = stats.get("paddle_ocr_seconds", 0.0) + (time.perf_counter() - start_time)
-    return 'x' in text.lower() or 'y' in text.lower() or 'k' in text.lower()
+
+    # NOTE: Previous rule (`x` or `y` or `k` anywhere) caused false positives.
+    # Example: OCR noise or random text containing a single 'y' made numbers look
+    # "already masked", yielding is_xx>0 and is_number_masked=0.
+    # New rule: require a strong mask-like pattern.
+    normalized = re.sub(r"\s+", "", text.lower())
+    if not normalized:
+        return False
+
+    # Common masked token style: 'xxxx' / 'yyyy' / 'kkkk' (at least 4 chars)
+    if re.search(r"[xyk]{4,}", normalized):
+        return True
+
+    # Fallback heuristic: at least 4 mask chars and >= 60% of token are x/y/k.
+    mask_chars = sum(1 for ch in normalized if ch in "xyk")
+    return mask_chars >= 4 and (mask_chars / max(len(normalized), 1)) >= 0.60
 
 
 def _first_8_digit_region_from_ocr_tokens(texts, boxes, crop_w, crop_h, rotated_180=False):
@@ -577,7 +592,7 @@ def mask_yolo_detections(image, merged_detections, debug=False, stats=None, ocr=
         log.info(f"YOLO det: [{det['model']}] {det['label']} conf={conf:.2f} box=[{x1},{y1},{x2},{y2}]")
         
         # Skip structural/non-maskable detections: card bbox, already-masked regions, etc.
-        if "aadhaar" in label or "masked" in label or "xx" in label:
+        if "aadhaar" in label or "masked" in label:
             log.info(f"YOLO det skipped (structural/masked): {det['label']}")
             continue
         

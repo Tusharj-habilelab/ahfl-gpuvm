@@ -923,15 +923,22 @@ def run_debug(input_path: Path, out_dir: Path):
                 pvc_stats = {"pvc_cards_processed": 0, "pvc_cards_masked": 0}
             _save_image(folders["card"] / "430_after_pvc_mask.png", after_pvc)
 
+            # NOTE: Match core.pipeline PAN-safe QR masking gate.
+            merged_dets = gate_result.get("merged_dets", [])
+            has_primary_number_det = any(
+                str(d.get("label", "")).lower() in {"number", "number_inverse", "number_anticlockwise"}
+                and float(d.get("conf", 0.0)) > 0.3
+                for d in merged_dets
+            )
+            qr_masking_allowed = bool(aadhaar_confirmed) or has_primary_number_det
+
             after_yolo, yolo_report = mask_yolo_detections(
                 after_pvc.copy(),
-                gate_result.get("merged_dets", []),
+                merged_dets,
                 debug=True,
                 stats={},
                 ocr=ocr,
-                # NOTE: Mirror core.pipeline rule: only allow QR masking when
-                # Aadhaar was OCR-verified for this oriented winner pass.
-                aadhaar_boxes=(gate_result.get("aadhaar_boxes") if aadhaar_confirmed else []),
+                aadhaar_boxes=(gate_result.get("aadhaar_boxes") if qr_masking_allowed else []),
             )
             _save_image(folders["card"] / "440_after_yolo_mask.png", after_yolo)
 

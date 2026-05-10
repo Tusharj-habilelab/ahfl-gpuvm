@@ -366,15 +366,26 @@ def _process_card_like_lane(
     det_label_counts = _summarize_detection_labels(gate_result.get("merged_dets", []))
     log.info(f"{lane_name} lane: pre-mask detection counts={det_label_counts}")
 
+    # NOTE: PAN-safe QR masking gate.
+    # - If Aadhaar OCR is confirmed, allow QR masking with Aadhaar boxes.
+    # - If OCR confirmation is weak but detector found primary Aadhaar-number labels,
+    #   still allow QR masking (prevents no-mask regression on real Aadhaar cards).
+    # - Helper-only labels (e.g. is_number) do not open this gate.
+    merged_dets = gate_result.get("merged_dets", [])
+    has_primary_number_det = any(
+        str(d.get("label", "")).lower() in {"number", "number_inverse", "number_anticlockwise"}
+        and float(d.get("conf", 0.0)) > 0.3
+        for d in merged_dets
+    )
+    qr_masking_allowed = bool(aadhaar_confirmed) or has_primary_number_det
+
     image, yolo_report = mask_yolo_detections(
         image,
-        gate_result.get("merged_dets", []),
+        merged_dets,
         debug=debug,
         stats=stats,
         ocr=ocr,
-        # NOTE: QR masking must only use Aadhaar boxes when Aadhaar is OCR-verified.
-        # This prevents PAN QR from being masked when gate falsely labels the card as Aadhaar.
-        aadhaar_boxes=(gate_result.get("aadhaar_boxes") if aadhaar_confirmed else []),
+        aadhaar_boxes=(gate_result.get("aadhaar_boxes") if qr_masking_allowed else []),
     )
 
     tokens_list = [
