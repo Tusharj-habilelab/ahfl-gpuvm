@@ -11,8 +11,6 @@ import numpy as np
 from core.config import (
     ORIENTATION_ANGLES,
     ORIENTATION_ENABLED,
-    ORIENTATION_STRONG_THRESHOLD,
-    ORIENTATION_TARGET_THRESHOLD,
 )
 from core.ocr.paddle import get_doc_orientation_model
 
@@ -120,26 +118,16 @@ def _rotate_by_angle(image: np.ndarray, angle: int) -> np.ndarray:
     return rotate_image_affine(image, angle)
 
 
-def _check_composite_early_exit(gate_result: Dict[str, Any]) -> bool:
-    """Composite early exit: strong Aadhaar + strong number/QR evidence."""
-    aadhaar_conf = gate_result.get("max_aadhaar_conf", 0.0)
-    number_conf = gate_result.get("best_number_conf", 0.0)
-    qr_conf = gate_result.get("best_qr_conf", 0.0)
-
-    strong_aadhaar = aadhaar_conf >= ORIENTATION_STRONG_THRESHOLD
-    strong_target = (
-        number_conf >= ORIENTATION_TARGET_THRESHOLD
-        or qr_conf >= ORIENTATION_TARGET_THRESHOLD
-    )
-    return strong_aadhaar and strong_target
-
-
 def find_best_orientation(
     image: np.ndarray,
     score_fn: Callable[[np.ndarray], Tuple[float, Dict[str, Any]]],
 ) -> Tuple[np.ndarray, int, Dict[str, Any]]:
     """
-    Try candidate angles and pick the best full-gate score.
+    Try ALL candidate angles, compute full composite score for each,
+    then pick the angle with the highest score.
+
+    No early exits — every angle is evaluated so the best orientation
+    is selected based on complete evidence (Aadhaar + number + QR).
 
     Returns:
         (best_rotated_image, best_angle, gate_result)
@@ -149,32 +137,20 @@ def find_best_orientation(
     if not ORIENTATION_ENABLED:
         return image, 0, data_0
 
-    if _check_composite_early_exit(data_0):
-        log.info(
-            "Orientation: early exit at 0° "
-            f"(aadhaar={data_0.get('max_aadhaar_conf', 0):.3f}, "
-            f"number={data_0.get('best_number_conf', 0):.3f}, "
-            f"qr={data_0.get('best_qr_conf', 0):.3f})"
-        )
-        return image, 0, data_0
+    # Cache: angle -> (rotated_image, score, gate_data)
+    scored_cache: Dict[int, Tuple[np.ndarray, float, Dict[str, Any]]] = {
+        0: (image, score_0, data_0)
+    }
 
-    scored_cache: Dict[int, Tuple[np.ndarray, float, Dict[str, Any]]] = {0: (image, score_0, data_0)}
-
+    # Use doc orientation hint to pre-compute that angle (avoids redundant rotation later)
     hint_angle = _get_doc_orientation_hint(image)
     log.info(f"Orientation: doc hint={hint_angle}°")
     if hint_angle != 0 and hint_angle in ORIENTATION_ANGLES:
         hint_rotated = _rotate_by_angle(image, hint_angle)
         hint_score, hint_data = score_fn(hint_rotated)
         scored_cache[hint_angle] = (hint_rotated, hint_score, hint_data)
-        if _check_composite_early_exit(hint_data):
-            log.info(
-                f"Orientation: doc hint early exit at {hint_angle}° "
-                f"(aadhaar={hint_data.get('max_aadhaar_conf', 0):.3f}, "
-                f"number={hint_data.get('best_number_conf', 0):.3f}, "
-                f"qr={hint_data.get('best_qr_conf', 0):.3f})"
-            )
-            return hint_rotated, hint_angle, hint_data
 
+    # Evaluate all angles (using cache for already-scored ones)
     best_angle = 0
     best_score = score_0
     best_image = image
@@ -193,15 +169,6 @@ def find_best_orientation(
             f"number_conf={data.get('best_number_conf', 0):.3f} "
             f"qr_conf={data.get('best_qr_conf', 0):.3f}"
         )
-
-        if _check_composite_early_exit(data):
-            log.info(
-                f"Orientation: early exit at {angle}° "
-                f"(aadhaar={data.get('max_aadhaar_conf', 0):.3f}, "
-                f"number={data.get('best_number_conf', 0):.3f}, "
-                f"qr={data.get('best_qr_conf', 0):.3f})"
-            )
-            return rotated, angle, data
 
         if score > best_score:
             best_score = score

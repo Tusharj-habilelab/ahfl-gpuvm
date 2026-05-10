@@ -181,7 +181,7 @@ def run_full_gate_scoring(
     log.info(f"Gate: fb-filtered label counts={_count_labels(filtered_dets)}")
     del grey, preprocessed  # free full-resolution arrays (called up to 8× in orientation loop)
 
-    # Compute score from confirmed Aadhaar detections
+    # Aadhaar detection stats (used for scoring AFTER best.pt)
     aadhaar_confs = [
         d["conf"] for d in filtered_dets
         if d.get("label", "").lower() == "aadhaar"
@@ -189,18 +189,6 @@ def run_full_gate_scoring(
     fb_confirmed = len(aadhaar_confs) > 0
     max_aadhaar_conf = max(aadhaar_confs) if aadhaar_confs else 0.0
     log.info(f"Gate: fb_confirmed={fb_confirmed}, aadhaar_count={len(aadhaar_confs)}, max_conf={max_aadhaar_conf:.3f}")
-
-    if aadhaar_confs:
-        score = max_aadhaar_conf + min(len(aadhaar_confs), 3) * 0.05 + 0.1
-    else:
-        raw_aadhaar_confs = [
-            d["conf"] for d in main_dets
-            if d.get("label", "").lower() == "aadhaar"
-        ]
-        if raw_aadhaar_confs:
-            score = max(raw_aadhaar_confs) * 0.5
-        else:
-            score = len(main_dets) * 0.01
 
     # Step 4: Find Aadhaar card bboxes, preserving front/back classifier metadata
     aadhaar_dets = [
@@ -250,18 +238,60 @@ def run_full_gate_scoring(
         "max_aadhaar_conf": max_aadhaar_conf,
     }
 
-    # Extract best.pt number and QR confidence for composite scoring
-    # Used by orientation angle selection to include target evidence
-    best_number_confs = [
+    # --- Composite scoring: includes evidence from BOTH main.pt and best.pt ---
+    # Extract number/QR confs from ALL merged dets (both models)
+    number_confs = [
         d["conf"] for d in all_merged
-        if "number" in d.get("label", "").lower() and d.get("model") == "best"
+        if "number" in d.get("label", "").lower()
+        and "masked" not in d.get("label", "").lower()
+        and "xx" not in d.get("label", "").lower()
     ]
-    best_qr_confs = [
+    qr_confs = [
         d["conf"] for d in all_merged
-        if "qr" in d.get("label", "").lower() and d.get("model") == "best"
+        if "qr" in d.get("label", "").lower()
+        and "masked" not in d.get("label", "").lower()
     ]
-    
-    gate_result["best_number_conf"] = max(best_number_confs) if best_number_confs else 0.0
-    gate_result["best_qr_conf"] = max(best_qr_confs) if best_qr_confs else 0.0
+
+    best_number_conf = max(number_confs) if number_confs else 0.0
+    best_qr_conf = max(qr_confs) if qr_confs else 0.0
+    target_count = len(number_confs) + len(qr_confs)
+
+    gate_result["best_number_conf"] = best_number_conf
+    gate_result["best_qr_conf"] = best_qr_conf
+
+    # Phase A: Aadhaar evidence — composite of max, avg, count from main.pt+fb
+    # plus number/QR detections INSIDE Aadhaar crops from best.pt as confirmation
+    if aadhaar_confs:
+        avg_aadhaar_conf = sum(aadhaar_confs) / len(aadhaar_confs)
+        count_bonus = min(len(aadhaar_confs), 3) * 0.05
+        # Weighted blend: max dominates, avg rewards consistent multi-card detection
+        aadhaar_base = max_aadhaar_conf * 0.7 + avg_aadhaar_conf * 0.3
+        # best.pt confirmation: number/QR found inside Aadhaar crops validates the card
+        best_inside_confs = []
+        for crop_info in aadhaar_crops:
+            for det in crop_info.get("merged_dets", []):
+                lbl = det.get("label", "").lower()
+                if ("number" in lbl or "qr" in lbl) and "masked" not in lbl and "xx" not in lbl:
+                    best_inside_confs.append(det["conf"])
+        best_confirmation = max(best_inside_confs) * 0.1 if best_inside_confs else 0.0
+        aadhaar_score = aadhaar_base + count_bonus + 0.1 + best_confirmation
+    else:
+        raw_aadhaar_confs = [
+            d["conf"] for d in main_dets
+            if d.get("label", "").lower() == "aadhaar"
+        ]
+        aadhaar_score = max(raw_aadhaar_confs) * 0.5 if raw_aadhaar_confs else 0.0
+
+    # Phase B: Number + QR evidence (from both main.pt and best.pt after merge)
+    number_score = best_number_conf * 0.15
+    qr_score = best_qr_conf * 0.10
+    target_count_bonus = min(target_count, 5) * 0.02
+
+    score = aadhaar_score + number_score + qr_score + target_count_bonus
+    log.info(
+        f"Gate: score={score:.4f} "
+        f"(aadhaar={aadhaar_score:.3f} number={number_score:.3f} "
+        f"qr={qr_score:.3f} target_bonus={target_count_bonus:.3f})"
+    )
 
     return score, gate_result
