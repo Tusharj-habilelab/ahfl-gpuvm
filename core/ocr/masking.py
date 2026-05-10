@@ -105,7 +105,7 @@ def is_valid_aadhaar_number(number: str) -> bool:
 
 
 def compute_digit_mask_region(
-    box: list, mask_digits: int = 8, total_digits: int = 12
+    box: list, mask_digits: int = 8, total_digits: int = 12, reverse: bool = False
 ) -> tuple:
     """
     Compute the sub-region covering the first N digits of a number bbox.
@@ -113,9 +113,11 @@ def compute_digit_mask_region(
     FALLBACK masking when OCR cannot read individual digit positions.
     Masks a proportional fraction (8/12 = 0.667) of the bounding box.
 
-    Handles both horizontal and vertical number orientations:
-      - Horizontal: mask left portion (width-based)
-      - Vertical: mask top portion (height-based)
+        Handles both horizontal and vertical number orientations:
+            - Horizontal: mask left portion (width-based)
+            - Vertical: mask top portion (height-based)
+        For 180°-read labels (e.g. Number_anticlockwise), set reverse=True
+        to mask from the opposite side while still targeting original first 8 digits.
 
     Args:
         box: [x1, y1, x2, y2] bounding box of the full number.
@@ -135,10 +137,18 @@ def compute_digit_mask_region(
     fraction = mask_digits / total_digits
 
     if w > h:
+        if reverse:
+            # Reverse path: mask right portion (for 180°-read labels).
+            x1_mask = int(x2 - fraction * w)
+            return (x1_mask, y1, x2, y2)
         # Horizontal number: mask left portion
         x2_mask = int(x1 + fraction * w)
         return (x1, y1, x2_mask, y2)
     else:
+        if reverse:
+            # Reverse path: mask bottom portion (for 180°-read labels).
+            y1_mask = int(y2 - fraction * h)
+            return (x1, y1_mask, x2, y2)
         # Vertical number: mask top portion
         y2_mask = int(y1 + fraction * h)
         return (x1, y1, x2, y2_mask)
@@ -510,7 +520,9 @@ def _ocr_verify_and_mask_number(image, box, label, ocr, stats=None):
         else:
             # Fallback retained: proportional mask when OCR token geometry is insufficient.
             # NOTE: kept for resilience on low-quality scans.
-            mask_region = compute_digit_mask_region([x1, y1, x2, y2])
+            # For Number_anticlockwise, reverse fallback direction so original first 8 are masked.
+            reverse_fallback = (label.lower() == 'number_anticlockwise')
+            mask_region = compute_digit_mask_region([x1, y1, x2, y2], reverse=reverse_fallback)
             cv2.rectangle(
                 image,
                 (mask_region[0], mask_region[1]),
@@ -596,8 +608,10 @@ def mask_yolo_detections(image, merged_detections, debug=False, stats=None, ocr=
                     # unless OCR verified the Aadhaar number. This blocks large false-positive masks.
                     is_primary_number_label = label in {"number", "number_anticlockwise", "number_inverse"}
                     if is_primary_number_label:
-                        # Fallback: proportional width masking (8/12, with 3px left-edge padding)
-                        mask_region = compute_digit_mask_region(det["box"])
+                        # Fallback: proportional masking. For Number_anticlockwise,
+                        # reverse direction so original first 8 digits remain the masked side.
+                        reverse_fallback = (label == "number_anticlockwise")
+                        mask_region = compute_digit_mask_region(det["box"], reverse=reverse_fallback)
                         cv2.rectangle(
                             image,
                             (mask_region[0], mask_region[1]),
