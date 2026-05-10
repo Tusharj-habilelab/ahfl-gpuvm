@@ -411,17 +411,18 @@ def _first_8_digit_region_from_ocr_tokens(texts, boxes, crop_w, crop_h, rotated_
                     pos = crop_h - pos
 
             digit_points.append((pos, span))
-            if len(digit_points) == 8:
-                break
-
-        if len(digit_points) == 8:
-            break
 
     if len(digit_points) < 8:
         return None
 
-    starts = [p - (s / 2.0) for p, s in digit_points]
-    ends = [p + (s / 2.0) for p, s in digit_points]
+    # NOTE: OCR runs on a 180-rotated crop for Number_anticlockwise.
+    # That reverses digit reading order relative to the original image.
+    # We must still mask the original FIRST 8 digits, so for rotated crops
+    # we select the trailing 8 points from OCR-read order.
+    selected_points = digit_points[-8:] if rotated_180 else digit_points[:8]
+
+    starts = [p - (s / 2.0) for p, s in selected_points]
+    ends = [p + (s / 2.0) for p, s in selected_points]
     return (min(starts), max(ends), horizontal)
 
 
