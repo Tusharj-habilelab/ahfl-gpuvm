@@ -3,7 +3,12 @@
 # NOTE: Enforce strict error handling so failed remote runs do not sync partial artifacts.
 set -euo pipefail
 
-read -p "Enter image path: " IMG
+# Accept image path from argument or interactive prompt (for batch vs manual runs)
+if [ $# -ge 1 ]; then
+  IMG="$1"
+else
+  read -p "Enter image path: " IMG
+fi
 
 # Strip surrounding quotes (both single and double)
 IMG="${IMG%\"}"
