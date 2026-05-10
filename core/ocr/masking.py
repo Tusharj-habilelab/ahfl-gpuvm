@@ -592,16 +592,27 @@ def mask_yolo_detections(image, merged_detections, debug=False, stats=None, ocr=
                     image, det["box"], det["label"], ocr, stats=stats
                 )
                 if not ocr_success:
-                    # Fallback: proportional width masking (8/12, with 3px left-edge padding)
-                    mask_region = compute_digit_mask_region(det["box"])
-                    cv2.rectangle(
-                        image,
-                        (mask_region[0], mask_region[1]),
-                        (mask_region[2], mask_region[3]),
-                        color, -1
-                    )
-                    log.info(f"number mask: proportional-fallback label={det['label']} region={mask_region}")
-                report_data["is_number_masked"] += 1
+                    # Safety rule: do NOT fallback-mask weak helper labels (e.g. is_number)
+                    # unless OCR verified the Aadhaar number. This blocks large false-positive masks.
+                    is_primary_number_label = label in {"number", "number_anticlockwise", "number_inverse"}
+                    if is_primary_number_label:
+                        # Fallback: proportional width masking (8/12, with 3px left-edge padding)
+                        mask_region = compute_digit_mask_region(det["box"])
+                        cv2.rectangle(
+                            image,
+                            (mask_region[0], mask_region[1]),
+                            (mask_region[2], mask_region[3]),
+                            color, -1
+                        )
+                        log.info(f"number mask: proportional-fallback label={det['label']} region={mask_region}")
+                        report_data["is_number_masked"] += 1
+                    else:
+                        log.info(
+                            f"number skipped (ocr-unverified helper label): label={det['label']} "
+                            f"box=[{x1},{y1},{x2},{y2}]"
+                        )
+                else:
+                    report_data["is_number_masked"] += 1
             else:
                 log.info(f"number already masked (x/y/k detected): box=[{x1},{y1},{x2},{y2}]")
                 report_data["is_xx"] += 1
