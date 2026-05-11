@@ -26,7 +26,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libgomp1 \
     libglib2.0-0 \
     libsm6 \
-    libxext6 \    libxrender-dev \
+    libxext6 \
+    libxrender-dev \
     libgl1-mesa-glx \
     tesseract-ocr \
     poppler-utils \
@@ -76,4 +77,3 @@ VOLUME ["/app/models"]
 # mounted model and PaddleOCR cache volumes.
 ENTRYPOINT ["python", "batch.py"]
 CMD ["--s3"]
--- INSERT --                                                                                                                                                              79,2          Bot
