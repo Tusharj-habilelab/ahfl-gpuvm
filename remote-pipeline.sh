@@ -22,9 +22,14 @@ if [ ! -f "$IMG" ]; then
   exit 1
 fi
 
-echo "Uploading: $IMG"
+# Preserve file extension (supports .pdf, .jpg, .png, .jpeg, etc.)
+FILENAME=$(basename "$IMG")
+EXTENSION="${FILENAME##*.}"
+TEST_INPUT="/tmp/test_input.${EXTENSION}"
+
+echo "Uploading: $IMG → $TEST_INPUT"
 scp -i ~/.ssh/ahfl_server "$IMG" \
-  "kisandep@20.244.26.183:/tmp/test_input.png"
+  "kisandep@20.244.26.183:${TEST_INPUT}"
 
 # # NOTE: Sync latest local masking logic to remote runtime path so tests include
 # # in-progress fixes before commit/push.
@@ -41,7 +46,7 @@ export MODEL_BEST=/ahfl-models/best.pt && \
 export MODEL_FRONT_BACK=/ahfl-models/front_back_detect.pt && \
 export MODEL_YOLO_N=/ahfl-models/yolov8n.pt && \
 python3 /ahfl-masking-1.1/pipeline-visualizer-per-step.py \
-  --input /tmp/test_input.png \
+  --input ${TEST_INPUT} \
   --out /ahfl-masking-1.1/debug_remote_artifacts
 " 2>&1 | tee /tmp/pipeline_run.log
 

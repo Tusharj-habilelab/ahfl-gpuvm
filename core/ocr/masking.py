@@ -308,6 +308,60 @@ def calculate_iou(box1, box2):
     return intersection / union
 
 
+def _detection_family(label: str) -> str:
+    """Group labels that represent the same physical target for safe deduping."""
+    normalized = str(label or "").lower()
+    if normalized in {"number", "number_anticlockwise", "number_inverse", "is_number"}:
+        return "number"
+    if normalized in {"qr", "is_qr"}:
+        return "qr"
+    return normalized
+
+
+def _deduplicate_overlapping_detections(detections, iou_threshold=0.5):
+    """
+    Collapse overlapping detections from the same physical target.
+
+    This is needed in two places:
+      1. main.pt can emit both number and number_anticlockwise on the same strip.
+      2. overlapping Aadhaar crops can re-add the same number/QR region multiple times.
+    """
+    # Labels that trigger masking actions (from main.pt)
+    _PRIMARY_LABELS = {"number", "number_anticlockwise", "number_inverse", "qr"}
+    # Labels that confirm detections but do not drive masking (from best.pt)
+    _HELPER_LABELS = {"is_number", "is_qr"}
+
+    deduped = []
+    for candidate in detections:
+        candidate_copy = dict(candidate)
+        candidate_label = candidate_copy.get("label", "")
+        candidate_family = _detection_family(candidate_label)
+        merged_into_existing = False
+
+        for existing in deduped:
+            existing_label = existing.get("label", "")
+            if _detection_family(existing_label) != candidate_family:
+                continue
+            if calculate_iou(existing["box"], candidate_copy["box"]) <= iou_threshold:
+                continue
+
+            # Keep the stronger detection, but never let helper labels overwrite
+            # actionable primary labels for the same physical target.
+            if candidate_copy.get("conf", 0.0) > existing.get("conf", 0.0):
+                saved_label = existing_label
+                existing.clear()
+                existing.update(candidate_copy)
+                if saved_label in _PRIMARY_LABELS and candidate_label in _HELPER_LABELS:
+                    existing["label"] = saved_label
+            merged_into_existing = True
+            break
+
+        if not merged_into_existing:
+            deduped.append(candidate_copy)
+
+    return deduped
+
+
 def merge_detections(detections1, detections2, iou_threshold=0.5):
     """
     Merge detections from two YOLO models, removing duplicates via IoU.
@@ -323,10 +377,14 @@ def merge_detections(detections1, detections2, iou_threshold=0.5):
     # Labels that confirm detections but do not drive masking (from best.pt)
     _HELPER_LABELS = {"is_number", "is_qr"}
 
-    merged = [dict(d) for d in detections1]
+    # Dedup main.pt self-overlaps first — this prevents one strip from surviving
+    # as both number and number_anticlockwise before best.pt merge even begins.
+    merged = _deduplicate_overlapping_detections(detections1, iou_threshold=iou_threshold)
     for det2 in detections2:
         is_duplicate = False
         for det1 in merged:
+            if _detection_family(det1.get("label", "")) != _detection_family(det2.get("label", "")):
+                continue
             if calculate_iou(det1["box"], det2["box"]) > iou_threshold:
                 if det2["conf"] > det1["conf"]:
                     # Save primary label before update — best.pt helper labels must not
@@ -338,8 +396,11 @@ def merge_detections(detections1, detections2, iou_threshold=0.5):
                 is_duplicate = True
                 break
         if not is_duplicate:
-            merged.append(det2)
-    return merged
+            merged.append(dict(det2))
+
+    # Dedup once more after cross-model merge so overlapping Aadhaar crops do not
+    # leave repeated number/QR detections in the final merged list.
+    return _deduplicate_overlapping_detections(merged, iou_threshold=iou_threshold)
 
 
 def yolo_results_to_detections(results, model_name="model"):

@@ -221,6 +221,10 @@ def run_full_gate_scoring(
             )
             if not inside_any:
                 all_merged.append(det)
+
+        # Overlapping Aadhaar crops can contribute the same number strip multiple times.
+        # Run one final merge pass so winner scoring and masking see one physical target once.
+        all_merged = merge_detections(all_merged, [])
     else:
         # No Aadhaar cards — fallback: best.pt on full image (RGB)
         yolo_best = get_yolo_best()
