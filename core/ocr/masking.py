@@ -256,6 +256,33 @@ def _coords_bbox_key(coords) -> tuple:
     return (x1, y1, x2, y2)
 
 
+def _token_span_is_right_to_left(tokens_list: list, start_idx: int, end_idx: int) -> bool:
+    """
+    Infer OCR read direction for a token span.
+
+    Returns True when token centers move right->left (or bottom->top for vertical text).
+    This lets form-lane recovery mask the original first 8 digits, not the trailing 8.
+    """
+    centers = []
+    for idx in range(start_idx, end_idx):
+        coords = tokens_list[idx].get("coordinates", [])
+        if not coords:
+            continue
+        xs = [p[0] for p in coords]
+        ys = [p[1] for p in coords]
+        centers.append(((min(xs) + max(xs)) / 2.0, (min(ys) + max(ys)) / 2.0))
+
+    if len(centers) < 2:
+        return False
+
+    start_center = centers[0]
+    end_center = centers[-1]
+    horizontal = abs(end_center[0] - start_center[0]) >= abs(end_center[1] - start_center[1])
+    if horizontal:
+        return end_center[0] < start_center[0]
+    return end_center[1] < start_center[1]
+
+
 def extract_number_coordinates(text: str, bbox):
     """Extract 12-digit number coordinates from OCR text within a bounding box."""
     match = re.search(r"\b\d{12}\b", text)
@@ -977,13 +1004,17 @@ def find_aadhaar_patterns(tokens_list, form_lane_only: bool = False):
                     continue
 
                 seen_form_hw.add(bbox_key)
+                # Direction hint prevents masking the wrong side when OCR token order is reversed.
+                reverse_mask = _token_span_is_right_to_left(tokens_list, i, end)
                 detected_words.append({
                     "text": cleaned,
                     "coordinates": merged_coords,
-                    "type": "number_form_hw_noise"
+                    "type": "number_form_hw_noise",
+                    "reverse": reverse_mask,
                 })
                 log.info(
-                    f"Form lane OCR recovery: masked noisy Aadhaar span tokens={i}:{end} value={cleaned}"
+                    f"Form lane OCR recovery: masked noisy Aadhaar span tokens={i}:{end} "
+                    f"value={cleaned} reverse={reverse_mask}"
                 )
 
     # C3 FIX: Unconditional Verhoeff safety pass
@@ -1043,6 +1074,17 @@ def mask_ocr_detections(image, detected_words, tokens_list=None):
             x2_next = max(p[0] for p in coords_next)
             y2_next = max(p[1] for p in coords_next)
             cv2.rectangle(image, (int(x1), int(y1)), (int(x2_next), int(y2_next)), color, -1)
+        elif dtype == "number_form_hw_noise":
+            # Use direction-aware mask region to always cover original first 8 digits.
+            reverse = bool(dw.get("reverse", False))
+            mask_region = compute_digit_mask_region([x1, y1, x2, y2], reverse=reverse)
+            cv2.rectangle(
+                image,
+                (int(mask_region[0]), int(mask_region[1])),
+                (int(mask_region[2]), int(mask_region[3])),
+                color,
+                -1,
+            )
         elif dtype == "number":
             x2_mask = int(x1 + 0.66 * w)
             cv2.rectangle(image, (int(x1), int(y1)), (int(x2_mask), int(y2)), color, -1)

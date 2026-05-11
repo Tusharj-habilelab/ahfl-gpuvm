@@ -71,3 +71,31 @@ This file tracks Bug 1 and Bug 2 findings, root causes, code changes, and behavi
 - `core/ocr/masking.py`
 - `core/pipeline.py`
 - `docs/AADHAAR_MASKING_BUG_LOG.md`
+
+---
+
+## Pending review suggestions (saved from code review)
+
+Date: 11-05-2026
+
+### Suggestion 1 (Bug 1 hardening): add local context guard for form-lane recovery
+- Current form-lane recovery can mask any Verhoeff-valid 12-digit span when broad context flags are true.
+- Suggested hardening:
+  - require Aadhaar marker proximity (same row / nearby y-range), or
+  - require Aadhaar keyword in a local token window around recovered span.
+- Reason: reduce rare false positives on non-Aadhaar 12-digit values.
+
+### Suggestion 2 (maintainability): tighten helper typing
+- Add concrete typing for new helpers in `core/ocr/masking.py`:
+  - `_merge_token_coordinates(tokens_list, start_idx, end_idx)`
+  - `_coords_bbox_key(coords)`
+- Reason: improves static validation and safer refactors.
+
+### Scope reminder
+- Form-lane-only behavior is correctly wired:
+  - form lane: `find_aadhaar_patterns(..., form_lane_only=True)`
+  - card/uncertain lane: `find_aadhaar_patterns(..., form_lane_only=False)`
+
+### Current status
+- Not blockers for current release.
+- Track as follow-up hardening tasks.
