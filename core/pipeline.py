@@ -271,6 +271,8 @@ def _process_form_lane(
     ]
     detected_words = find_aadhaar_patterns(tokens_list)
     image = mask_ocr_detections(image, detected_words, tokens_list)
+    # NOTE: No fallback OCR pass here — form lane already ran OCR on the full image above.
+    # A second pass would be identical and wasteful. Card lane handles its own fallback separately.
 
     report = {
         **yolo_report,

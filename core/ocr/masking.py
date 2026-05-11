@@ -312,14 +312,29 @@ def merge_detections(detections1, detections2, iou_threshold=0.5):
     """
     Merge detections from two YOLO models, removing duplicates via IoU.
     Each detection: {"box": [x1,y1,x2,y2], "label": str, "conf": float, "model": str}
+
+    Primary labels (from main.pt) drive masking actions: "number", "number_anticlockwise",
+    "number_inverse". Helper labels (from best.pt) confirm detections: "is_number", "is_qr".
+    When a helper label wins the confidence race, we keep its higher confidence but restore
+    the primary label — otherwise masking skips the region thinking it is unverified.
     """
+    # Labels that trigger masking actions (from main.pt)
+    _PRIMARY_LABELS = {"number", "number_anticlockwise", "number_inverse"}
+    # Labels that confirm detections but do not drive masking (from best.pt)
+    _HELPER_LABELS = {"is_number", "is_qr"}
+
     merged = [dict(d) for d in detections1]
     for det2 in detections2:
         is_duplicate = False
         for det1 in merged:
             if calculate_iou(det1["box"], det2["box"]) > iou_threshold:
                 if det2["conf"] > det1["conf"]:
-                    det1.update(det2)
+                    # Save primary label before update — best.pt helper labels must not
+                    # overwrite main.pt primary labels, or masking will skip the region.
+                    saved_label = det1["label"]
+                    det1.update(det2)  # take best.pt's higher confidence
+                    if saved_label in _PRIMARY_LABELS and det2["label"] in _HELPER_LABELS:
+                        det1["label"] = saved_label  # restore primary label
                 is_duplicate = True
                 break
         if not is_duplicate:
