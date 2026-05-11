@@ -1,0 +1,104 @@
+# AHFL-Masking 1.1 — Orchestration
+# Migrated from: docker-compose.yml (AHFL-Masking 1.0)
+# Updated: now runs 3 separate services instead of 1 monolith
+
+version: "3.9"
+
+services:
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: services/api-gateway/Dockerfile
+    container_name: ahfl-api-gateway
+    ports:
+      - "${API_GATEWAY_PORT:-8002}:8000"
+    environment:
+      - HOST=${HOST:-http://localhost:8002}
+      - MASKING_ENGINE_URL=http://masking-engine:8001
+      - AUTHORIZED_KEYS_PATH=config/authorized-keys.txt
+      - OUTPUT_FOLDER=/app/output/masked
+      - API_GATEWAY_PORT=8000
+    volumes:
+      - masked_output:/app/output/masked
+    depends_on:
+      - masking-engine
+    restart: unless-stopped
+
+  masking-engine:
+    build:
+      context: .
+      dockerfile: services/masking-engine/Dockerfile
+    image: ahfl-masking:gpu
+    container_name: ahfl-masking-engine
+    ports:
+      - "${MASKING_ENGINE_PORT:-8003}:8001"
+    environment:
+      - OUTPUT_FOLDER=/app/output/masked
+      - MODEL_MAIN=/app/models/main.pt
+      - MODEL_BEST=/app/models/best.pt
+      - MODEL_FRONT_BACK=/app/models/front_back_detect.pt
+      - MODEL_YOLO_N=/app/models/yolov8n.pt
+      - MASKING_ENGINE_PORT=8001
+      - PADDLE_MODEL_DIR=/app/models/paddleocr
+      - GPU_ENABLED=true
+      # Detection thresholds — tunable without rebuild
+      - ORIENTATION_STRONG_THRESHOLD=0.75
+      - ORIENTATION_TARGET_THRESHOLD=0.7
+      - PVC_PERSON_CONFIDENCE_THRESHOLD=0.5
+      # Dilation: false=off (default), true=dilated greyscale for faded cards
+      - YOLO_MAIN_DILATE_ENABLED=false
+    volumes:
+      - /ahfl-models:/app/models
+      - masked_output:/app/output/masked
+      - /ahfl-models/.paddlex:/root/.paddlex
+      - ./logs:/logs
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  batch-processor:
+    build:
+      context: .
+      dockerfile: services/batch-processor/Dockerfile
+    container_name: ahfl-batch-processor
+    environment:
+      - TABLE_NAME=${TABLE_NAME:-ahfl_processed_data}
+      - AWS_REGION=${AWS_REGION:-ap-south-1}
+      - MODEL_MAIN=/app/models/main.pt
+      - MODEL_BEST=/app/models/best.pt
+      - MODEL_FRONT_BACK=/app/models/front_back_detect.pt
+      - MODEL_YOLO_N=/app/models/yolov8n.pt
+      - GPU_ENABLED=true
+      - RAW_BUCKET=${RAW_BUCKET:-ahfl-ams-raw-data-bucket-333813598364-ap-south-1-an}
+      - MASKED_BUCKET=${MASKED_BUCKET:-ahfl-uat-ams-masked-data-bucket-333813598364-ap-south-1-an}
+      - PADDLE_MODEL_DIR=/app/models/paddleocr
+      # Detection thresholds — tunable without rebuild
+      - ORIENTATION_STRONG_THRESHOLD=0.75
+      - ORIENTATION_TARGET_THRESHOLD=0.7
+      - PVC_PERSON_CONFIDENCE_THRESHOLD=0.5
+      # Dilation: false=off (default), true=dilated greyscale for faded cards
+      - YOLO_MAIN_DILATE_ENABLED=false
+    volumes:
+      - /ahfl-models:/app/models:ro
+      - /ahfl-models/.paddlex:/root/.paddlex
+      - ./logs:/logs
+    profiles:
+      - batch
+    restart: "no"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+volumes:
+  masked_output:
+    driver: local

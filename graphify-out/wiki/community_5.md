@@ -1,0 +1,53 @@
+# Community 5: _validate_api_key()
+
+**Members:** 21
+
+## Nodes
+
+- **main** (`services_api_gateway_main_py`, File, degree: 20)
+- **create_upload_file()** (`services_api_gateway_main_py_create_upload_file`, Function, degree: 2)
+- **health()** (`services_api_gateway_main_py_health`, Function, degree: 1)
+- **dotenv.load_dotenv** (`services_api_gateway_main_py_import_dotenv_load_dotenv`, Module, degree: 1)
+- **fastapi.FastAPI** (`services_api_gateway_main_py_import_fastapi_fastapi`, Module, degree: 1)
+- **fastapi.File** (`services_api_gateway_main_py_import_fastapi_file`, Module, degree: 1)
+- **fastapi.Header** (`services_api_gateway_main_py_import_fastapi_header`, Module, degree: 1)
+- **fastapi.HTTPException** (`services_api_gateway_main_py_import_fastapi_httpexception`, Module, degree: 1)
+- **fastapi.middleware.cors.CORSMiddleware** (`services_api_gateway_main_py_import_fastapi_middleware_cors_corsmiddleware`, Module, degree: 1)
+- **fastapi.responses.FileResponse** (`services_api_gateway_main_py_import_fastapi_responses_fileresponse`, Module, degree: 1)
+- **fastapi.responses.JSONResponse** (`services_api_gateway_main_py_import_fastapi_responses_jsonresponse`, Module, degree: 1)
+- **fastapi.UploadFile** (`services_api_gateway_main_py_import_fastapi_uploadfile`, Module, degree: 1)
+- **hmac** (`services_api_gateway_main_py_import_hmac`, Module, degree: 1)
+- **httpx** (`services_api_gateway_main_py_import_httpx`, Module, degree: 1)
+- **mimetypes** (`services_api_gateway_main_py_import_mimetypes`, Module, degree: 1)
+- **os** (`services_api_gateway_main_py_import_os`, Module, degree: 1)
+- **pathlib.Path** (`services_api_gateway_main_py_import_pathlib_path`, Module, degree: 1)
+- **uvicorn** (`services_api_gateway_main_py_import_uvicorn`, Module, degree: 1)
+- **_load_api_keys()** (`services_api_gateway_main_py_load_api_keys`, Function, degree: 2)
+- **serve_masked_file()** (`services_api_gateway_main_py_serve_masked_file`, Function, degree: 1)
+- **_validate_api_key()** (`services_api_gateway_main_py_validate_api_key`, Function, degree: 3)
+
+## Relationships
+
+- services_api_gateway_main_py → services_api_gateway_main_py_import_os (imports)
+- services_api_gateway_main_py → services_api_gateway_main_py_import_hmac (imports)
+- services_api_gateway_main_py → services_api_gateway_main_py_import_mimetypes (imports)
+- services_api_gateway_main_py → services_api_gateway_main_py_import_pathlib_path (imports)
+- services_api_gateway_main_py → services_api_gateway_main_py_import_httpx (imports)
+- services_api_gateway_main_py → services_api_gateway_main_py_import_fastapi_fastapi (imports)
+- services_api_gateway_main_py → services_api_gateway_main_py_import_fastapi_uploadfile (imports)
+- services_api_gateway_main_py → services_api_gateway_main_py_import_fastapi_file (imports)
+- services_api_gateway_main_py → services_api_gateway_main_py_import_fastapi_header (imports)
+- services_api_gateway_main_py → services_api_gateway_main_py_import_fastapi_httpexception (imports)
+- services_api_gateway_main_py → services_api_gateway_main_py_import_fastapi_middleware_cors_corsmiddleware (imports)
+- services_api_gateway_main_py → services_api_gateway_main_py_import_fastapi_responses_fileresponse (imports)
+- services_api_gateway_main_py → services_api_gateway_main_py_import_fastapi_responses_jsonresponse (imports)
+- services_api_gateway_main_py → services_api_gateway_main_py_import_dotenv_load_dotenv (imports)
+- services_api_gateway_main_py → services_api_gateway_main_py_load_api_keys (defines)
+- services_api_gateway_main_py → services_api_gateway_main_py_validate_api_key (defines)
+- services_api_gateway_main_py → services_api_gateway_main_py_health (defines)
+- services_api_gateway_main_py → services_api_gateway_main_py_create_upload_file (defines)
+- services_api_gateway_main_py → services_api_gateway_main_py_serve_masked_file (defines)
+- services_api_gateway_main_py → services_api_gateway_main_py_import_uvicorn (imports)
+- services_api_gateway_main_py_validate_api_key → services_api_gateway_main_py_load_api_keys (calls)
+- services_api_gateway_main_py_create_upload_file → services_api_gateway_main_py_validate_api_key (calls)
+

@@ -1,0 +1,11 @@
+---
+id: core_ocr_masking_py_yolo_results_to_detections
+type: Function
+source: ./core/ocr/masking.py
+community: 4
+community_label: yolo_results_to_detections()
+---
+
+## Connections
+
+- [[masking]] (defines)
