@@ -359,6 +359,11 @@ def _detection_family(label: str) -> str:
     return normalized
 
 
+def _label_implies_reverse_mask(label: str) -> bool:
+    """Return True when label semantics imply reverse first-8 masking direction."""
+    return str(label or "").lower() == "number_anticlockwise"
+
+
 def _deduplicate_overlapping_detections(detections, iou_threshold=0.5):
     """
     Collapse overlapping detections from the same physical target.
@@ -377,6 +382,8 @@ def _deduplicate_overlapping_detections(detections, iou_threshold=0.5):
         candidate_copy = dict(candidate)
         candidate_label = candidate_copy.get("label", "")
         candidate_family = _detection_family(candidate_label)
+        # Keep orientation hint independent of final label chosen by confidence merge.
+        candidate_copy["reverse_mask"] = bool(candidate_copy.get("reverse_mask", False)) or _label_implies_reverse_mask(candidate_label)
         merged_into_existing = False
 
         for existing in deduped:
@@ -390,10 +397,16 @@ def _deduplicate_overlapping_detections(detections, iou_threshold=0.5):
             # actionable primary labels for the same physical target.
             if candidate_copy.get("conf", 0.0) > existing.get("conf", 0.0):
                 saved_label = existing_label
+                saved_reverse = bool(existing.get("reverse_mask", False)) or _label_implies_reverse_mask(saved_label)
                 existing.clear()
                 existing.update(candidate_copy)
                 if saved_label in _PRIMARY_LABELS and candidate_label in _HELPER_LABELS:
                     existing["label"] = saved_label
+                # Preserve reverse direction if either side indicated anticlockwise semantics.
+                existing["reverse_mask"] = bool(existing.get("reverse_mask", False)) or saved_reverse
+            else:
+                # Preserve reverse direction even when candidate loses confidence comparison.
+                existing["reverse_mask"] = bool(existing.get("reverse_mask", False)) or bool(candidate_copy.get("reverse_mask", False))
             merged_into_existing = True
             break
 
@@ -431,13 +444,21 @@ def merge_detections(detections1, detections2, iou_threshold=0.5):
                     # Save primary label before update — best.pt helper labels must not
                     # overwrite main.pt primary labels, or masking will skip the region.
                     saved_label = det1["label"]
+                    saved_reverse = bool(det1.get("reverse_mask", False)) or _label_implies_reverse_mask(saved_label)
                     det1.update(det2)  # take best.pt's higher confidence
                     if saved_label in _PRIMARY_LABELS and det2["label"] in _HELPER_LABELS:
                         det1["label"] = saved_label  # restore primary label
+                    # Preserve reverse direction if existing winner was anticlockwise.
+                    det1["reverse_mask"] = bool(det1.get("reverse_mask", False)) or saved_reverse or _label_implies_reverse_mask(det2.get("label", ""))
+                else:
+                    # Preserve reverse direction even when det2 is not chosen as winner.
+                    det1["reverse_mask"] = bool(det1.get("reverse_mask", False)) or _label_implies_reverse_mask(det2.get("label", ""))
                 is_duplicate = True
                 break
         if not is_duplicate:
-            merged.append(dict(det2))
+            det2_copy = dict(det2)
+            det2_copy["reverse_mask"] = bool(det2_copy.get("reverse_mask", False)) or _label_implies_reverse_mask(det2_copy.get("label", ""))
+            merged.append(det2_copy)
 
     # Dedup once more after cross-model merge so overlapping Aadhaar crops do not
     # leave repeated number/QR detections in the final merged list.
@@ -568,7 +589,7 @@ def _first_8_digit_region_from_ocr_tokens(texts, boxes, crop_w, crop_h, rotated_
     return (min(starts), max(ends), horizontal)
 
 
-def _ocr_verify_and_mask_number(image, box, label, ocr, stats=None):
+def _ocr_verify_and_mask_number(image, box, label, ocr, stats=None, reverse_hint: bool = False):
     """
     Try to read digits from a YOLO number bbox via OCR and mask first 8 precisely.
 
@@ -617,7 +638,7 @@ def _ocr_verify_and_mask_number(image, box, label, ocr, stats=None):
 
         # Primary: OCR token-bbox based span for first 8 digits.
         # This avoids char-count fraction drift and reduces 9th-digit bleed.
-        rotated_180 = (label.lower() == 'number_anticlockwise')
+        rotated_180 = (label.lower() == 'number_anticlockwise') or bool(reverse_hint)
         bbox_region = _first_8_digit_region_from_ocr_tokens(
             texts,
             boxes,
@@ -664,7 +685,7 @@ def _ocr_verify_and_mask_number(image, box, label, ocr, stats=None):
             )
             log.info(
                 f"OCR verify: bbox-mask unavailable -> proportional fallback region={mask_region} "
-                f"token_count={len(texts)}"
+                f"token_count={len(texts)} reverse_hint={reverse_hint}"
             )
 
         if stats is not None:
@@ -726,6 +747,7 @@ def mask_yolo_detections(image, merged_detections, debug=False, stats=None, ocr=
                 log.info(f"QR skipped (outside Aadhaar bbox): box=[{x1},{y1},{x2},{y2}]")
         elif "number" in label and conf > 0.3:
             report_data["is_number"] += 1
+            reverse_hint = bool(det.get("reverse_mask", False))
             try:
                 already_masked = check_image_text(image, det["box"], det["label"], stats=stats, ocr=ocr)
             except Exception:
@@ -733,7 +755,7 @@ def mask_yolo_detections(image, merged_detections, debug=False, stats=None, ocr=
             if not already_masked:
                 # Primary: OCR-verified digit masking (char-position-aware fraction)
                 image, ocr_success = _ocr_verify_and_mask_number(
-                    image, det["box"], det["label"], ocr, stats=stats
+                    image, det["box"], det["label"], ocr, stats=stats, reverse_hint=reverse_hint
                 )
                 if not ocr_success:
                     # Safety rule: do NOT fallback-mask weak helper labels (e.g. is_number)
@@ -742,7 +764,7 @@ def mask_yolo_detections(image, merged_detections, debug=False, stats=None, ocr=
                     if is_primary_number_label:
                         # Fallback: proportional masking. For Number_anticlockwise,
                         # reverse direction so original first 8 digits remain the masked side.
-                        reverse_fallback = (label == "number_anticlockwise")
+                        reverse_fallback = (label == "number_anticlockwise") or reverse_hint
                         mask_region = compute_digit_mask_region(det["box"], reverse=reverse_fallback)
                         cv2.rectangle(
                             image,
