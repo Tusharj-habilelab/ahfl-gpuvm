@@ -196,7 +196,10 @@ def run_full_gate_scoring(
         if d.get("label", "").lower() == "aadhaar"
     ]
     aadhaar_boxes = [d["box"] for d in aadhaar_dets]
-    log.info(f"Gate: {len(aadhaar_boxes)} Aadhaar card boxes found, score={score:.4f}")
+    # NOTE: `score` is computed later after best.pt merge + composite scoring.
+    # Keep this early log free of `score` to avoid unbound-local warnings in page loop.
+    # log.info(f"Gate: {len(aadhaar_boxes)} Aadhaar card boxes found, score={score:.4f}")
+    log.info(f"Gate: {len(aadhaar_boxes)} Aadhaar card boxes found")
 
     # Step 5: Run best.pt on each Aadhaar crop (RGB)
     if aadhaar_boxes:
