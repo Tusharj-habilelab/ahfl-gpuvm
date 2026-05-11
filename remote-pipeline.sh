@@ -26,17 +26,16 @@ echo "Uploading: $IMG"
 scp -i ~/.ssh/ahfl_server "$IMG" \
   "kisandep@20.244.26.183:/tmp/test_input.png"
 
-# NOTE: Sync latest local masking logic to remote runtime path so tests include
-# in-progress fixes before commit/push.
-scp -i ~/.ssh/ahfl_server \
-  "/Users/tusharjain/projects/AHFL/AHFL-GPU/ahfl-working-Gpu/core/ocr/masking.py" \
-  "kisandep@20.244.26.183:/ahfl-masking-1.1/core/ocr/masking.py"
+# # NOTE: Sync latest local masking logic to remote runtime path so tests include
+# # in-progress fixes before commit/push.
+# scp -i ~/.ssh/ahfl_server \
+#   "
 
 ssh -i ~/.ssh/ahfl_server kisandep@20.244.26.183 "
 # NOTE: Sync remote repo before run so latest masking/rotation fixes are executed.
 cd /ahfl-masking-1.1 && \
 source /ahfl-masking-1.1/venv-paddle3.2.1-ocr3.4.0/bin/activate && \
-git pull --ff-only && \
+git pull origin cpu-testing && \
 export MODEL_MAIN=/ahfl-models/main.pt && \
 export MODEL_BEST=/ahfl-models/best.pt && \
 export MODEL_FRONT_BACK=/ahfl-models/front_back_detect.pt && \
