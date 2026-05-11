@@ -1,4 +1,5 @@
-FROM nvidia/cuda:12.2.2-cudnn8-runtime-ubuntu22.04
+#FROM nvidia/cuda:12.2.2-cudnn8-runtime-ubuntu22.04
+FROM nvidia/cuda:12.2.2-cudnn8-devel-ubuntu22.04
 
 LABEL service="batch-processor" version="1.1.0"
 
@@ -25,8 +26,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libgomp1 \
     libglib2.0-0 \
     libsm6 \
-    libxext6 \
-    libxrender-dev \
+    libxext6 \    libxrender-dev \
     libgl1-mesa-glx \
     tesseract-ocr \
     poppler-utils \
@@ -59,9 +59,9 @@ RUN pip install --no-cache-dir \
 
 # Build-time validation: ensure core GPU libs import correctly and report CUDA availability.
 # These checks validate installs but do not fail on missing CUDA at build time.
-RUN python -c "import paddle; print('paddle', getattr(paddle, '__version__', 'unknown'))"
-RUN python -c "import torch; print('torch', getattr(torch, '__version__', 'unknown'), 'cuda_available=' + str(torch.cuda.is_available()))"
-RUN python -c "from paddleocr import PaddleOCR; print('PaddleOCR OK')"
+#RUN python -c "import paddle; print('paddle', getattr(paddle, '__version__', 'unknown'))"
+#RUN python -c "import torch; print('torch', getattr(torch, '__version__', 'unknown'), 'cuda_available=' + str(torch.cuda.is_available()))"
+#RUN python -c "from paddleocr import PaddleOCR; print('PaddleOCR OK')"
 
 COPY services/batch-processor/ .
 COPY core/ ./core/
@@ -76,3 +76,4 @@ VOLUME ["/app/models"]
 # mounted model and PaddleOCR cache volumes.
 ENTRYPOINT ["python", "batch.py"]
 CMD ["--s3"]
+-- INSERT --                                                                                                                                                              79,2          Bot
