@@ -15,7 +15,7 @@ python-multipart==0.0.9
 pydantic==2.7.0
 
 # ML / Vision — GPU Variants
-# Installed in Dockerfile from Paddle official cu121 index.
+# Installed in Dockerfile from Paddle official cu126 index.
 # Keep commented here to avoid duplicate installs/resolution conflicts.
 # paddlepaddle-gpu==3.3.0
 paddleocr==3.4.0

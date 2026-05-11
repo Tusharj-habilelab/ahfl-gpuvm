@@ -269,7 +269,8 @@ def _process_form_lane(
         {"text": t, "coordinates": b, "confidence": c}
         for t, b, c in zip(all_texts, all_boxes, all_confidences)
     ]
-    detected_words = find_aadhaar_patterns(tokens_list)
+    # Form lane: enable OCR-only handwritten/noise recovery patterns for Bug 1.
+    detected_words = find_aadhaar_patterns(tokens_list, form_lane_only=True)
     image = mask_ocr_detections(image, detected_words, tokens_list)
     # NOTE: No fallback OCR pass here — form lane already ran OCR on the full image above.
     # A second pass would be identical and wasteful. Card lane handles its own fallback separately.
@@ -394,7 +395,8 @@ def _process_card_like_lane(
         {"text": t, "coordinates": b, "confidence": c}
         for t, b, c in zip(all_texts, all_boxes, all_confidences)
     ]
-    detected_words = find_aadhaar_patterns(tokens_list)
+    # Card/uncertain lane: keep legacy OCR pattern behavior (no form-lane extensions).
+    detected_words = find_aadhaar_patterns(tokens_list, form_lane_only=False)
     image = mask_ocr_detections(image, detected_words, tokens_list)
 
     # Rotate back to original orientation after all masking is complete.

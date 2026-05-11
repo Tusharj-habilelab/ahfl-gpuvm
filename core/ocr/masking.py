@@ -215,6 +215,47 @@ def is_twelve_digit_number(s: str) -> bool:
     return bool(re.fullmatch(r'\d{12}', s))
 
 
+# OCR handwriting/scan noise map for digit recovery in form-lane Aadhaar patterns.
+_OCR_DIGIT_NOISE_TRANSLATION = str.maketrans({
+    "o": "0", "O": "0", "D": "0", "Q": "0",
+    "i": "1", "I": "1", "l": "1", "L": "1", "|": "1", "!": "1",
+    "z": "2", "Z": "2",
+    "s": "5", "S": "5",
+    "g": "6", "G": "6",
+    "b": "8", "B": "8",
+    "q": "9",
+})
+
+
+def _normalize_ocr_digits(text: str) -> str:
+    """Normalize common OCR noise and keep only digits for Aadhaar checks."""
+    normalized = str(text or "").translate(_OCR_DIGIT_NOISE_TRANSLATION)
+    return re.sub(r"[^0-9]", "", normalized)
+
+
+def _merge_token_coordinates(tokens_list: list, start_idx: int, end_idx: int):
+    """Merge token polygons from [start_idx, end_idx) into one bounding polygon."""
+    coords = []
+    for idx in range(start_idx, end_idx):
+        coords.extend(tokens_list[idx].get("coordinates", []))
+    if not coords:
+        return None
+    x1 = min(p[0] for p in coords)
+    y1 = min(p[1] for p in coords)
+    x2 = max(p[0] for p in coords)
+    y2 = max(p[1] for p in coords)
+    return [(x1, y1), (x2, y1), (x2, y2), (x1, y2)]
+
+
+def _coords_bbox_key(coords) -> tuple:
+    """Create a stable bbox key for simple duplicate suppression."""
+    x1 = int(min(p[0] for p in coords))
+    y1 = int(min(p[1] for p in coords))
+    x2 = int(max(p[0] for p in coords))
+    y2 = int(max(p[1] for p in coords))
+    return (x1, y1, x2, y2)
+
+
 def extract_number_coordinates(text: str, bbox):
     """Extract 12-digit number coordinates from OCR text within a bounding box."""
     match = re.search(r"\b\d{12}\b", text)
@@ -732,7 +773,7 @@ def mask_yolo_detections(image, merged_detections, debug=False, stats=None, ocr=
 # OCR-Based Masking (Pattern matching on extracted text)
 # ============================================================
 
-def find_aadhaar_patterns(tokens_list):
+def find_aadhaar_patterns(tokens_list, form_lane_only: bool = False):
     """
     Scan OCR tokens for Aadhaar number patterns.
     Returns a list of detected_words dicts with coordinates and type.
@@ -906,6 +947,44 @@ def find_aadhaar_patterns(tokens_list):
                             "coordinates": tokens_list[i + 1]["coordinates"],
                             "type": "aadhar_table_pmy_hw"
                         })
+
+    # Form-lane handwritten recovery: OCR-only pattern rescue for noisy 12-digit strings.
+    # IMPORTANT: This path is form-lane-only by flag and does not use YOLO signals.
+    if form_lane_only and (aadhar_found or crif_found or hw_found or pmay_found):
+        seen_form_hw = set()
+        for i in range(n):
+            # Check contiguous 1/2/3-token spans to recover merged/split handwritten digits.
+            for span in (1, 2, 3):
+                end = i + span
+                if end > n:
+                    break
+                combined_text = "".join(tokens_list[k]["text"] for k in range(i, end))
+                cleaned = _normalize_ocr_digits(combined_text)
+                if len(cleaned) != 12 or not is_valid_aadhaar_number(cleaned):
+                    continue
+
+                merged_coords = _merge_token_coordinates(tokens_list, i, end)
+                if not merged_coords:
+                    continue
+
+                bbox_key = _coords_bbox_key(merged_coords)
+                if bbox_key in seen_form_hw:
+                    continue
+
+                # Avoid duplicating an existing detection with same region.
+                if any(_coords_bbox_key(dw["coordinates"]) == bbox_key for dw in detected_words):
+                    seen_form_hw.add(bbox_key)
+                    continue
+
+                seen_form_hw.add(bbox_key)
+                detected_words.append({
+                    "text": cleaned,
+                    "coordinates": merged_coords,
+                    "type": "number_form_hw_noise"
+                })
+                log.info(
+                    f"Form lane OCR recovery: masked noisy Aadhaar span tokens={i}:{end} value={cleaned}"
+                )
 
     # C3 FIX: Unconditional Verhoeff safety pass
     # If aadhar_found/crif_found is False (keyword corrupted by OCR), still mask valid 12-digit numbers.

@@ -37,11 +37,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN pip install --upgrade --no-cache-dir pip setuptools wheel
 
-# PaddlePaddle GPU — cu121 index for CUDA 12.2 host (correct ABI match)
+# PaddlePaddle GPU — cu121 channel does not publish paddlepaddle-gpu 3.3.0.
+# Use cu126 channel (validated package exists for cp310 linux_x86_64).
 # Single source install in Dockerfile; keep commented in requirements.txt.
 RUN pip install --no-cache-dir \
     paddlepaddle-gpu==3.3.0 \
-    -i https://www.paddlepaddle.org.cn/packages/stable/cu121/
+    -i https://www.paddlepaddle.org.cn/packages/stable/cu126/
 
 # PyTorch GPU
 # Single source install in Dockerfile; keep commented in requirements.txt.
