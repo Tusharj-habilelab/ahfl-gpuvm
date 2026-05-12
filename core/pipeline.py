@@ -359,6 +359,13 @@ def _process_card_like_lane(
         }
         report["mask_counts"] = _report_mask_counts(report)
         log.info(f"{lane_name} lane: SKIPPED reason={checks['skip_reason']}")
+        
+        # CRITICAL: Rotate back to original orientation even on skip.
+        # Otherwise tilted documents remain tilted in output.
+        if best_angle != 0:
+            image = rotate_back_to_original_space(image, int(best_angle), original_shape)
+            log.info(f"{lane_name} lane: rotated back to original orientation on skip (inverse of {best_angle}°)")
+        
         return image, report
 
     pvc_stats = {"pvc_cards_processed": 0, "pvc_cards_masked": 0}
