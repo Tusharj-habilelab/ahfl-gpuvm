@@ -908,13 +908,17 @@ def run_debug(input_path: Path, out_dir: Path):
             # Keep parity with core.pipeline: include detected YOLO counts even when
             # skip/PAN short-circuits masking.
             yolo_report = _derive_yolo_report_from_dets(gate_result.get("merged_dets", []))
-            if winner_angle not in (0, 90, 180, 270):
-                rotate_back_info["note"] = "non_cardinal_winner_angle_no_inverse_applied"
             _save_image(folders["card"] / "430_after_pvc_mask.png", work_img)
             _save_image(folders["card"] / "440_after_yolo_mask.png", work_img)
             _save_image(folders["card"] / "450_card_ocr_patterns_overlay.png", work_img)
             _save_image(folders["card"] / "460_after_ocr_mask.png", work_img)
-            _save_image(folders["card"] / "499_final.png", work_img)
+            # Mirror core.pipeline skip-path: rotate back to original orientation before saving final.
+            skip_final = work_img
+            if winner_angle != 0:
+                skip_final = rotate_back_to_original_space(skip_final, int(winner_angle), original_shape)
+                rotate_back_info["inverse_angle_applied"] = int(-winner_angle)
+                rotate_back_info["rotation_applied"] = True
+            _save_image(folders["card"] / "499_final.png", skip_final)
         else:
             after_pvc = work_img.copy()
             if aadhaar_crops:
