@@ -326,17 +326,45 @@ def _run_gate_once(rotated: np.ndarray) -> Dict[str, Any]:
         merged_all = merge_detections(fb_filtered, best_full)
 
     aadhaar_confs = [d["conf"] for d in fb_filtered if str(d.get("label", "")).lower() == "aadhaar"]
+
+    # NOTE: Mirror run_full_gate_scoring composite formula exactly so visualizer winner_angle
+    # matches production. Old formula (max + count*0.05 + 0.1) diverged from production.
+    number_confs_all = [
+        d["conf"] for d in merged_all
+        if "number" in d.get("label", "").lower()
+        and "masked" not in d.get("label", "").lower()
+        and "xx" not in d.get("label", "").lower()
+    ]
+    qr_confs_all = [
+        d["conf"] for d in merged_all
+        if "qr" in d.get("label", "").lower()
+        and "masked" not in d.get("label", "").lower()
+    ]
+    best_number_conf = max(number_confs_all) if number_confs_all else 0.0
+    best_qr_conf = max(qr_confs_all) if qr_confs_all else 0.0
+    target_count = len(number_confs_all) + len(qr_confs_all)
+
     if aadhaar_confs:
-        score = max(aadhaar_confs) + min(len(aadhaar_confs), 3) * 0.05 + 0.1
+        avg_aadhaar_conf = sum(aadhaar_confs) / len(aadhaar_confs)
+        max_aadhaar_conf = max(aadhaar_confs)
+        count_bonus = min(len(aadhaar_confs), 3) * 0.05
+        aadhaar_base = max_aadhaar_conf * 0.7 + avg_aadhaar_conf * 0.3
+        best_inside_confs = []
+        for crop_info in crop_details:
+            for det in crop_info.get("merged_inside", []):
+                lbl = det.get("label", "").lower()
+                if ("number" in lbl or "qr" in lbl) and "masked" not in lbl and "xx" not in lbl:
+                    best_inside_confs.append(det["conf"])
+        best_confirmation = max(best_inside_confs) * 0.1 if best_inside_confs else 0.0
+        aadhaar_score = aadhaar_base + count_bonus + 0.1 + best_confirmation
     else:
         raw_aadhaar_confs = [d["conf"] for d in main_dets if str(d.get("label", "")).lower() == "aadhaar"]
-        if raw_aadhaar_confs:
-            score = max(raw_aadhaar_confs) * 0.5
-        else:
-            score = len(main_dets) * 0.01
+        aadhaar_score = max(raw_aadhaar_confs) * 0.5 if raw_aadhaar_confs else 0.0
 
-    best_number_confs = [d["conf"] for d in merged_all if "number" in str(d.get("label", "")).lower() and d.get("model") == "best"]
-    best_qr_confs = [d["conf"] for d in merged_all if "qr" in str(d.get("label", "")).lower() and d.get("model") == "best"]
+    score = aadhaar_score + best_number_conf * 0.15 + best_qr_conf * 0.10 + min(target_count, 5) * 0.02
+
+    best_number_confs = number_confs_all
+    best_qr_confs = qr_confs_all
 
     return {
         "score": float(score),
