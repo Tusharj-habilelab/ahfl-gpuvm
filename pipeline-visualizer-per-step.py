@@ -912,10 +912,13 @@ def run_debug(input_path: Path, out_dir: Path):
         _save_image(folders["card"] / "420_card_ocr_aadhaar_keywords.png", kw_overlay)
 
         aadhaar_confirmed = bool(aadhaar_crops) and is_aadhaar_card_confirmed(all_texts)
+        # Mirror pipeline.py: pass YOLO fb_confirmed so PAN/skip-keyword noise can't
+        # silently zero out masking on a real Aadhaar card whose OCR confirmation failed.
         checks = _verify_skip_pan(
             all_texts,
             skip_keywords_enabled=True,
             aadhaar_confirmed=aadhaar_confirmed,
+            gate_fb_confirmed=bool(gate_result.get("fb_confirmed", False)),
         )
         yolo_report = {
             "is_aadhaar": 0,
@@ -962,7 +965,10 @@ def run_debug(input_path: Path, out_dir: Path):
                 and float(d.get("conf", 0.0)) > 0.3
                 for d in merged_dets
             )
-            qr_masking_allowed = bool(aadhaar_confirmed) or has_primary_number_det
+            # NOTE: Mirror core.pipeline gate: allow QR masking when FB gate confirms Aadhaar,
+            # even if OCR verification fails and only helper number labels are present.
+            gate_fb_confirmed = bool(gate_result.get("fb_confirmed", False))
+            qr_masking_allowed = bool(aadhaar_confirmed) or has_primary_number_det or gate_fb_confirmed
 
             after_yolo, yolo_report = mask_yolo_detections(
                 after_pvc.copy(),
@@ -971,6 +977,7 @@ def run_debug(input_path: Path, out_dir: Path):
                 stats={},
                 ocr=ocr,
                 aadhaar_boxes=(gate_result.get("aadhaar_boxes") if qr_masking_allowed else []),
+                gate_fb_confirmed=gate_fb_confirmed,
             )
             _save_image(folders["card"] / "440_after_yolo_mask.png", after_yolo)
 

@@ -99,7 +99,7 @@ BATCH_PATH_SKIP_KEYWORDS = tuple(
 # ────────────────────────────────────────────────────────────
 
 ROUTER_ENABLED = os.environ.get("ROUTER_ENABLED", "true").lower() == "true"
-ROUTER_CONFIDENCE_THRESHOLD = float(os.environ.get("ROUTER_CONFIDENCE_THRESHOLD", "0.55"))
+ROUTER_CONFIDENCE_THRESHOLD = float(os.environ.get("ROUTER_CONFIDENCE_THRESHOLD", "0.4")) #chnaged from 0.5 to 0.4 to accomodate more documents in card gate
 
 ROUTER_OCR_LITE_MAX_TOKENS = int(os.environ.get("ROUTER_OCR_LITE_MAX_TOKENS", "30"))
 ROUTER_OCR_LITE_MAX_SIDE = int(os.environ.get("ROUTER_OCR_LITE_MAX_SIDE", "800"))

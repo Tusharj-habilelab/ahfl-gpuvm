@@ -116,13 +116,20 @@ def _verify_skip_pan(
     *,
     skip_keywords_enabled: bool,
     aadhaar_confirmed: bool,
+    gate_fb_confirmed: bool = False,
 ) -> Dict[str, Any]:
     """Run skip-keywords and PAN checks before masking."""
     combined_text = " ".join(all_texts).lower() if all_texts else ""
 
+    # Treat YOLO fb_confirmed as Aadhaar confirmation alongside OCR-based check.
+    # Real Aadhaar cards sometimes fail OCR verification (low contrast, rotation,
+    # noisy text) yet the gate has already detected the card via main+best+fb models.
+    # Without this, skip_keywords or PAN noise can silently zero out masking.
+    confirmed = bool(aadhaar_confirmed) or bool(gate_fb_confirmed)
+
     # Do not apply generic skip-keyword logic to confirmed Aadhaar card text.
     # This avoids false skip on valid card lane documents.
-    if skip_keywords_enabled and combined_text and not aadhaar_confirmed:
+    if skip_keywords_enabled and combined_text and not confirmed:
         matched_kw = next((kw for kw in SKIP_KEYWORDS if kw in combined_text), None)
         if matched_kw:
             return {
@@ -132,7 +139,7 @@ def _verify_skip_pan(
                 "pan_found": False,
             }
 
-    pan_found = bool(all_texts) and (not aadhaar_confirmed) and is_pan_card(all_texts)
+    pan_found = bool(all_texts) and (not confirmed) and is_pan_card(all_texts)
     if pan_found:
         return {
             "skipped": True,
@@ -334,6 +341,7 @@ def _process_card_like_lane(
         all_texts,
         skip_keywords_enabled=skip_keywords_enabled,
         aadhaar_confirmed=aadhaar_confirmed,
+        gate_fb_confirmed=bool(gate_result.get("fb_confirmed", False)),
     )
 
     if checks["skipped"]:
@@ -387,7 +395,10 @@ def _process_card_like_lane(
         and float(d.get("conf", 0.0)) > 0.3
         for d in merged_dets
     )
-    qr_masking_allowed = bool(aadhaar_confirmed) or has_primary_number_det
+    # NOTE: Some valid Aadhaar pages fail OCR verification but are still gate-confirmed
+    # via FB+YOLO. In those cases, keep QR masking enabled with Aadhaar-box spatial checks.
+    gate_fb_confirmed = bool(gate_result.get("fb_confirmed", False))
+    qr_masking_allowed = bool(aadhaar_confirmed) or has_primary_number_det or gate_fb_confirmed
 
     image, yolo_report = mask_yolo_detections(
         image,
@@ -396,6 +407,7 @@ def _process_card_like_lane(
         stats=stats,
         ocr=ocr,
         aadhaar_boxes=(gate_result.get("aadhaar_boxes") if qr_masking_allowed else []),
+        gate_fb_confirmed=gate_fb_confirmed,
     )
 
     tokens_list = [

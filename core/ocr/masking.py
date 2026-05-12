@@ -725,7 +725,7 @@ def _ocr_verify_and_mask_number(image, box, label, ocr, stats=None, reverse_hint
         return image, False
 
 
-def mask_yolo_detections(image, merged_detections, debug=False, stats=None, ocr=None, aadhaar_boxes=None):
+def mask_yolo_detections(image, merged_detections, debug=False, stats=None, ocr=None, aadhaar_boxes=None, gate_fb_confirmed=False):
     """Apply black rectangle masking based on merged YOLO detections.
 
     Number masking flow:
@@ -787,8 +787,12 @@ def mask_yolo_detections(image, merged_detections, debug=False, stats=None, ocr=
                 if not ocr_success:
                     # Safety rule: do NOT fallback-mask weak helper labels (e.g. is_number)
                     # unless OCR verified the Aadhaar number. This blocks large false-positive masks.
+                    # Exception: when gate_fb_confirmed=True, the FB/YOLO gate has already
+                    # confirmed the page is an Aadhaar card. In that case, proportional fallback
+                    # is safe and prevents silently leaving numbers unmasked on real cards.
                     is_primary_number_label = label in {"number", "number_anticlockwise", "number_inverse"}
-                    if is_primary_number_label:
+                    helper_fallback_allowed = bool(gate_fb_confirmed) and bool(aadhaar_boxes) and is_inside_aadhaar_by_area(det["box"], aadhaar_boxes)
+                    if is_primary_number_label or helper_fallback_allowed:
                         # Fallback: proportional masking. For Number_anticlockwise,
                         # reverse direction so original first 8 digits remain the masked side.
                         reverse_fallback = (label == "number_anticlockwise") or reverse_hint
@@ -799,7 +803,8 @@ def mask_yolo_detections(image, merged_detections, debug=False, stats=None, ocr=
                             (mask_region[2], mask_region[3]),
                             color, -1
                         )
-                        log.info(f"number mask: proportional-fallback label={det['label']} region={mask_region}")
+                        reason = "primary-label" if is_primary_number_label else "helper-label gate-confirmed"
+                        log.info(f"number mask: proportional-fallback ({reason}) label={det['label']} region={mask_region}")
                         report_data["is_number_masked"] += 1
                     else:
                         log.info(
