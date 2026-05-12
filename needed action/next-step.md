@@ -13,6 +13,42 @@ What is #9?
 What is #10?
 - `lane_chosen` in file summary always picks the first page's lane. For mixed PDFs (some pages form, some card), this can misrepresent the file. No processing break, but reporting truth is reduced.
 
+## Pending: failedPages + has_page_errors in DynamoDB (12-05-2026)
+
+File: `services/batch-processor/batch.py` → `_update_to_completed()`
+
+Problem:
+- `totalPages=13`, `scannedPages=4`, but no top-level failed count.
+- Status stays `COMPLETED` even when 9/13 pages errored.
+- `has_page_errors` field missing — can't filter partial failures without scanning `pageReports`.
+
+Change to apply (after GPU flow test passes):
+
+1. Add after `scanned = ...` line:
+```python
+failed = total - scanned
+has_page_errors = failed > 0
+```
+
+2. Add to UpdateExpression string:
+```
+"totalPages = :tp, scannedPages = :sp, maskedPages = :mp, failedPages = :fp, has_page_errors = :hpe, "
+```
+
+3. Add to ExpressionAttributeValues:
+```python
+":fp": failed,
+":hpe": has_page_errors,
+```
+
+Result per record:
+- `failedPages` = int count of pages with errors
+- `has_page_errors` = true/false (filterable with DynamoDB FilterExpression)
+
+Do NOT apply until GPU flow test is verified working.
+
+---
+
 ## Static warnings status (06-05-2026)
 
 Blocker now?
