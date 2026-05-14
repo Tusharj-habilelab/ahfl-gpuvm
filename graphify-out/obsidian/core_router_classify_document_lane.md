@@ -1,11 +1,11 @@
 ---
-id: core_pipeline_py_import_core_router_classify_document_lane
+id: pipeline_visualizer_per_step_py_import_core_router_classify_document_lane
 type: Module
-source: ./core/pipeline.py
-community: 2
-community_label: _verify_skip_pan()
+source: ./pipeline-visualizer-per-step.py
+community: 0
+community_label: _draw_poly_regions()
 ---
 
 ## Connections
 
-- [[pipeline]] (imports)
+- [[pipeline-visualizer-per-step]] (imports)

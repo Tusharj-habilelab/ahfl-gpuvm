@@ -3,7 +3,7 @@
 - **ID:** `core_router_py`
 - **Type:** File
 - **File:** `./core/router.py`
-- **Community:** 0 (typing.Tuple)
+- **Community:** 2 (typing.Tuple)
 
 ## Relationships
 

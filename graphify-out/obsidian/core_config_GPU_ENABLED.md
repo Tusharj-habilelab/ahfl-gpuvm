@@ -1,11 +1,11 @@
 ---
-id: services_masking_engine_engine_py_import_core_config_gpu_enabled
+id: pipeline_visualizer_per_step_py_import_core_config_gpu_enabled
 type: Module
-source: ./services/masking-engine/engine.py
-community: 3
-community_label: startup_event()
+source: ./pipeline-visualizer-per-step.py
+community: 0
+community_label: _draw_poly_regions()
 ---
 
 ## Connections
 
-- [[engine]] (imports)
+- [[pipeline-visualizer-per-step]] (imports)

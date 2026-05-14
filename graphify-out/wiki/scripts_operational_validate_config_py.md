@@ -3,7 +3,7 @@
 - **ID:** `scripts_operational_validate_config_py`
 - **Type:** File
 - **File:** `./scripts/operational/validate_config.py`
-- **Community:** 1 (check())
+- **Community:** 3 (check())
 
 ## Relationships
 

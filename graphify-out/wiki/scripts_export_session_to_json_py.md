@@ -3,7 +3,7 @@
 - **ID:** `scripts_export_session_to_json_py`
 - **Type:** File
 - **File:** `./scripts/export_session_to_json.py`
-- **Community:** 3 (to_ms())
+- **Community:** 5 (to_ms())
 
 ## Relationships
 

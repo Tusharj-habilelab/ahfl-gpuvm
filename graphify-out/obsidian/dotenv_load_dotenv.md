@@ -1,11 +1,11 @@
 ---
-id: services_masking_engine_engine_py_import_dotenv_load_dotenv
+id: scripts_operational_validate_config_py_import_dotenv_load_dotenv
 type: Module
-source: ./services/masking-engine/engine.py
+source: ./scripts/operational/validate_config.py
 community: 3
-community_label: startup_event()
+community_label: check()
 ---
 
 ## Connections
 
-- [[engine]] (imports)
+- [[validate_config]] (imports)
