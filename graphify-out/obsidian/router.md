@@ -2,7 +2,7 @@
 id: core_router_py
 type: File
 source: ./core/router.py
-community: 0
+community: 2
 community_label: typing.Tuple
 ---
 

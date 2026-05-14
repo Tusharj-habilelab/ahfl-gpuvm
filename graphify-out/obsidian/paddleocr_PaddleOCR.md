@@ -1,11 +1,11 @@
 ---
-id: core_ocr_paddle_py_import_paddleocr_paddleocr
+id: scripts_operational_validate_config_py_import_paddleocr_paddleocr
 type: Module
-source: ./core/ocr/paddle.py
-community: 9
-community_label: scale_adapted_ocr_results()
+source: ./scripts/operational/validate_config.py
+community: 3
+community_label: check()
 ---
 
 ## Connections
 
-- [[paddle]] (imports)
+- [[validate_config]] (imports)

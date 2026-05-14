@@ -2,7 +2,7 @@
 id: core_router_py_contains_form_signals
 type: Function
 source: ./core/router.py
-community: 5
+community: 7
 community_label: _normalize_text()
 ---
 

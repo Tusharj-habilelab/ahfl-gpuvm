@@ -1,11 +1,11 @@
 ---
-id: core_db_log_writer_py_import_typing_list
+id: pipeline_visualizer_per_step_py_import_typing_list
 type: Module
-source: ./core/db/log_writer.py
-community: 11
-community_label: write_mask_log()
+source: ./pipeline-visualizer-per-step.py
+community: 0
+community_label: _draw_poly_regions()
 ---
 
 ## Connections
 
-- [[log_writer]] (imports)
+- [[pipeline-visualizer-per-step]] (imports)

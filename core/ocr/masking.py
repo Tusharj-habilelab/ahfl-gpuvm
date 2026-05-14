@@ -256,33 +256,6 @@ def _coords_bbox_key(coords) -> tuple:
     return (x1, y1, x2, y2)
 
 
-def _token_span_is_right_to_left(tokens_list: list, start_idx: int, end_idx: int) -> bool:
-    """
-    Infer OCR read direction for a token span.
-
-    Returns True when token centers move right->left (or bottom->top for vertical text).
-    This lets form-lane recovery mask the original first 8 digits, not the trailing 8.
-    """
-    centers = []
-    for idx in range(start_idx, end_idx):
-        coords = tokens_list[idx].get("coordinates", [])
-        if not coords:
-            continue
-        xs = [p[0] for p in coords]
-        ys = [p[1] for p in coords]
-        centers.append(((min(xs) + max(xs)) / 2.0, (min(ys) + max(ys)) / 2.0))
-
-    if len(centers) < 2:
-        return False
-
-    start_center = centers[0]
-    end_center = centers[-1]
-    horizontal = abs(end_center[0] - start_center[0]) >= abs(end_center[1] - start_center[1])
-    if horizontal:
-        return end_center[0] < start_center[0]
-    return end_center[1] < start_center[1]
-
-
 def extract_number_coordinates(text: str, bbox):
     """Extract 12-digit number coordinates from OCR text within a bounding box."""
     match = re.search(r"\b\d{12}\b", text)
@@ -386,9 +359,17 @@ def _detection_family(label: str) -> str:
     return normalized
 
 
+def _label_to_rotation(label: str):
+    """Return cv2 rotation code for labels that need crop rotation before OCR, or None."""
+    l = str(label or "").lower()
+    if l in ("number_anticlockwise", "number_inverse"):
+        return cv2.ROTATE_180
+    return None
+
+
 def _label_implies_reverse_mask(label: str) -> bool:
     """Return True when label semantics imply reverse first-8 masking direction."""
-    return str(label or "").lower() == "number_anticlockwise"
+    return str(label or "").lower() in ("number_anticlockwise", "number_inverse")
 
 
 def _deduplicate_overlapping_detections(detections, iou_threshold=0.5):
@@ -521,8 +502,9 @@ def check_image_text(image, coordinates, label, stats=None, ocr=None):
     start_time = time.perf_counter() if stats is not None else None
     x1, y1, x2, y2 = [int(c) for c in coordinates]
     cropped_img = image[y1:y2, x1:x2]
-    if label == 'Number_anticlockwise':
-        cropped_img = cv2.rotate(cropped_img, cv2.ROTATE_180)
+    rotation = _label_to_rotation(label)
+    if rotation is not None:
+        cropped_img = cv2.rotate(cropped_img, rotation)
 
     try:
         # ocr must always be the shared singleton passed from pipeline.py — never None.
@@ -636,8 +618,9 @@ def _ocr_verify_and_mask_number(image, box, label, ocr, stats=None, reverse_hint
     log.info(f"OCR verify: label={label} box=[{x1},{y1},{x2},{y2}]")
 
     cropped = image[y1:y2, x1:x2]
-    if label.lower() == 'number_anticlockwise':
-        cropped = cv2.rotate(cropped, cv2.ROTATE_180)
+    rotation = _label_to_rotation(label)
+    if rotation is not None:
+        cropped = cv2.rotate(cropped, rotation)
 
     try:
         # ocr must always be the shared singleton passed from pipeline.py — never None.
@@ -665,7 +648,7 @@ def _ocr_verify_and_mask_number(image, box, label, ocr, stats=None, reverse_hint
 
         # Primary: OCR token-bbox based span for first 8 digits.
         # This avoids char-count fraction drift and reduces 9th-digit bleed.
-        rotated_180 = (label.lower() == 'number_anticlockwise') or bool(reverse_hint)
+        rotated_180 = (_label_to_rotation(label) == cv2.ROTATE_180) or bool(reverse_hint)
         bbox_region = _first_8_digit_region_from_ocr_tokens(
             texts,
             boxes,
@@ -701,7 +684,7 @@ def _ocr_verify_and_mask_number(image, box, label, ocr, stats=None, reverse_hint
             # Fallback retained: proportional mask when OCR token geometry is insufficient.
             # NOTE: kept for resilience on low-quality scans.
             # For Number_anticlockwise, reverse fallback direction so original first 8 are masked.
-            reverse_fallback = (label.lower() == 'number_anticlockwise')
+            reverse_fallback = _label_implies_reverse_mask(label)
             mask_region = compute_digit_mask_region([x1, y1, x2, y2], reverse=reverse_fallback)
             cv2.rectangle(
                 image,
@@ -763,6 +746,19 @@ def mask_yolo_detections(image, merged_detections, debug=False, stats=None, ocr=
         
         if "qr" in label and conf > 0.3:
             report_data["is_qr"] += 1
+            # is_qr is a helper/confirmation label from best.pt — it must NOT directly
+            # trigger masking, exactly like is_number. Only primary label "qr" masks.
+            if label == "is_qr":
+                log.info(f"QR skipped (helper label is_qr, no direct masking): box=[{x1},{y1},{x2},{y2}]")
+                continue
+            # Skip QR regions that are already a solid black rectangle (pre-masked input).
+            region = image[y1:y2, x1:x2]
+            if region.size > 0:
+                dark_ratio = np.sum(np.max(region, axis=2) < 30) / (region.shape[0] * region.shape[1])
+                if dark_ratio > 0.90:
+                    log.info(f"QR already masked (dark_ratio={dark_ratio:.2f}): box=[{x1},{y1},{x2},{y2}]")
+                    report_data["is_xx"] += 1
+                    continue
             # Spatial check: only mask QR inside Aadhaar card bbox
             if aadhaar_boxes and is_inside_aadhaar_by_area(det["box"], aadhaar_boxes):
                 cv2.rectangle(image, (x1, y1), (x2, y2), color, -1)
@@ -795,7 +791,7 @@ def mask_yolo_detections(image, merged_detections, debug=False, stats=None, ocr=
                     if is_primary_number_label or helper_fallback_allowed:
                         # Fallback: proportional masking. For Number_anticlockwise,
                         # reverse direction so original first 8 digits remain the masked side.
-                        reverse_fallback = (label == "number_anticlockwise") or reverse_hint
+                        reverse_fallback = _label_implies_reverse_mask(label) or reverse_hint
                         mask_region = compute_digit_mask_region(det["box"], reverse=reverse_fallback)
                         cv2.rectangle(
                             image,
@@ -1031,17 +1027,13 @@ def find_aadhaar_patterns(tokens_list, form_lane_only: bool = False):
                     continue
 
                 seen_form_hw.add(bbox_key)
-                # Direction hint prevents masking the wrong side when OCR token order is reversed.
-                reverse_mask = _token_span_is_right_to_left(tokens_list, i, end)
                 detected_words.append({
                     "text": cleaned,
                     "coordinates": merged_coords,
-                    "type": "number_form_hw_noise",
-                    "reverse": reverse_mask,
+                    "type": "number_form_hw_noise"
                 })
                 log.info(
-                    f"Form lane OCR recovery: masked noisy Aadhaar span tokens={i}:{end} "
-                    f"value={cleaned} reverse={reverse_mask}"
+                    f"Form lane OCR recovery: masked noisy Aadhaar span tokens={i}:{end} value={cleaned}"
                 )
 
     # C3 FIX: Unconditional Verhoeff safety pass
@@ -1101,17 +1093,6 @@ def mask_ocr_detections(image, detected_words, tokens_list=None):
             x2_next = max(p[0] for p in coords_next)
             y2_next = max(p[1] for p in coords_next)
             cv2.rectangle(image, (int(x1), int(y1)), (int(x2_next), int(y2_next)), color, -1)
-        elif dtype == "number_form_hw_noise":
-            # Use direction-aware mask region to always cover original first 8 digits.
-            reverse = bool(dw.get("reverse", False))
-            mask_region = compute_digit_mask_region([x1, y1, x2, y2], reverse=reverse)
-            cv2.rectangle(
-                image,
-                (int(mask_region[0]), int(mask_region[1])),
-                (int(mask_region[2]), int(mask_region[3])),
-                color,
-                -1,
-            )
         elif dtype == "number":
             x2_mask = int(x1 + 0.66 * w)
             cv2.rectangle(image, (int(x1), int(y1)), (int(x2_mask), int(y2)), color, -1)

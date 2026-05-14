@@ -83,7 +83,6 @@ Out of scope this pass:
 - CERSAI OCR-pattern skip in `find_aadhaar_patterns()` — affects pattern-based masking only, not YOLO masking.
 
 ---
-
 ## Static warnings status (06-05-2026)
 
 Blocker now?

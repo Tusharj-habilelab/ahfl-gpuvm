@@ -1,11 +1,11 @@
 ---
-id: scripts_inspect_yolo_models_py_import_numpy
+id: pipeline_visualizer_per_step_py_import_numpy
 type: Module
-source: ./scripts/inspect_yolo_models.py
-community: 21
-community_label: format_report()
+source: ./pipeline-visualizer-per-step.py
+community: 0
+community_label: _draw_poly_regions()
 ---
 
 ## Connections
 
-- [[inspect_yolo_models]] (imports)
+- [[pipeline-visualizer-per-step]] (imports)

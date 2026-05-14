@@ -1,11 +1,11 @@
 ---
-id: services_batch_processor_batch_py_import_botocore_exceptions_clienterror
+id: scripts_operational_validate_config_py_import_botocore_exceptions_clienterror
 type: Module
-source: ./services/batch-processor/batch.py
-community: 1
-community_label: _validate_s3_buckets()
+source: ./scripts/operational/validate_config.py
+community: 3
+community_label: check()
 ---
 
 ## Connections
 
-- [[batch]] (imports)
+- [[validate_config]] (imports)

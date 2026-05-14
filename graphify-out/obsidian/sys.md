@@ -1,11 +1,11 @@
 ---
-id: gpu_master_sync_d4_complete_py_import_sys
+id: scripts_operational_validate_config_py_import_sys
 type: Module
-source: ./GPU_MASTER_SYNC_D4_COMPLETE.py
-community: 28
-community_label: write_file()
+source: ./scripts/operational/validate_config.py
+community: 3
+community_label: check()
 ---
 
 ## Connections
 
-- [[GPU_MASTER_SYNC_D4_COMPLETE]] (imports)
+- [[validate_config]] (imports)

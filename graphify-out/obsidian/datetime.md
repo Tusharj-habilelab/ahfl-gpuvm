@@ -1,11 +1,11 @@
 ---
-id: scripts_inspect_yolo_models_py_import_datetime
+id: scripts_export_session_to_json_py_import_datetime
 type: Module
-source: ./scripts/inspect_yolo_models.py
-community: 21
-community_label: format_report()
+source: ./scripts/export_session_to_json.py
+community: 5
+community_label: to_ms()
 ---
 
 ## Connections
 
-- [[inspect_yolo_models]] (imports)
+- [[export_session_to_json]] (imports)

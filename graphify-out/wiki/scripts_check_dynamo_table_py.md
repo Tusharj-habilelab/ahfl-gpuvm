@@ -3,7 +3,7 @@
 - **ID:** `scripts_check_dynamo_table_py`
 - **Type:** File
 - **File:** `./scripts/check_dynamo_table.py`
-- **Community:** 2 (check_table())
+- **Community:** 4 (check_table())
 
 ## Relationships
 

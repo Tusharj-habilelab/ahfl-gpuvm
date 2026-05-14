@@ -362,7 +362,7 @@ No GPU wheels.
 Your log file exposes a GitHub Personal Access Token publicly:
 
 ```text
-github_pat_...
+[REDACTED_GITHUB_TOKEN]
 ```
 
 Inside `git remote -v`.

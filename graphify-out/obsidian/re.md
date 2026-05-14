@@ -1,11 +1,11 @@
 ---
-id: core_classifiers_py_import_re
+id: core_router_py_import_re
 type: Module
-source: ./core/classifiers.py
-community: 6
-community_label: normalize_aadhaar_keyword()
+source: ./core/router.py
+community: 2
+community_label: typing.Tuple
 ---
 
 ## Connections
 
-- [[classifiers]] (imports)
+- [[router]] (imports)

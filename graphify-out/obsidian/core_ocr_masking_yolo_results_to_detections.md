@@ -1,11 +1,11 @@
 ---
-id: core_aadhaar_gate_py_import_core_ocr_masking_yolo_results_to_detections
+id: pipeline_visualizer_per_step_py_import_core_ocr_masking_yolo_results_to_detections
 type: Module
-source: ./core/aadhaar_gate.py
-community: 8
-community_label: run_full_gate_scoring()
+source: ./pipeline-visualizer-per-step.py
+community: 0
+community_label: _draw_poly_regions()
 ---
 
 ## Connections
 
-- [[aadhaar_gate]] (imports)
+- [[pipeline-visualizer-per-step]] (imports)

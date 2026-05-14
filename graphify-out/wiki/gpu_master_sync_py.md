@@ -3,7 +3,7 @@
 - **ID:** `gpu_master_sync_py`
 - **Type:** File
 - **File:** `./GPU_MASTER_SYNC.py`
-- **Community:** 4 (write_file())
+- **Community:** 6 (write_file())
 
 ## Relationships
 
