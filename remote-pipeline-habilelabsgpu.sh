@@ -41,8 +41,8 @@ scp "$IMG" "${REMOTE_HOST}:${TEST_INPUT}"
 
 # NOTE: Run per-step visualizer so output structure matches old script behavior.
 ssh "${REMOTE_HOST}" "
-cd ${REMOTE_ROOT} && \
-git pull origin cpu-testing && \
+#cd ${REMOTE_ROOT} && \
+#git pull origin cpu-testing && \
 source ${REMOTE_VENV}/bin/activate && \
 export PYTHONPATH=${REMOTE_ROOT} && \
 export MODEL_MAIN=${REMOTE_MODEL_DIR}/main.pt && \
