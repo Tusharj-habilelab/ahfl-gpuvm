@@ -20,17 +20,35 @@ from paddleocr import PaddleOCR, DocImgOrientationClassification
 # Add core to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
+
+def _get_paddle_device() -> str:
+    """Return paddle device string: env override > GPU auto-detect > cpu."""
+    override = os.getenv("PADDLE_DEVICE")
+    if override:
+        return override
+    try:
+        import paddle
+        if paddle.is_compiled_with_cuda() and paddle.device.cuda.device_count() > 0:
+            return "gpu:0"
+    except Exception:
+        pass
+    return "cpu"
+
+
 def test_detection_model(image_path: str, output_dir: Path):
     """Test PP-OCRv5_server_det - Text detection model"""
     print("\n" + "="*60)
     print("1. TESTING: PP-OCRv5_server_det (Text Detection)")
     print("="*60)
     
+    device = _get_paddle_device()
+    print(f"  Using device: {device}")
+    
     from paddleocr import PaddleOCR
-    ocr = PaddleOCR(lang='en', use_angle_cls=False, use_gpu=True, det=True, rec=False)
+    ocr = PaddleOCR(lang='en', use_textline_orientation=False, device=device)
     
     img = cv2.imread(image_path)
-    result = ocr.ocr(image_path, det=True, rec=False)
+    result = ocr.ocr(image_path)
     
     # Draw detection boxes
     vis_img = img.copy()
@@ -53,8 +71,11 @@ def test_recognition_model(image_path: str, det_result, output_dir: Path):
     print("2. TESTING: en_PP-OCRv5_mobile_rec (Text Recognition)")
     print("="*60)
     
+    device = _get_paddle_device()
+    print(f"  Using device: {device}")
+    
     from paddleocr import PaddleOCR
-    ocr = PaddleOCR(lang='en', use_angle_cls=False, use_gpu=True)
+    ocr = PaddleOCR(lang='en', use_textline_orientation=False, device=device)
     
     img = cv2.imread(image_path)
     result = ocr.ocr(image_path)
@@ -84,8 +105,11 @@ def test_textline_orientation(image_path: str, output_dir: Path):
     print("="*60)
     print("NOTE: This model is used internally by PaddleOCR when use_textline_orientation=True")
     
+    device = _get_paddle_device()
+    print(f"  Using device: {device}")
+    
     from paddleocr import PaddleOCR
-    ocr = PaddleOCR(lang='en', use_textline_orientation=True, use_gpu=True)
+    ocr = PaddleOCR(lang='en', use_textline_orientation=True, device=device)
     
     img = cv2.imread(image_path)
     result = ocr.ocr(image_path)
@@ -112,7 +136,10 @@ def test_doc_orientation(image_path: str, output_dir: Path):
     print("4. TESTING: PP-LCNet_x1_0_doc_ori (Document Orientation)")
     print("="*60)
     
-    doc_ori = DocImgOrientationClassification(use_gpu=True)
+    device = _get_paddle_device()
+    print(f"  Using device: {device}")
+    
+    doc_ori = DocImgOrientationClassification(device=device)
     
     img = cv2.imread(image_path)
     result = doc_ori(img)
@@ -163,8 +190,11 @@ def test_uvdoc_unwarp(image_path: str, output_dir: Path):
     print("NOTE: UVDoc requires specific initialization. Testing basic usage...")
     
     try:
+        device = _get_paddle_device()
+        print(f"  Using device: {device}")
+        
         from paddleocr import PPStructure
-        engine = PPStructure(use_gpu=True, recovery=True)
+        engine = PPStructure(device=device, recovery=True)
         
         img = cv2.imread(image_path)
         result = engine(img)
@@ -190,11 +220,14 @@ def test_full_pipeline(image_path: str, output_dir: Path):
     print("6. TESTING: Full Pipeline (As Used in Application)")
     print("="*60)
     
+    device = _get_paddle_device()
+    print(f"  Using device: {device}")
+    
     from paddleocr import PaddleOCR
     ocr = PaddleOCR(
         lang='en',
         use_textline_orientation=True,
-        use_gpu=True,
+        device=device,
     )
     
     img = cv2.imread(image_path)
@@ -252,6 +285,7 @@ def main():
     print("="*60)
     print(f"Test Image: {image_path}")
     print(f"Output Directory: {output_dir}")
+    print(f"Device: {_get_paddle_device()}")
     
     # Run all tests
     det_result = test_detection_model(image_path, output_dir)
